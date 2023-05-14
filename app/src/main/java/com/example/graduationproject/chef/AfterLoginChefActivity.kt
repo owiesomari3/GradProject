@@ -25,7 +25,6 @@ import com.example.graduationproject.databinding.ButtonsheetlayoutBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
 
-
 class AfterLoginChefActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     @SuppressLint("MissingInflatedId", "ResourceType")
     private lateinit var drawerLayout: DrawerLayout

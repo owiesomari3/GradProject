@@ -72,6 +72,16 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:id="@+id/incorrect_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="12dp"
+        android:text="@string/INCORRECT_USER_NAME_OR_PASSWORD"
+        android:textColor="#ce0000"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="@dimen/width"
         android:layout_height="wrap_content"

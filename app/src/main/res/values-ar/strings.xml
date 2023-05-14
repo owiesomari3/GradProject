@@ -66,14 +66,14 @@
     <string name="the_rate">The Rate:</string>
     <string name="price">price</string>
     <string name="add_to_cart">Add to cart</string>
-    <string name="register">Register</string>
-    <string name="full_name">Full Name</string>
-    <string name="confirm_password">Confirm password</string>
+    <string name="register">تسجيل حساب</string>
+    <string name="full_name">الاسم كامل </string>
+    <string name="confirm_password">تاكيد كلمة المرور</string>
     <string name="send_us_an_email">Send us an email</string>
     <string name="send_a_complaint_via_email">Send a complaint via email</string>
     <string name="chef">Chef</string>
     <string name="hungry">Hungry</string>
-    <string name="chose_the_type_of_account">Chose the type account:</string>
+    <string name="chose_the_type_of_account">الرجاء اختيار نوع الحساب</string>
     <string name="ok">ok</string>
     <string name="register_like_as">Register like as :</string>
     <string name="what_will_you_upload">What will you upload?</string>
@@ -82,4 +82,8 @@
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="add_from_use">Add from use :</string>
+    <string name="SELECT_LANGUAGE">اختر اللغة </string>
+    <string name="FULL_NAME_IS_REQUIRED">هذا الحقل مطلوب </string>
+    <string name="INCORRECT_USER_NAME_OR_PASSWORD">البريد الاكتروني او كلمة المرور غير صحيحة</string>
+
 </resources>

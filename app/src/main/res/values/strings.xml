@@ -74,7 +74,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="chef">Chef</string>
     <string name="hungry">Hungry</string>
-    <string name="chose_the_type_of_account">Chose the type of account :</string>
+    <string name="chose_the_type_of_account">Chose your account type :</string>
     <string name="ok">ok</string>
     <string name="register_like_as">Register like as :</string>
     <string name="what_will_you_upload">What will you upload?</string>
@@ -83,6 +83,8 @@
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
     <string name="add_from_use">Add from use :</string>
-
+    <string name="SELECT_LANGUAGE">Select language</string>
+    <string name="FULL_NAME_IS_REQUIRED">This field is required</string>
+    <string name="INCORRECT_USER_NAME_OR_PASSWORD">incorrect username or password</string>
 
 </resources>

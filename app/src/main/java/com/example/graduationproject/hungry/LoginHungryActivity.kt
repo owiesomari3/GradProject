@@ -15,27 +15,40 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Button
 import android.widget.LinearLayout
+import android.widget.Toast
+import com.example.graduationproject.CacheManager
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.ActivityLoginHungryBinding
 import com.google.android.material.textfield.TextInputEditText
 
-class LoginHungryActivity: AppCompatActivity() ,View.OnClickListener, View.OnFocusChangeListener,
-    View.OnKeyListener  {
+class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
+    View.OnKeyListener {
     @SuppressLint("MissingInflatedId")
-   lateinit var binding:ActivityLoginHungryBinding
+    lateinit var binding: ActivityLoginHungryBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding= ActivityLoginHungryBinding.inflate(layoutInflater)
+        binding = ActivityLoginHungryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.btnLogHungry.setOnClickListener {
-            startActivity(Intent(this,AfterLoginHungryActivity::class.java))
-        }
+
+
         binding.apply {
-            binding.etEmail.onFocusChangeListener = this@LoginHungryActivity
-            binding.etPass.onFocusChangeListener = this@LoginHungryActivity
+            etEmail.onFocusChangeListener = this@LoginHungryActivity
+            etPass.onFocusChangeListener = this@LoginHungryActivity
+
+            btnLogHungry.setOnClickListener {
+                val user = CacheManager.getUserByEmailAndPassword(etEmail.text.toString(), etPass.text.toString())
+                user?.let {
+                    incorrectPassword.visibility = View.GONE
+                    //Toast.makeText(this@LoginHungryActivity, "sucessgull", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginHungryActivity, AfterLoginHungryActivity::class.java))
+                } ?: run {
+                    incorrectPassword.visibility = View.VISIBLE
+                }
+            }
         }
 
     }
+
     private fun validEmail(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.etEmail.text.toString()
@@ -82,6 +95,7 @@ class LoginHungryActivity: AppCompatActivity() ,View.OnClickListener, View.OnFoc
                             }
                         }
                     }
+
                     R.id.et_pass -> {
                         if (hasFocus) {
                             if (tilPass.isErrorEnabled) {
@@ -98,6 +112,7 @@ class LoginHungryActivity: AppCompatActivity() ,View.OnClickListener, View.OnFoc
         }
 
     }
+
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
         TODO("Not yet implemented")
     }

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="220dp"
     android:id="@+id/layout"
-    android:background="@drawable/custome_diloge">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custome_diloge"
+    android:padding="18dp">
+
     <ImageButton
         android:id="@+id/cancel"
         android:layout_width="30dp"
@@ -22,13 +24,12 @@
         android:src="@drawable/logoai" />
 
     <LinearLayout
-        android:layout_marginTop="0dp"
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_dia"
+        android:layout_marginTop="0dp"
         android:orientation="vertical">
-
 
 
         <TextView
@@ -38,7 +39,7 @@
             android:layout_marginStart="10dp"
             android:text="@string/chose_the_type_of_account"
             android:textColor="@color/green"
-            android:textSize= "@dimen/size_text_small"/>
+            android:textSize="@dimen/size_text_small" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -59,11 +60,11 @@
                 android:textStyle="bold" />
 
             <RadioButton
-                android:layout_marginTop="10dp"
                 android:id="@+id/reg_hungry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="@string/hungry"
                 android:textColor="@color/green"

@@ -12,9 +12,12 @@ import android.view.Window
 import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import com.example.graduationproject.chef.LoginChefActivity
 import com.example.graduationproject.databinding.ActivityRegisterBinding
+import com.example.graduationproject.enums.UserType
 import com.example.graduationproject.hungry.LoginHungryActivity
+import com.example.graduationproject.models.User
 
 class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
     View.OnKeyListener {
@@ -35,33 +38,62 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
             passETReg.onFocusChangeListener = this@RegisterALLActivity
             confPassETReg.onFocusChangeListener = this@RegisterALLActivity
         }
+
+        setUpEditFields()
     }
 
     private fun dialogReg() {
-        val dialogRegister=Dialog(this)
+        val dialogRegister = Dialog(this)
         dialogRegister.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogRegister.setCancelable(false)
         dialogRegister.setContentView(R.layout.dialog_reg)
-        val btnChef:RadioButton=dialogRegister.findViewById(R.id.reg_chef)
-        val btnHungry:RadioButton=dialogRegister.findViewById(R.id.reg_hungry)
-        val cancel :ImageView=dialogRegister.findViewById(R.id.cancel)
-        btnChef.setOnClickListener{
-            startActivity(Intent(this,LoginChefActivity::class.java))
+        val btnChef: RadioButton = dialogRegister.findViewById(R.id.reg_chef)
+        val btnHungry: RadioButton = dialogRegister.findViewById(R.id.reg_hungry)
+        val cancel: ImageView = dialogRegister.findViewById(R.id.cancel)
+        btnChef.setOnClickListener {
+            CacheManager.addNewUser(User(binding.fulNameETReg.text.toString(), binding.emailETReg.text.toString(), binding.passETReg.text.toString(), UserType.CHEF))
+            startActivity(Intent(this, LoginChefActivity::class.java))
         }
-        btnHungry.setOnClickListener{
-            startActivity(Intent(this,LoginHungryActivity::class.java))
+        btnHungry.setOnClickListener {
+            CacheManager.addNewUser(User(binding.fulNameETReg.text.toString(), binding.emailETReg.text.toString(), binding.passETReg.text.toString(), UserType.HUNGRY))
+            startActivity(Intent(this, LoginHungryActivity::class.java))
         }
-        cancel.setOnClickListener{
+        cancel.setOnClickListener {
             dialogRegister.cancel()
         }
         dialogRegister.show()
     }
 
+    private fun setUpEditFields() {
+        binding.apply {
+            fulNameETReg.doOnTextChanged { _, _, _, _ ->
+                setButtonEnibility()
+            }
+
+            emailETReg.doOnTextChanged { _, _, _, _ ->
+                setButtonEnibility()
+            }
+
+            passETReg.doOnTextChanged { _, _, _, _ ->
+                setButtonEnibility()
+            }
+
+            confPassETReg.doOnTextChanged { _, _, _, _ ->
+                setButtonEnibility()
+            }
+        }
+    }
+
+    private fun setButtonEnibility() {
+        binding.apply {
+            btnRegisterInApp.isEnabled = fulNameETReg.text?.isNotEmpty() == true && validEmail() && validPass() && validPassConf()
+        }
+    }
 
     private fun validFullName(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.fulNameETReg.text.toString()
-        if (value.isEmpty()) errorMessage = "Full Name is required"
+        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
         if (errorMessage != null) {
             binding.fulNameTilReg.apply {
                 isErrorEnabled = true
@@ -74,7 +106,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validEmail(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.emailETReg.text.toString()
-        if (value.isEmpty()) errorMessage = "Email is required"
+        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
         else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) errorMessage =
             "Email address is invalid"
         if (errorMessage != null) {
@@ -89,8 +121,8 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validPass(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.passETReg.text.toString()
-        if (value.isEmpty()) errorMessage = "password is required"
-        else if (value.length < 10) errorMessage = "Password must be 10 characters long"
+        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (value.length < 8) errorMessage = "Password must be 8 characters long"
         if (errorMessage != null) {
             binding.passTilReg.apply {
                 isErrorEnabled = true
@@ -104,9 +136,9 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         var errorMessage: String? = null
         val password: String = binding.passETReg.text.toString()
         val confirmPass: String = binding.passETReg.text.toString()
-        if (confirmPass.isEmpty()) errorMessage = "confirm password is required"
-        else if (confirmPass.length < 6) errorMessage =
-            " Confirm Password must be 6 characters long"
+        if (confirmPass.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (confirmPass.length < 8) errorMessage =
+            " Confirm Password must be 8 characters long"
         else if (confirmPass != password) errorMessage =
             "Confirm password doesn't match with Password"
         if (errorMessage != null) {

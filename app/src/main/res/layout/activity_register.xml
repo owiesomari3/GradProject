@@ -106,7 +106,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/green"
                 app:counterEnabled="true"
-                app:counterMaxLength="10"
+                app:counterMaxLength="16"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/green"
                 app:startIconDrawable="@drawable/baseline_lock_24"
@@ -125,6 +125,7 @@
                 android:id="@+id/btn_register_in_app"
                 style="@style/custom_btn"
                 android:background="@drawable/border"
+                android:enabled="false"
                 android:shadowColor="@null"
                 android:text="@string/register" />
         </LinearLayout>
