@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProgressIndicator">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/lpi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="6dp"
+        android:indeterminate="true"
+        android:scrollbarSize="10dp"
+        app:indicatorColor="@color/yallow"
+        app:trackColor="@color/green"
+        app:trackCornerRadius="10dp"
+        app:trackThickness="10dp"
+        tools:ignore="MissingConstraints" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/cpi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="16dp"
+        android:indeterminate="true"
+        app:indicatorColor="@color/yallow"
+        app:indicatorInset="30dp"
+        app:indicatorSize="100dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lpi"
+        app:layout_constraintVertical_bias="0.16"
+        app:trackColor="@color/green"
+        app:trackThickness="5dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txtv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/loading"
+        android:textSize="@dimen/size_text_small"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        app:layout_constraintBottom_toTopOf="@+id/cpi"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/lpi"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:foregroundGravity="center"
+        android:src="@drawable/add_shopping_cart"
+        app:layout_constraintBottom_toBottomOf="@+id/cpi"
+        app:layout_constraintEnd_toEndOf="@+id/cpi"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="@+id/cpi"
+        app:layout_constraintTop_toTopOf="@+id/cpi"
+        app:layout_constraintVertical_bias="0.508"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/ze"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginBottom="7dp"
+        android:src="@drawable/img_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.019"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

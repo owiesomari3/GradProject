@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/offers_chefs"
+        android:title="@string/offers"
+        android:icon="@drawable/baseline_food_bank_24"/>
+
+    <item
+        android:id="@+id/search_chef"
+        android:title="@string/search"
+        android:icon="@drawable/baseline_search_24"/>
+
+    <item
+        android:id="@+id/wallet_chef"
+        android:title="@string/wallet"
+        android:icon="@drawable/baseline_wallet_24"/>
+
+    <item
+        android:id="@+id/home_chef"
+        android:title="@string/home"
+        android:icon="@drawable/logoai"/>
+
+</menu>

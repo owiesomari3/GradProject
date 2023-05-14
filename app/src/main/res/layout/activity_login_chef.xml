@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/log2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".chef.LoginChefActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="@dimen/mar_big"
+        android:text="@string/you_have_come_to_us_as_the_sun_comes_to_light_the_world"
+        android:textColor="@color/green"
+        android:textSize="15sp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_email"
+        android:layout_gravity="center"
+        android:layout_width="@dimen/width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/green"
+        android:textColorHighlight="@color/green"
+        android:textColorHint="@color/green"
+        android:textColorLink="@color/green"
+        app:boxBackgroundMode="outline"
+        app:endIconMode="clear_text"
+        app:placeholderText="ex:abc@def.com"
+        app:placeholderTextColor="@color/yallow"
+        app:startIconDrawable="@drawable/email_icon"
+        app:startIconTint="@color/green">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/EMAIL"
+            android:inputType="textEmailAddress" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_pass"
+        android:layout_width="@dimen/width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:textColor="@color/green"
+        android:textColorHighlight="@color/green"
+        android:textColorHint="@color/green"
+        android:textColorLink="@color/green"
+        app:boxBackgroundMode="outline"
+        app:boxStrokeColor="@color/green"
+        app:counterEnabled="true"
+        app:counterMaxLength="16"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@color/green"
+        app:startIconDrawable="@drawable/baseline_lock_24"
+        app:startIconTint="@color/green">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_pass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/PASSWORD"
+            android:maxLength="16"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/width"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/mar_medium"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/KEEP_ME_LOGGED_IN"
+            android:textColor="@color/green"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:stateListAnimator="@null"
+            android:text="@string/FORGET_PASSWORD"
+            android:textColor="@color/green"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_login_chef"
+            style="@style/custom_btn"
+            android:text="@string/LOGIN"
+            android:textAllCaps="false"
+            android:background="@drawable/border" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationChef"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/chef" />
+
+
+</LinearLayout>

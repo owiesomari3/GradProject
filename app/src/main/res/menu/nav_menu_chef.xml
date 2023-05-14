@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn = "navigation_view">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/num_account_chef"
+            android:title="@string/account_number"
+            android:icon="@drawable/baseline_account_circle_24"/>
+        <item
+            android:id="@+id/location_chef"
+            android:icon="@drawable/baseline_location_on_24"
+            android:title="@string/location"/>
+
+        <item
+            android:id="@+id/evaluation_chef"
+            android:icon="@drawable/baseline_star_rate_24"
+            android:title="@string/evaluation_your_restaurant"/>
+        <item
+            android:id="@+id/your_menu_chef"
+            android:title="@string/your_menu"
+            android:icon="@drawable/baseline_restaurant_menu_24"/>
+
+        <item
+            android:id="@+id/favorite_in_your_menue"
+            android:icon="@drawable/baseline_whatshot_24"
+            android:title="@string/favorite_in_your_menu" />
+
+        <item
+            android:id="@+id/nav_settings_chef"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/settings_account"/>
+
+        <item
+            android:id="@+id/nav_share_chef"
+            android:icon="@drawable/baseline_share_24"
+            android:title="@string/share"/>
+
+        <item
+            android:id="@+id/send_us_an_email"
+            android:icon="@drawable/baseline_share_24"
+            android:title="@string/send_us_an_email"/>
+
+
+    </group>
+    <item
+        android:title="">
+
+        <menu>
+            <item
+                android:id="@+id/nav_logout_chef"
+                android:icon="@drawable/baseline_exit_to_app_24"
+                android:title="@string/logout"/>
+        </menu>
+
+    </item>
+
+</menu>

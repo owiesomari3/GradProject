@@ -1,0 +1,142 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_text_small"
+        app:cardCornerRadius=".6dp"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/green"
+        app:strokeWidth=".5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="@dimen/size_text_small">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ful_name_til_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/green"
+                android:textColorHighlight="@color/green"
+                android:textColorHint="@color/green"
+                android:textColorLink="@color/green"
+                app:boxBackgroundMode="outline"
+                app:endIconMode="clear_text"
+                app:startIconDrawable="@drawable/round_account_circle_24"
+                app:startIconTint="@color/green">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ful_name_ET_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/full_name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/email_til_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/green"
+                android:textColorHighlight="@color/green"
+                android:textColorHint="@color/green"
+                android:textColorLink="@color/green"
+                app:boxBackgroundMode="outline"
+                app:endIconMode="clear_text"
+                app:placeholderText="ex:abc@def.com"
+                app:placeholderTextColor="@color/yallow"
+                app:startIconDrawable="@drawable/email_icon"
+                app:startIconTint="@color/green">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email_ET_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/EMAIL"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pass_til_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/green"
+                android:textColorHighlight="@color/green"
+                android:textColorHint="@color/green"
+                android:textColorLink="@color/green"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/green"
+                app:counterEnabled="true"
+                app:counterMaxLength="16"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/green"
+                app:startIconDrawable="@drawable/baseline_lock_24"
+                app:startIconTint="@color/green">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/pass_ET_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/PASSWORD"
+                    android:maxLength="16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/conf_pass_til_reg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/green"
+                android:textColorHighlight="@color/green"
+                android:textColorHint="@color/green"
+                android:textColorLink="@color/green"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/green"
+                app:counterEnabled="true"
+                app:counterMaxLength="10"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/green"
+                app:startIconDrawable="@drawable/baseline_lock_24"
+                app:startIconTint="@color/green">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/conf_pass_ET_reg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/confirm_password"
+                    android:maxLength="10" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <Button
+                android:id="@+id/btn_register_in_app"
+                style="@style/custom_btn"
+                android:background="@drawable/border"
+                android:shadowColor="@null"
+                android:text="@string/register" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationBee"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/bee" />
+
+</LinearLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="ExtraText">
+
+    <item android:state_pressed="false">
+          <shape  android:shape="rectangle">
+          <corners android:radius="20dp"/>
+            <gradient
+             android:endColor="@color/Light_yallow"
+             android:startColor="@color/light_green"/>
+      </shape>
+    </item>
+    <item android:state_pressed="true"
+        android:drawable="@drawable/presses"/>
+
+</selector>

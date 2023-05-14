@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".Rating">
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:numStars="5"
+        android:progressTint="@color/light_green"
+        android:rating="1"
+        android:stepSize="0.5" />
+    <Button
+        android:shadowColor="@null"
+        android:id="@+id/btn1_rat"
+        android:background="@drawable/border"
+        android:text="@string/my_rating"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:textAllCaps="false"
+        android:layout_marginTop="250dp"
+        android:layout_width="@dimen/width"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+
+        android:layout_width="@dimen/width"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/img_2" />
+    <Button
+        android:shadowColor="@null"
+        android:id="@+id/btn2_rat_app"
+        android:background="@drawable/custom_email_pass"
+        android:text="@string/would_you_like_to_rate_us_on_the_app_store"
+        android:textStyle="bold"
+        android:textColor="@color/green"
+        android:textAllCaps="false"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>
