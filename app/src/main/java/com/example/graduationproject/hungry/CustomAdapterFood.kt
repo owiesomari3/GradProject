@@ -1,23 +1,28 @@
 package com.example.graduationproject.hungry
 
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.app.Activity
 import android.graphics.BitmapFactory
+import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.R
 import com.example.graduationproject.enums.UserType
 
-class CustomAdapterFood(private val foodList: ArrayList<DataFood>) :
+class CustomAdapterFood(
+    private val foodList: ArrayList<DataFood>,
+    private val callback: ItemClickInterface
+) :
     RecyclerView.Adapter<CustomAdapterFood.ViewHolder>() {
 
     @SuppressLint("InflateParams")
@@ -53,6 +58,19 @@ class CustomAdapterFood(private val foodList: ArrayList<DataFood>) :
             rateTv.text = (data.rate.toString())
             foodNameTv.text = (data.familiar_name)
             priceTv.text = (data.price)
+
+            container.setOnClickListener {
+                /*val data1 = Bundle()
+                data1.putParcelable("food", data)
+                val fragment: Fragment = AfterSelectedItemFragment()
+                fragment.arguments = data1
+
+                activity?.fragmentManager?.beginTransaction()
+                    ?.replace(R.id.frame_layout_chef, fragment)
+                    ?.commit()*/
+
+                callback.onItemClick(data)
+            }
         }
     }
 
@@ -66,6 +84,7 @@ class CustomAdapterFood(private val foodList: ArrayList<DataFood>) :
         var rateEditText: EditText
         var rateTv: TextView
         var myImage: ImageView
+        var container: CardView
 
         init {
             foodNameEditText = itemView.findViewById(R.id.edit_familiar_name)
@@ -75,14 +94,12 @@ class CustomAdapterFood(private val foodList: ArrayList<DataFood>) :
             priceEditText = itemView.findViewById(R.id.edit_price)
             priceTv = itemView.findViewById(R.id.tv_price)
             myImage = itemView.findViewById(R.id.image_food)
-
-            itemView.setOnClickListener {
-                // val myIntent = Intent(itemView.context, AfterSelectFood::class.java)
-                // itemView.context.startActivities(arrayOf(myIntent))
-
-            }
+            container = itemView.findViewById(R.id.container)
         }
     }
 
+    interface ItemClickInterface {
+        fun onItemClick(data: DataFood)
+    }
 }
 

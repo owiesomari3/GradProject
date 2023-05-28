@@ -35,12 +35,11 @@ class AddFoodFragment : Fragment() {
         binding.apply {
             if (image != null) img.setImageBitmap(image)
             else if (imageUri != null) img.setImageURI(imageUri)
-
             save.setOnClickListener {
                 val jsonArray = Storage.getAllFoods(requireContext()) ?: JSONArray()
                 val jsonObject = JSONObject()
                 jsonObject.put(Constants.FOOD_ID, generateFoodId(jsonArray))
-                jsonObject.put(Constants.CURRENT_CHEF, CacheManager.getCurrentChef())
+                jsonObject.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
                 jsonObject.put(Constants.FAMILIAR_NAME, familiarName.text.toString())
                 jsonObject.put(Constants.PRICE, price.text.toString())
                 jsonObject.put(Constants.DESCRIPTION, description.text.toString())

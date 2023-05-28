@@ -98,8 +98,10 @@
     <string name="cart">Cart</string>
     <string name="FOOD_ADDED_SUCCESSFULLY">Your food was added successfully</string>
     <string name="EMAIL_ADDRESS_IS_INVALID">Email address is invalid</string>
+    <string name="EMAIL_ALREADY_REGISTERED">Email already registered</string>
     <string name="CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD">"Confirm password doesn't match with Password"</string>
     <string name="PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Password must be 8 characters long"</string>
+    <string name="Correct_Format92xxxxxxxxxx">Correct Format:+92xxxxxxxxxx</string>
     <string name="Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Confirm Password must be 8 characters long"</string>
     <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
 

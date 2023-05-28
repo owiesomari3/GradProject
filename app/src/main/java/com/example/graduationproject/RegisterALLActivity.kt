@@ -2,6 +2,7 @@ package com.example.graduationproject
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -19,9 +20,9 @@ import com.airbnb.lottie.LottieAnimationView
 import com.example.graduationproject.chef.LoginChefActivity
 import com.example.graduationproject.databinding.ActivityRegisterBinding
 import com.example.graduationproject.enums.UserType
-import com.example.graduationproject.hungry.CustomAdapterFood
 import com.example.graduationproject.hungry.LoginHungryActivity
-import com.example.graduationproject.models.User
+import org.json.JSONArray
+import org.json.JSONObject
 
 class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
     View.OnKeyListener {
@@ -56,30 +57,26 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
             val cancel: ImageView = findViewById(R.id.cancel)
             val logo: LottieAnimationView = findViewById(R.id.animationregtrue)
             btnChef.setOnClickListener {
-                CacheManager.addNewUser(
-                    User(
-                        binding.fulNameETReg.text.toString(),
-                        binding.emailETReg.text.toString(),
-                        binding.passETReg.text.toString(),
-                        UserType.CHEF
-                    )
+                addNewUser(
+                    binding.fulNameETReg.text.toString(),
+                    binding.emailETReg.text.toString(),
+                    binding.passETReg.text.toString(),
+                    binding.phoneETReg.text.toString(),
+                    UserType.CHEF
                 )
                 startActivity(Intent(this@RegisterALLActivity, LoginChefActivity::class.java))
             }
             btnHungry.setOnClickListener {
-                CacheManager.addNewUser(
-                    User(
-                        binding.fulNameETReg.text.toString(),
-                        binding.emailETReg.text.toString(),
-                        binding.passETReg.text.toString(),
-                        UserType.HUNGRY
-                    )
+                addNewUser(
+                    binding.fulNameETReg.text.toString(),
+                    binding.emailETReg.text.toString(),
+                    binding.passETReg.text.toString(),
+                    binding.phoneETReg.text.toString(),
+                    UserType.HUNGRY
                 )
                 startActivity(Intent(this@RegisterALLActivity, LoginHungryActivity::class.java))
             }
-            cancel.setOnClickListener {
-                cancel()
-            }
+            cancel.setOnClickListener { cancel() }
             show()
             Handler().postDelayed(
                 {
@@ -113,7 +110,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun setButtonEnability() {
         binding.apply {
             btnRegisterInApp.isEnabled =
-                fulNameETReg.text?.isNotEmpty() == true && validEmail() && validPass() && validateConf() && validFullName() && validateConfAndPass()
+                fulNameETReg.text?.isNotEmpty() == true && validEmail() && validPass() && validateConf() && validFullName() && validateConfAndPass() && validPhone()
         }
     }
 
@@ -143,8 +140,28 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
             errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
         else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches())
             errorMessage = getString(R.string.EMAIL_ADDRESS_IS_INVALID)
+
         if (errorMessage != null) {
             binding.emailTilReg.apply {
+                isErrorEnabled = true
+                error = errorMessage
+            }
+        }
+        return errorMessage == null
+    }
+
+    private fun validPhone(): Boolean {
+        var errorMessage: String? = null
+        val value: String = binding.phoneETReg.text.toString()
+        val phonePattern = Regex("^[+][0-9]{10,13}\$")
+        if (value.isEmpty())
+            errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (!phonePattern.matches(value))
+            errorMessage =
+                getString(R.string.Correct_Format92xxxxxxxxxx)
+
+        if (errorMessage != null) {
+            binding.phoneTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
@@ -217,10 +234,18 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                             if (emailTilReg.isErrorEnabled) {
                                 emailTilReg.isErrorEnabled = false
                             }
-                        } else {
-                            validEmail()
-                        }
+                        } else validEmail()
+
                     }
+                    R.id.phone_ET_reg -> {
+                        if (hasFocus) {
+                            if (phoneTilReg.isErrorEnabled) {
+                                phoneTilReg.isErrorEnabled = false
+                            }
+                        } else validPhone()
+
+                    }
+
 
                     R.id.pass_ET_reg -> {
                         if (hasFocus) {
@@ -237,7 +262,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                                     setStartIconDrawable(R.drawable.check_circle_24)
                                     setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
                                 }
-                            }
+                            } else validPass()
                         }
                     }
                     R.id.conf_pass_ET_reg -> {
@@ -266,5 +291,68 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
 
     override fun onKey(view: View?, keyCode: Int, event: KeyEvent?): Boolean {
         return false
+    }
+
+    private fun addNewUser(
+        name: String,
+        email: String,
+        password: String,
+        phoneNumber: String,
+        type: UserType
+    ) {
+        val jsonArrayUser = Storage.getAllUsers(this@RegisterALLActivity) ?: JSONArray()
+        if (!isEmailExist(email)) {
+            val jsonObject = JSONObject()
+            jsonObject.put(Constants.USER_ID, generateUserId(jsonArrayUser))
+            jsonObject.put(Constants.FULL_NAME, name)
+            jsonObject.put(Constants.Email, email)
+            jsonObject.put(Constants.Phone, phoneNumber)
+            jsonObject.put(Constants.PASSWORD, password)
+            jsonObject.put(Constants.USER_TYPE, type.name)
+            jsonArrayUser.put(jsonObject)
+            saveAllUsersList(jsonArrayUser)
+        }
+    }
+
+    private fun generateUserId(jsonUserArray: JSONArray): Int {
+        return if (jsonUserArray.length() == 0) {
+            1
+        } else {
+            val jsonObject =
+                jsonUserArray.getJSONObject(jsonUserArray.length() - 1)//get last object in the array
+            jsonObject.getInt(Constants.USER_ID) + 1
+        }
+    }
+
+    private fun saveAllUsersList(jsonArray: JSONArray) {
+        val sharedPreferences = getSharedPreferences(Constants.INFO_USERS_SHARED_PREFS, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.USER_LIST, jsonArray.toString())
+        editor.apply()
+    }
+
+    private fun isEmailExist(emailValue: String): Boolean {
+        var errorMessage = ""
+        // Check if the new email stored before
+        val sharedUsers = Storage.getAllUsers(this@RegisterALLActivity)
+        if (sharedUsers != null) {
+            for (i in 0 until sharedUsers.length()) {
+                val userObject = sharedUsers.getJSONObject(i)
+                val email = userObject.optString(Constants.Email, "")
+                if (email.equals(emailValue, ignoreCase = true)) {
+                    errorMessage = getString(R.string.EMAIL_ALREADY_REGISTERED)
+                    break
+                }
+            }
+            return if (errorMessage != "") {
+                binding.emailTilReg.apply {
+                    isErrorEnabled = true
+                    error = errorMessage
+                }
+                true
+            } else false
+        } else {
+            return false
+        }
     }
 }

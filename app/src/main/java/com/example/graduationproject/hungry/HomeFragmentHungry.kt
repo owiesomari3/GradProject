@@ -1,12 +1,15 @@
 package com.example.graduationproject.hungry
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Constants
+import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentHomeHungryBinding
 
@@ -30,22 +33,35 @@ class HomeFragmentHungry : Fragment() {
         allFoods?.let {
             for (i in allFoods.length() - 1 downTo 0) {
                 val jsonObject = allFoods.getJSONObject(i)
+                val id = jsonObject.getString(Constants.FOOD_ID)
                 val name = jsonObject.getString(Constants.FAMILIAR_NAME)
                 val price = jsonObject.getString(Constants.PRICE)
                 val description = jsonObject.getString(Constants.DESCRIPTION)
                 val image = jsonObject.getString(Constants.IMAGE)
-                /*val quantity = jsonObject.optString(
-                    Constants.QUANTITY,
-                    "0"
-                ) // Use a default value if "quantity" is missing*/
-                foods.add(DataFood(name, price, image, 5.0, description))
+                val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
+                foods.add(DataFood(name, price, image, 5.0, description, id, chefEmail))
             }
         }
-        rvAdapter = CustomAdapterFood(foods)
+        rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
+            @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+            override fun onItemClick(data: DataFood) {
+                replaceFragment(AfterSelectedItemFragment(), data)
+            }
+        })
         binding.recyclerHomeHungry.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = rvAdapter
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun replaceFragment(fragment: Fragment, data: DataFood) {
+        val data1 = Bundle()
+        data1.putParcelable("food", data)
+        fragment.arguments = data1
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.frame_layout_hungry, fragment)
+        fragmentTransaction?.commit()
+    }
 }

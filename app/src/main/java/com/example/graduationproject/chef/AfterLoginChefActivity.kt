@@ -244,7 +244,3 @@ class AfterLoginChefActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 }
-
-
-
-

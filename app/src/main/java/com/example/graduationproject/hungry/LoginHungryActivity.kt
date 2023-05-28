@@ -2,13 +2,14 @@ package com.example.graduationproject.hungry
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.R
+import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.ActivityLoginHungryBinding
 import com.example.graduationproject.enums.UserType
 
@@ -27,11 +28,22 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
             etPass.onFocusChangeListener = this@LoginHungryActivity
 
             btnLogHungry.setOnClickListener {
-                val user = CacheManager.getUserByEmailAndPassword(etEmail.text.toString(), etPass.text.toString())
-                user?.let {
+                val userEmail = Storage.getUserByEmailAndPassword(
+                    this@LoginHungryActivity,
+                    etEmail.text.toString(),
+                    etPass.text.toString(),
+                    UserType.HUNGRY
+                )
+                userEmail?.let {
                     CacheManager.setUserType(UserType.HUNGRY)
+                    CacheManager.setCurrentUser(it)
                     incorrectPassword.visibility = View.GONE
-                    startActivity(Intent(this@LoginHungryActivity, AfterLoginHungryActivity::class.java))
+                    startActivity(
+                        Intent(
+                            this@LoginHungryActivity,
+                            AfterLoginHungryActivity::class.java
+                        )
+                    )
                 } ?: run {
                     incorrectPassword.visibility = View.VISIBLE
                 }

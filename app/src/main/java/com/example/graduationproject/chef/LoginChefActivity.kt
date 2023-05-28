@@ -7,14 +7,11 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.CacheManager
-import com.example.graduationproject.Constants
 import com.example.graduationproject.R
+import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.ActivityLoginChefBinding
 import com.example.graduationproject.enums.UserType
-import com.example.graduationproject.models.User
 
 class LoginChefActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
     View.OnKeyListener {
@@ -30,10 +27,11 @@ class LoginChefActivity : AppCompatActivity(), View.OnClickListener, View.OnFocu
             etEmail.onFocusChangeListener = this@LoginChefActivity
             etPass.onFocusChangeListener = this@LoginChefActivity
             btnLoginChef.setOnClickListener {
-                val user = CacheManager.getUserByEmailAndPassword(etEmail.text.toString(), etPass.text.toString())
-                user?.let {
+
+                val userEmail = Storage.getUserByEmailAndPassword(this@LoginChefActivity,etEmail.text.toString(), etPass.text.toString(),UserType.CHEF)
+                userEmail?.let {
                     CacheManager.setUserType(UserType.CHEF)
-                    CacheManager.setCurrentChef(etEmail.text.toString())
+                    CacheManager.setCurrentUser(it)
                     incorrectPassword.visibility = View.GONE
                     startActivity(Intent(this@LoginChefActivity,AfterLoginChefActivity::class.java))
                 } ?: run {
