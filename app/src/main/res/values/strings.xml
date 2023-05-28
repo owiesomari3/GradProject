@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name"> Warmth</string>
+
     <string name="PLEASE_WAIT_A_WHILE_UNTIL_THE_REQUIRED_FOOD_IS_PROVIDED">Please wait a while until the required food is provided</string>
     <string name="LOGIN">Login</string>
     <string name="CONTINUE_WITH_GOOGLE">Continue with google</string>
@@ -7,13 +8,12 @@
     <string name="OR">OR</string>
     <string name="PASSWORD">Password</string>
     <string name="EMAIL">Email</string>
-    <string name="SHOW">Show</string>
     <string name="KEEP_ME_LOGGED_IN">Keep Me logged in</string>
     <string name="FORGET_PASSWORD">Forgot password?</string>
     <string name="DON_T_HAVE_AN_ACCOUNT">Don\'t have an account?</string>
     <string name="CREATE_AN_ACCOUNT">Create an account</string>
     <string name="join_as_a_chef">  Chef</string>
-    <string name="join_as_hungry">  Hungry</string>
+    <string name="join_as_hungry" translatable="false">  Hungry</string>
     <string name="WELCOME">Welcome</string>
     <string name="you_have_come_to_us_as_the_sun_comes_to_light_the_world">You have come to us as the sun comes to light the world</string>
     <string name="welcome_how_are_you_wish_you_are_fine">Welcome, how are you, wish you are fine</string>
@@ -61,7 +61,7 @@
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="the_familiar_name">The familiar name:</string>
-    <string name="the_description">The description</string>
+    <string name="the_description">Description:</string>
     <string name="the_rate">The Rate:</string>
     <string name="price">price</string>
     <string name="add_to_cart">Add to cart</string>
@@ -71,7 +71,7 @@
     <string name="send_us_an_email">Send us an email</string>
     <string name="send_a_complaint_via_email">Send a complaint via email</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="chef">Chef</string>
     <string name="hungry">Hungry</string>
     <string name="chose_the_type_of_account">Chose your account type :</string>
@@ -86,5 +86,21 @@
     <string name="SELECT_LANGUAGE">Select language</string>
     <string name="FULL_NAME_IS_REQUIRED">This field is required</string>
     <string name="INCORRECT_USER_NAME_OR_PASSWORD">incorrect username or password</string>
+    <string name="open_nav" translatable="false">Open Navigation Drawer</string>
+    <string name="close_nav" translatable="false">Close Navigation Drawer</string>
+    <string name="todo">TODO</string>
+    <string name="rate">Rate:</string>
+    <string name="familiar_name">Familiar Name :</string>
+    <string name="Will_you_allow_me_access_to_the_camera">Will you allow me access to the camera</string>
+    <string name="Will_you_allow_me_access_to_photo_library">Will you allow me access to the photo library?</string>
+    <string name="save">Save</string>
+    <string name="quantity">Quantity</string>
+    <string name="cart">Cart</string>
+    <string name="FOOD_ADDED_SUCCESSFULLY">Your food was added successfully</string>
+    <string name="EMAIL_ADDRESS_IS_INVALID">Email address is invalid</string>
+    <string name="CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD">"Confirm password doesn't match with Password"</string>
+    <string name="PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Password must be 8 characters long"</string>
+    <string name="Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Confirm Password must be 8 characters long"</string>
+    <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
 
 </resources>

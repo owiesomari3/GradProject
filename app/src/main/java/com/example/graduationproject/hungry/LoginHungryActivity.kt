@@ -2,24 +2,15 @@ package com.example.graduationproject.hungry
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.R
 import com.example.graduationproject.databinding.ActivityLoginHungryBinding
-import com.google.android.material.textfield.TextInputEditText
+import com.example.graduationproject.enums.UserType
 
 class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
     View.OnKeyListener {
@@ -38,23 +29,20 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
             btnLogHungry.setOnClickListener {
                 val user = CacheManager.getUserByEmailAndPassword(etEmail.text.toString(), etPass.text.toString())
                 user?.let {
+                    CacheManager.setUserType(UserType.HUNGRY)
                     incorrectPassword.visibility = View.GONE
-                    //Toast.makeText(this@LoginHungryActivity, "sucessgull", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this@LoginHungryActivity, AfterLoginHungryActivity::class.java))
                 } ?: run {
                     incorrectPassword.visibility = View.VISIBLE
                 }
             }
         }
-
     }
-
     private fun validEmail(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.etEmail.text.toString()
-        if (value.isEmpty()) errorMessage = "Email is required"
-        else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) errorMessage =
-            "Email address is invalid"
+        if (value.isEmpty()) errorMessage =getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) errorMessage =getString(R.string.EMAIL_ADDRESS_IS_INVALID)
         if (errorMessage != null) {
             binding.tilEmail.apply {
                 isErrorEnabled = true
@@ -67,8 +55,8 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validPass(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.etPass.text.toString()
-        if (value.isEmpty()) errorMessage = "password is required"
-        else if (value.length < 10) errorMessage = "Password must be 10 characters long"
+        if (value.isEmpty()) errorMessage =getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (value.length < 8) errorMessage = getString(R.string.Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG)
         if (errorMessage != null) {
             binding.tilPass.apply {
                 isErrorEnabled = true
@@ -77,7 +65,6 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         }
         return errorMessage == null
     }
-
     override fun onClick(v: View?) {}
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
@@ -90,9 +77,8 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                                 tilEmail.isErrorEnabled = false
                             }
                         } else {
-                            if (validEmail()) {
+                            validEmail()
 
-                            }
                         }
                     }
 
@@ -101,20 +87,15 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                             if (tilPass.isErrorEnabled) {
                                 tilPass.isErrorEnabled = false
                             }
-                        } else {
-                            if (validPass()) {
-
-                            }
-                        }
+                        } else validPass()
                     }
                 }
             }
         }
-
     }
 
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-        TODO("Not yet implemented")
+     return false
     }
 
 }

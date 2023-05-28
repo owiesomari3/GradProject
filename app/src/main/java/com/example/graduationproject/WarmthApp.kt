@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.res.Configuration
 import java.util.Locale
 
-class WarthApp : Application() {
+class WarmthApp : Application() {
 
     override fun onCreate() {
         super.onCreate()

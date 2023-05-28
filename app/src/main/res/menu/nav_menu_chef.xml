@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn = "navigation_view">
-
-    <group
-        android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="@string/home"
+            android:icon="@drawable/baseline_home_24"/>
         <item
             android:id="@+id/num_account_chef"
             android:title="@string/account_number"
@@ -43,19 +44,8 @@
             android:id="@+id/send_us_an_email"
             android:icon="@drawable/baseline_share_24"
             android:title="@string/send_us_an_email"/>
-
-
-    </group>
-    <item
-        android:title="">
-
-        <menu>
-            <item
-                android:id="@+id/nav_logout_chef"
-                android:icon="@drawable/baseline_exit_to_app_24"
-                android:title="@string/logout"/>
+           <item
+        android:id="@+id/nav_logout_chef"
+        android:icon="@drawable/baseline_exit_to_app_24"
+        android:title="@string/logout"/>
         </menu>
-
-    </item>
-
-</menu>

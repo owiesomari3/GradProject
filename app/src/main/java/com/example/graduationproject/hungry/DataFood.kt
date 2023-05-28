@@ -1,5 +1,9 @@
 package com.example.graduationproject.hungry
 
-import android.media.Image
-
-data class DataFood (var familiar_name:String, var description:String,var price :Double,var image: Int)
+data class DataFood(
+    var familiar_name:String,
+    var price:String,
+    var image: String,
+    var rate: Double,
+   //var quantity: Int,
+    var description: String)

@@ -9,6 +9,10 @@
         <item name="android:textColor">@color/btn_click_txt_color</item>
         <item name="android:textSize">@dimen/size_text_med</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:clipChildren">false</item>
+    </style>
+    <style name="custom_Menufab">
+        <item name="android:textColor">@color/yallow</item>
     </style>
 </resources>
 

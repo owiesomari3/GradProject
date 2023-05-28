@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout_hungry"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    app:guidelineUseRtl="true"
     tools:context=".hungry.AfterLoginHungryActivity"
     tools:openDrawer="start">
 
@@ -20,55 +20,24 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/yallow"
-            android:elevation="4dp">
+            android:elevation="4dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:menu="@menu/main_menu"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
             <ImageView
                 android:id="@+id/menu_click"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:src="@drawable/ic_menu_left_alt" />
 
         </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
+            android:id="@+id/frame_layout_hungry"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </androidx.recyclerview.widget.RecyclerView>
-            </ScrollView>
-        </FrameLayout>
-
-
-        <!--  <androidx.coordinatorlayout.widget.CoordinatorLayout
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-
-              <com.google.android.material.bottomappbar.BottomAppBar
-                  android:id="@+id/bottomAppBar"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_gravity="bottom"
-                  android:background="@color/white">
-
-                  <com.google.android.material.bottomnavigation.BottomNavigationView
-                      android:id="@+id/bottomNavigationView_hungry"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:background="@color/white"
-                      app:itemIconTint="@color/yallow"
-                      app:labelVisibilityMode="labeled"
-                      app:menu="@menu/bottom_menu_hungry" />
-
-              </com.google.android.material.bottomappbar.BottomAppBar>
-          </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+            android:layout_height="match_parent"/>
 
 
     </LinearLayout>
@@ -83,5 +52,19 @@
         app:itemTextColor="@color/green"
         app:menu="@menu/nav_menu_hungry" />
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView_hungry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="?android:attr/windowBackground"
+            android:elevation="6dp"
+            app:itemIconTint="@color/green"
+            app:menu="@menu/bottom_menu_hungry"
+            app:labelVisibilityMode="selected"/>
 
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

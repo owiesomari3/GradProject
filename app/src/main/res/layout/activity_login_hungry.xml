@@ -38,6 +38,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
+            android:text="hungry@gmail.com"
             android:layout_height="wrap_content"
             android:hint="@string/EMAIL"
             android:inputType="textEmailAddress" />
@@ -68,6 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/PASSWORD"
+            android:inputType="textPassword"
+            android:text="Pass@1234"
             android:maxLength="16" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -123,6 +126,4 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/hungry" />
-
-
 </LinearLayout>

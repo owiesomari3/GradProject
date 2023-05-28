@@ -16,6 +16,6 @@
     <style name="DialogAnimation">
 <item name="android:windowEnterTransition">@anim/slide_in</item>
 <item name="android:windowExitTransition">@anim/slide_out</item>
+        <item name="windowMinWidthMinor">85%</item>
     </style>
-
 </resources>

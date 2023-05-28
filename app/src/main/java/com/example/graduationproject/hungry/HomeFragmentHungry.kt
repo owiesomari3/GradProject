@@ -1,37 +1,51 @@
 package com.example.graduationproject.hungry
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.graduationproject.R
-import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
+import com.example.graduationproject.Constants
+import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentHomeHungryBinding
-import com.example.graduationproject.databinding.RecyclerHomeBinding
-
 
 class HomeFragmentHungry : Fragment() {
-
-    lateinit var binding:FragmentHomeHungryBinding
-
+    private var rvAdapter: CustomAdapterFood? = null
+    private lateinit var binding: FragmentHomeHungryBinding
+    var foods = ArrayList<DataFood>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_home_hungry, container, false)
+    ): View {
+        binding = FragmentHomeHungryBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val foods=ArrayList<DataFood>()
-        binding= FragmentHomeHungryBinding.inflate(layoutInflater)
-        binding.recyclerHome.layoutManager=LinearLayoutManager(this.context,RecyclerView.VERTICAL,false)
-        val adapter=CustomAdapterFood(foods)
-        binding.recyclerHome.adapter=adapter
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val allFoods = Storage.getAllFoods(requireContext())
+
+        allFoods?.let {
+            for (i in allFoods.length() - 1 downTo 0) {
+                val jsonObject = allFoods.getJSONObject(i)
+                val name = jsonObject.getString(Constants.FAMILIAR_NAME)
+                val price = jsonObject.getString(Constants.PRICE)
+                val description = jsonObject.getString(Constants.DESCRIPTION)
+                val image = jsonObject.getString(Constants.IMAGE)
+                /*val quantity = jsonObject.optString(
+                    Constants.QUANTITY,
+                    "0"
+                ) // Use a default value if "quantity" is missing*/
+                foods.add(DataFood(name, price, image, 5.0, description))
+            }
+        }
+        rvAdapter = CustomAdapterFood(foods)
+        binding.recyclerHomeHungry.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = rvAdapter
+        }
     }
+
 }

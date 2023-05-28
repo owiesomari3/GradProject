@@ -17,6 +17,23 @@
         android:text="@string/you_have_come_to_us_as_the_sun_comes_to_light_the_world"
         android:textColor="@color/green"
         android:textSize="15sp" />
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_chef"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/size_text_small"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="8dp"
+        app:strokeColor="@color/green"
+        app:strokeWidth=".5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:padding="@dimen/size_text_small">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_email"
@@ -68,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/PASSWORD"
+            android:inputType="textPassword"
             android:maxLength="16" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -114,6 +132,8 @@
         android:background="@drawable/border"
         android:text="@string/LOGIN"
         android:textAllCaps="false" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animationChef"

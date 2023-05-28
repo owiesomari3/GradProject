@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/size_text_small"
-        app:cardCornerRadius=".6dp"
+        app:cardCornerRadius="4dp"
         app:cardElevation="8dp"
         app:strokeColor="@color/green"
         app:strokeWidth=".5dp">
@@ -34,6 +34,7 @@
                 app:boxBackgroundMode="outline"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/round_account_circle_24"
+                app:endIconTint="@color/yallow"
                 app:startIconTint="@color/green">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -41,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/full_name"
-                    android:inputType="text" />
+                    android:inputType="textCapCharacters" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -58,7 +59,8 @@
                 app:placeholderText="ex:abc@def.com"
                 app:placeholderTextColor="@color/yallow"
                 app:startIconDrawable="@drawable/email_icon"
-                app:startIconTint="@color/green">
+                app:startIconTint="@color/green"
+                app:endIconTint="@color/yallow">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email_ET_reg"
@@ -91,6 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/PASSWORD"
+                    android:inputType="textPassword"
                     android:maxLength="16" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -117,7 +120,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/confirm_password"
-                    android:maxLength="10" />
+                    android:inputType="textPassword"
+                    android:maxLength="16" />
             </com.google.android.material.textfield.TextInputLayout>
 
 

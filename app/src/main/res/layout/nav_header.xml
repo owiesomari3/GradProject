@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="176dp"
-    android:gravity="bottom"
-    android:padding="16dp"
+    android:layout_height="200dp"
     android:background="@drawable/img_5"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:orientation="vertical"
+    android:padding="18dp">
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right"
+            android:src="@drawable/baseline_clear_24"
+            tools:ignore="RtlHardcoded" />
 
-    <ImageView
-
+        <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/logoai"
-        android:background="@drawable/logo"/>
-
+        android:background="@drawable/logo"
+        android:src="@drawable/logoai" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/android_knowledge"
         android:textColor="@color/green"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/contact_androidknowledge_com"
         android:textColor="@color/green"
-        android:textSize="14sp"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="14sp" />
 
 </LinearLayout>

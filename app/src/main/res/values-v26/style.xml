@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="custom_fab">
+        <item name="android:textColor">@color/yallow</item>
+        <item name="android:iconTint">@color/green</item>
+    </style>
+
+    <style name="custom_Menufab">
+        <item name="android:textColor">@color/yallow</item>
+        <item name="android:iconTint">@color/green</item>
+    </style>
+</resources>

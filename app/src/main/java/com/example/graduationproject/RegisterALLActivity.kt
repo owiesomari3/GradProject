@@ -1,10 +1,12 @@
 package com.example.graduationproject
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
@@ -13,15 +15,16 @@ import android.widget.ImageView
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
+import com.airbnb.lottie.LottieAnimationView
 import com.example.graduationproject.chef.LoginChefActivity
 import com.example.graduationproject.databinding.ActivityRegisterBinding
 import com.example.graduationproject.enums.UserType
+import com.example.graduationproject.hungry.CustomAdapterFood
 import com.example.graduationproject.hungry.LoginHungryActivity
 import com.example.graduationproject.models.User
 
 class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
     View.OnKeyListener {
-
     private lateinit var binding: ActivityRegisterBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
@@ -31,69 +34,99 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
             binding.animationBee.pauseAnimation()
             dialogReg()
         }
-
         binding.apply {
             fulNameETReg.onFocusChangeListener = this@RegisterALLActivity
             emailETReg.onFocusChangeListener = this@RegisterALLActivity
             passETReg.onFocusChangeListener = this@RegisterALLActivity
             confPassETReg.onFocusChangeListener = this@RegisterALLActivity
         }
-
         setUpEditFields()
+
     }
 
+    @SuppressLint("MissingInflatedId")
     private fun dialogReg() {
         val dialogRegister = Dialog(this)
-        dialogRegister.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogRegister.setCancelable(false)
-        dialogRegister.setContentView(R.layout.dialog_reg)
-        val btnChef: RadioButton = dialogRegister.findViewById(R.id.reg_chef)
-        val btnHungry: RadioButton = dialogRegister.findViewById(R.id.reg_hungry)
-        val cancel: ImageView = dialogRegister.findViewById(R.id.cancel)
-        btnChef.setOnClickListener {
-            CacheManager.addNewUser(User(binding.fulNameETReg.text.toString(), binding.emailETReg.text.toString(), binding.passETReg.text.toString(), UserType.CHEF))
-            startActivity(Intent(this, LoginChefActivity::class.java))
+        dialogRegister.apply() {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setCancelable(false)
+            setContentView(R.layout.dialog_reg)
+            val btnChef: RadioButton = findViewById(R.id.reg_chef)
+            val btnHungry: RadioButton = findViewById(R.id.reg_hungry)
+            val cancel: ImageView = findViewById(R.id.cancel)
+            val logo: LottieAnimationView = findViewById(R.id.animationregtrue)
+            btnChef.setOnClickListener {
+                CacheManager.addNewUser(
+                    User(
+                        binding.fulNameETReg.text.toString(),
+                        binding.emailETReg.text.toString(),
+                        binding.passETReg.text.toString(),
+                        UserType.CHEF
+                    )
+                )
+                startActivity(Intent(this@RegisterALLActivity, LoginChefActivity::class.java))
+            }
+            btnHungry.setOnClickListener {
+                CacheManager.addNewUser(
+                    User(
+                        binding.fulNameETReg.text.toString(),
+                        binding.emailETReg.text.toString(),
+                        binding.passETReg.text.toString(),
+                        UserType.HUNGRY
+                    )
+                )
+                startActivity(Intent(this@RegisterALLActivity, LoginHungryActivity::class.java))
+            }
+            cancel.setOnClickListener {
+                cancel()
+            }
+            show()
+            Handler().postDelayed(
+                {
+                    logo.pauseAnimation()
+                },
+                4850
+            )
         }
-        btnHungry.setOnClickListener {
-            CacheManager.addNewUser(User(binding.fulNameETReg.text.toString(), binding.emailETReg.text.toString(), binding.passETReg.text.toString(), UserType.HUNGRY))
-            startActivity(Intent(this, LoginHungryActivity::class.java))
-        }
-        cancel.setOnClickListener {
-            dialogRegister.cancel()
-        }
-        dialogRegister.show()
     }
 
     private fun setUpEditFields() {
         binding.apply {
             fulNameETReg.doOnTextChanged { _, _, _, _ ->
-                setButtonEnibility()
+                setButtonEnability()
             }
 
             emailETReg.doOnTextChanged { _, _, _, _ ->
-                setButtonEnibility()
+                setButtonEnability()
             }
 
             passETReg.doOnTextChanged { _, _, _, _ ->
-                setButtonEnibility()
+                setButtonEnability()
             }
 
             confPassETReg.doOnTextChanged { _, _, _, _ ->
-                setButtonEnibility()
+                setButtonEnability()
             }
         }
     }
 
-    private fun setButtonEnibility() {
+    private fun setButtonEnability() {
         binding.apply {
-            btnRegisterInApp.isEnabled = fulNameETReg.text?.isNotEmpty() == true && validEmail() && validPass() && validPassConf()
+            btnRegisterInApp.isEnabled =
+                fulNameETReg.text?.isNotEmpty() == true && validEmail() && validPass() && validateConf() && validFullName() && validateConfAndPass()
         }
     }
 
     private fun validFullName(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.fulNameETReg.text.toString()
-        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        val fullNamePattern = Regex("^[a-zA-Z ]+\$")
+        if (value.isEmpty())
+            errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (!fullNamePattern.matches(value))
+            errorMessage =
+                getString(R.string.INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED)
+
         if (errorMessage != null) {
             binding.fulNameTilReg.apply {
                 isErrorEnabled = true
@@ -106,9 +139,10 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validEmail(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.emailETReg.text.toString()
-        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) errorMessage =
-            "Email address is invalid"
+        if (value.isEmpty())
+            errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches())
+            errorMessage = getString(R.string.EMAIL_ADDRESS_IS_INVALID)
         if (errorMessage != null) {
             binding.emailTilReg.apply {
                 isErrorEnabled = true
@@ -122,7 +156,8 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         var errorMessage: String? = null
         val value: String = binding.passETReg.text.toString()
         if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (value.length < 8) errorMessage = "Password must be 8 characters long"
+        else if (value.length < 8) errorMessage =
+            getString(R.string.PASSWORD_MUST_BE_8_CHARACTERS_LONG)
         if (errorMessage != null) {
             binding.passTilReg.apply {
                 isErrorEnabled = true
@@ -132,15 +167,27 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         return errorMessage == null
     }
 
-    private fun validPassConf(): Boolean {
+    private fun validateConf(): Boolean {
+        var errorMessage: String? = null
+        val value: String = binding.passETReg.text.toString()
+        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
+        else if (value.length < 8) errorMessage =
+            getString(R.string.Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG)
+        if (errorMessage != null) {
+            binding.confPassTilReg.apply {
+                isErrorEnabled = true
+                error = errorMessage
+            }
+        }
+        return errorMessage == null
+    }
+
+    private fun validateConfAndPass(): Boolean {
         var errorMessage: String? = null
         val password: String = binding.passETReg.text.toString()
-        val confirmPass: String = binding.passETReg.text.toString()
-        if (confirmPass.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (confirmPass.length < 8) errorMessage =
-            " Confirm Password must be 8 characters long"
-        else if (confirmPass != password) errorMessage =
-            "Confirm password doesn't match with Password"
+        val confirmPass: String = binding.confPassETReg.text.toString()
+        if (confirmPass != password) errorMessage =
+            getString(R.string.CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD)
         if (errorMessage != null) {
             binding.confPassTilReg.apply {
                 isErrorEnabled = true
@@ -154,15 +201,24 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
         binding.apply {
-            view?.let {
+            if (view != null) {
                 when (view.id) {
                     R.id.ful_name_ET_reg -> {
                         if (hasFocus) {
-                            if (emailTilReg.isErrorEnabled) {
+                            if (fulNameTilReg.isErrorEnabled) {
                                 fulNameTilReg.isErrorEnabled = false
                             }
+                        } else validFullName()
+                    }
+
+
+                    R.id.email_ET_reg -> {
+                        if (hasFocus) {
+                            if (emailTilReg.isErrorEnabled) {
+                                emailTilReg.isErrorEnabled = false
+                            }
                         } else {
-                            validFullName()
+                            validEmail()
                         }
                     }
 
@@ -172,7 +228,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                                 passTilReg.isErrorEnabled = false
                             }
                         } else {
-                            if (validPass() && validPassConf() && confPassETReg.text!!.isNotEmpty()) {
+                            if (validPass() && validateConf() && confPassETReg.text!!.isNotEmpty() && validateConfAndPass()) {
                                 if (passTilReg.isErrorEnabled) {
                                     passTilReg.isErrorEnabled = false
                                 }
@@ -184,26 +240,13 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                             }
                         }
                     }
-
-                    R.id.email_ET_reg -> {
-                        if (hasFocus) {
-                            if (emailTilReg.isErrorEnabled) {
-                                emailTilReg.isErrorEnabled = false
-                            }
-                        } else {
-                            if (validEmail()) {
-
-                            }
-                        }
-                    }
-
                     R.id.conf_pass_ET_reg -> {
                         if (hasFocus) {
                             if (confPassTilReg.isErrorEnabled) {
                                 confPassTilReg.isErrorEnabled = false
                             }
                         } else {
-                            if (validPassConf() && validPass()) {
+                            if (validateConf() && validPass() && validateConfAndPass()) {
                                 if (confPassTilReg.isErrorEnabled) {
                                     passTilReg.isErrorEnabled = false
                                 }
@@ -212,9 +255,10 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                                     setStartIconDrawable(R.drawable.check_circle_24)
                                     setStartIconTintList(ColorStateList.valueOf(Color.GREEN))
                                 }
-                            }
+                            } else validateConf()
                         }
                     }
+
                 }
             }
         }

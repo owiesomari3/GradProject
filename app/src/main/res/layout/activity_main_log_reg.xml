@@ -5,7 +5,6 @@
     android:id="@+id/all_log"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".MainLogRegActivity">
 
@@ -15,7 +14,7 @@
         android:background="@color/Light_yallow"
         app:itemIconTint="@color/green"
         app:itemTextColor="@color/green"
-        app:title="Warmth"
+        app:title="@string/app_name"
         app:titleTextColor="@color/green">
 
         <ImageView
