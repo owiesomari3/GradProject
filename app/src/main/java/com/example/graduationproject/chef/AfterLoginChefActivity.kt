@@ -120,7 +120,7 @@ class AfterLoginChefActivity : AppCompatActivity() {
                     replaceFragment(HomeFragmentChef())
                 }
                 R.id.order_chefs -> {
-                    replaceFragment(OffersChefsFragment())
+                    replaceFragment(OrdersChefsFragment())
                 }
                 R.id.wallet_chef -> {
                     replaceFragment(WalletChefFragment())

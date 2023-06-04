@@ -50,7 +50,7 @@
     <string name="evaluation_your_restaurant">Evaluation your restaurant</string>
     <string name="your_menu">Your Menu</string>
     <string name="chose">Chose</string>
-    <string name="order">order</string>
+    <string name="order">Order</string>
     <string name="settings_account">Settings Account</string>
     <string name="location">Location</string>
     <string name="favorite_in_your_menu">Favorite in your menu</string>
@@ -62,8 +62,9 @@
     <string name="phone">Phone</string>
     <string name="the_familiar_name">The familiar name:</string>
     <string name="the_description">Description:</string>
+    <string name="chefEmail">Chef Email:</string>
     <string name="the_rate">The Rate:</string>
-    <string name="price">price</string>
+    <string name="price">price:</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="register">Register</string>
     <string name="full_name">Full Name</string>
@@ -94,7 +95,7 @@
     <string name="Will_you_allow_me_access_to_the_camera">Will you allow me access to the camera</string>
     <string name="Will_you_allow_me_access_to_photo_library">Will you allow me access to the photo library?</string>
     <string name="save">Save</string>
-    <string name="quantity">Quantity</string>
+    <string name="quantity">Quantity:</string>
     <string name="cart">Cart</string>
     <string name="FOOD_ADDED_SUCCESSFULLY">Your food was added successfully</string>
     <string name="EMAIL_ADDRESS_IS_INVALID">Email address is invalid</string>
@@ -104,5 +105,7 @@
     <string name="Correct_Format92xxxxxxxxxx">Correct Format:+92xxxxxxxxxx</string>
     <string name="Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Confirm Password must be 8 characters long"</string>
     <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
+    <string name="hungry_email">Hungry Email:</string>
+    <string name="total_price">Total Price:</string>
 
 </resources>

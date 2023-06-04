@@ -7,9 +7,12 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
+import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentAfterSelectedItemBinding
 import org.json.JSONArray
@@ -25,27 +28,31 @@ class AfterSelectedItemFragment : Fragment() {
     ): View {
         binding = FragmentAfterSelectedItemBinding.inflate(inflater, container, false)
         return binding.root
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataFood = arguments?.getParcelable("food")
-
         fillViews()
+        setUpEditFields()
         binding.orderItem.setOnClickListener {
             val jsonArray = Storage.allOrder(requireContext()) ?: JSONArray()
             val jsonObjectOrder = JSONObject()
-            jsonObjectOrder.put(Constants.FOOD_ID,dataFood?.foodId)
-            jsonObjectOrder.put(Constants.CURRENT_CHEF,dataFood?.chefEmail)
-            jsonObjectOrder.put(Constants.User,CacheManager.getCurrentUser())
-            jsonObjectOrder.put(Constants.QUANTITY,binding.editQuantity.text.toString())
+            jsonObjectOrder.put(Constants.FOOD_ID, dataFood?.foodId)
+            jsonObjectOrder.put(Constants.CURRENT_CHEF, dataFood?.chefEmail)
+            jsonObjectOrder.put(Constants.User, CacheManager.getCurrentUser())
+            jsonObjectOrder.put(Constants.QUANTITY, binding.editQuantity.text.toString())
             jsonArray.put(jsonObjectOrder)
             saveAllOrder(jsonArray)
+            replaceFragment(HomeFragmentHungry())
         }
+
     }
 
-    private fun saveAllOrder(jsonArray:JSONArray) {
-        val sharedPreferences = activity?.getSharedPreferences(Constants.ORDER, Context.MODE_PRIVATE)
+    private fun saveAllOrder(jsonArray: JSONArray) {
+        val sharedPreferences =
+            activity?.getSharedPreferences(Constants.ORDER, Context.MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
         editor?.putString(Constants.ORDER_LIST, jsonArray.toString())
         editor?.apply()
@@ -60,6 +67,28 @@ class AfterSelectedItemFragment : Fragment() {
             tvDescribtion.text = dataFood?.description
             tvPrice.text = dataFood?.price
             tvRate.text = dataFood?.rate.toString()
+        }
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+        fragmentTransaction?.add(R.id.frame_layout_hungry, fragment)
+        fragmentTransaction?.commit()
+    }
+
+    private fun setButtonEnability() {
+        binding.apply {
+            orderItem.isEnabled =
+                editQuantity.text?.isNotEmpty() == true
+        }
+    }
+
+    private fun setUpEditFields() {
+        binding.apply {
+            editQuantity.doOnTextChanged { _, _, _, _ ->
+                setButtonEnability()
+            }
         }
     }
 }

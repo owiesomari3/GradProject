@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".hungry.OrderHungryFragment">
+    tools:context=".hungry.CartFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -13,3 +13,5 @@
         android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
+
+

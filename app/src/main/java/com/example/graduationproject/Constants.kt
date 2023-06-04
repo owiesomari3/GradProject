@@ -21,6 +21,9 @@ object Constants {
     const val ORDER_LIST = "ORDER_LIST"
     const val ORDER = "ORDER"
     const val User = "User"
+    const val Rate = "Rate"
+    const val HungryEmail = "HungryEmail"
     const val INFO_USERS_SHARED_PREFS = "infoUsersSharedPrefs"
+    const val CART_LIST = "CART_LIST"
 
 }

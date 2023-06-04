@@ -96,10 +96,6 @@ object Storage {
         }
     }
 
-
-
-
-
     fun getUserByEmailAndPassword(
         context: Context,
         email: String,

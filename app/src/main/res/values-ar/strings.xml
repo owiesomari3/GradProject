@@ -45,7 +45,7 @@
     <string name="evaluation_your_restaurant">تقييم مطعمك</string>
     <string name="your_menu"> قائمة الطعام</string>
     <string name="chose">اختار</string>
-    <string name="order">طلب</string>
+    <string name="order">طلب:</string>
     <string name="settings_account">اعدادات حسابك</string>
     <string name="location">الموقع</string>
     <string name="favorite_in_your_menu">الافضل في قائمة طعامك</string>
@@ -85,11 +85,12 @@
     <string name="Will_you_allow_me_access_to_the_camera">هل  تسمح لي بالوصول الى الكاميرا؟</string>
     <string name="Will_you_allow_me_access_to_photo_library">هل  تسمح لي بالوصول الى مكتبة الصور؟</string>
     <string name="save">Save</string>
-    <string name="quantity">Quantity</string>
+    <string name="quantity">Quantity:</string>
     <string name="cart">Cart</string>
     <string name="CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD">"Confirm password doesn't match with Password"</string>
     <string name="Correct_Format92xxxxxxxxxx">Correct Format:+92xxxxxxxxxx</string>
     <string name="EMAIL_ALREADY_REGISTERED">Email already registered</string>
+    <string name="chefEmail">chefEmail:</string>
 
     <string name="EMAIL_ADDRESS_IS_INVALID">Email address is invalid</string>
     <string name="PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Password must be 8 characters long"</string>
@@ -97,5 +98,7 @@
 
     <string name="FOOD_ADDED_SUCCESSFULLY">تم اضافة الطعام بنجاح</string>
     <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
+    <string name="hungry_email">Hungry Email:</string>
+    <string name="total_price">Total Price:</string>
 
 </resources>

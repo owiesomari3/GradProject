@@ -1,13 +1,13 @@
-package com.example.graduationproject
+package com.example.graduationproject.chef
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Order(
+data class OrderChef(
     var familiar_name: String?,
     var price: String?,
     var image: String?,
-    var description: String?,
+   // var description: String?,
     var foodId: String?,
     var chefEmail: String?,
     var quantity: String?,

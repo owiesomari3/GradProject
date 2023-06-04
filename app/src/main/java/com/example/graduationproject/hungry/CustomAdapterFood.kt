@@ -1,19 +1,15 @@
 package com.example.graduationproject.hungry
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.graphics.BitmapFactory
-import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.R
@@ -60,15 +56,6 @@ class CustomAdapterFood(
             priceTv.text = (data.price)
 
             container.setOnClickListener {
-                /*val data1 = Bundle()
-                data1.putParcelable("food", data)
-                val fragment: Fragment = AfterSelectedItemFragment()
-                fragment.arguments = data1
-
-                activity?.fragmentManager?.beginTransaction()
-                    ?.replace(R.id.frame_layout_chef, fragment)
-                    ?.commit()*/
-
                 callback.onItemClick(data)
             }
         }

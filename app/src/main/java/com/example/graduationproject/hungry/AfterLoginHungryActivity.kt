@@ -3,11 +3,9 @@ package com.example.graduationproject.hungry
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.View
-import android.widget.TextView
-import android.widget.Toolbar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -18,14 +16,23 @@ import com.example.graduationproject.chef.WalletChefFragment
 import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
 
 class AfterLoginHungryActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAfterLoginHungryBinding
-
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingInflatedId", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAfterLoginHungryBinding.inflate(layoutInflater)
+        val binding: ActivityAfterLoginHungryBinding = ActivityAfterLoginHungryBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.apply {
+            toolbarHungry.setOnMenuItemClickListener {menuItem ->
+                when(menuItem.itemId){
+                    R.id.add_to_the_cart -> {
+                        replaceFragment(CartFragment())
+                        true
+                    }
+                    else->false
+                }
+            }
+
             menuClick.setOnClickListener {
                 if (drawerLayoutHungry.isDrawerOpen(GravityCompat.START))
                     drawerLayoutHungry.closeDrawer(GravityCompat.START)
@@ -105,36 +112,13 @@ class AfterLoginHungryActivity : AppCompatActivity() {
         }
 
     }
+    
 
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.frame_layout_hungry, fragment)
         fragmentTransaction.commit()
-    }
-
-    @SuppressLint("SetTextI18n")
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.main_menu, menu)
-        val menuItem = menu?.findItem(R.id.notification_main_bar)
-        val actionView = menuItem?.actionView
-        if (actionView is TextView) {
-            actionView.text = "Action View"
-           // actionView.setText("")///DB
-        }
-
-        menu?.findItem(R.id.notification_main_bar)?.setOnMenuItemClickListener {
-            // Handle menu item 1 click
-            true
-        }
-
-        menu?.findItem(R.id.add_to_the_cart)?.setOnMenuItemClickListener {
-            // Handle menu item 2 click
-            true
-        }
-
-        return true
     }
 
 
