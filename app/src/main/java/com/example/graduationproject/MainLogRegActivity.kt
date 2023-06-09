@@ -1,8 +1,6 @@
 package com.example.graduationproject
 
 import android.annotation.SuppressLint
-import android.app.Dialog
-import android.app.ProgressDialog.show
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color

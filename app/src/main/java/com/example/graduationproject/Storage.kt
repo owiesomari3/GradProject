@@ -39,6 +39,7 @@ object Storage {
         editor.putString(Constants.FOODS_LIST, jsonString)
         editor.apply()
     }
+
     fun convertBitmapToBase64(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
@@ -84,6 +85,24 @@ object Storage {
             Context.MODE_PRIVATE
         )
         val jsonString = sharedPreferences.getString(Constants.ORDER_LIST, null)
+        return if (jsonString != null) {
+            try {
+                JSONArray(jsonString)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        } else {
+            null
+        }
+    }
+
+    fun getAllWallet(context: Context): JSONArray? {
+        val sharedPreferences = context.getSharedPreferences(
+            Constants.WALLET,
+            Context.MODE_PRIVATE
+        )
+        val jsonString = sharedPreferences.getString(Constants.WALLET_List, null)
         return if (jsonString != null) {
             try {
                 JSONArray(jsonString)

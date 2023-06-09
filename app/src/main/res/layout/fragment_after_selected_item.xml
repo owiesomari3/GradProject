@@ -134,9 +134,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:inputType="number"
-/>
+                    android:inputType="number" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/choose_the_payment_method"
+                    android:textColor="@color/green"
+                    android:textSize="15sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/pay_cash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/cash"
+                        android:textColor="@color/green"
+                        android:textSize="15sp" />
+
+                    <RadioButton
+                        android:id="@+id/pay_visa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/visa"
+                        android:textColor="@color/green"
+                        android:textSize="15sp" />
+                </RadioGroup>
+            </LinearLayout>
+
             <Button
                 android:enabled="false"
                 android:layout_marginBottom="10dp"

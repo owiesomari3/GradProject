@@ -1,6 +1,5 @@
 package com.example.graduationproject.chef
 
-
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -11,6 +10,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
@@ -18,13 +18,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.graduationproject.R
+import com.example.graduationproject.*
 import com.example.graduationproject.databinding.ActivityAfterLoginChefBinding
-
+import org.json.JSONArray
 
 class AfterLoginChefActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityAfterLoginChefBinding
 
+    private lateinit var binding: ActivityAfterLoginChefBinding
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAfterLoginChefBinding.inflate(layoutInflater)
@@ -38,6 +38,12 @@ class AfterLoginChefActivity : AppCompatActivity() {
                     drawerLayoutChef.closeDrawer(GravityCompat.START)
                 else drawerLayoutChef.openDrawer(GravityCompat.START)
             }
+
+            navView.getHeaderView(0).apply {
+                findViewById<TextView>(R.id.user_email).text = CacheManager.getCurrentUser()
+                findViewById<TextView>(R.id.username).text = getUserName()
+            }
+
             navView.setNavigationItemSelectedListener { menuItem ->
                 drawerLayoutChef.closeDrawer(GravityCompat.START)
                 when (menuItem.itemId) {
@@ -182,7 +188,7 @@ class AfterLoginChefActivity : AppCompatActivity() {
                     camera()
                     replaceFragment(AddFoodFragment())
                 } else {
-                    Toast.makeText(this, "Camera permission denied", Toast.LENGTH_LONG).show()
+                    Util.showToastMsg(this,"Camera permission denied")
                 }
             }
             13 -> {
@@ -190,7 +196,7 @@ class AfterLoginChefActivity : AppCompatActivity() {
                     gallery()
                     replaceFragment(AddFoodFragment())
                 } else {
-                    Toast.makeText(this, "Gallery permission denied", Toast.LENGTH_LONG).show()
+                    Util.showToastMsg(this,"Gallery permission denied")
                 }
             }
         }
@@ -242,5 +248,17 @@ class AfterLoginChefActivity : AppCompatActivity() {
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frame_layout_chef, fragment)
         fragmentTransaction.commit()
+    }
+
+    private  fun getUserName():String{
+        var userName = ""
+        val allUsers = Storage.getAllUsers(this)?: JSONArray()
+        for( i in 0 until  allUsers.length()){
+            val json = allUsers.getJSONObject(i)
+            if(json.getString(Constants.Email) == CacheManager.getCurrentUser()){
+                userName = json.getString(Constants.FULL_NAME)
+            }
+        }
+        return userName
     }
 }

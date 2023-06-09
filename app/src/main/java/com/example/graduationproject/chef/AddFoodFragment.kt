@@ -8,10 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.graduationproject.CacheManager
-import com.example.graduationproject.Constants
-import com.example.graduationproject.R
-import com.example.graduationproject.Storage
+import com.example.graduationproject.*
 import com.example.graduationproject.databinding.FragmentAddFoodBinding
 import org.json.JSONArray
 import org.json.JSONObject
@@ -47,7 +44,7 @@ class AddFoodFragment : Fragment() {
                 imageUri?.let { jsonObject.put(Constants.IMAGE, Storage.convertImageUriToBase64(requireContext().contentResolver, it)) }
                 jsonArray.put(jsonObject)
                 Storage.saveAllFoodsList(requireContext(), jsonArray)
-                Toast.makeText(context, getString(R.string.FOOD_ADDED_SUCCESSFULLY), Toast.LENGTH_SHORT).show()
+                Util.showToastMsg(requireContext() ,R.string.FOOD_ADDED_SUCCESSFULLY )
             }
         }
     }

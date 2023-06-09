@@ -1,5 +1,6 @@
 package com.example.graduationproject.hungry
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -7,6 +8,9 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RadioGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +19,8 @@ import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentAfterSelectedItemBinding
+import com.example.graduationproject.enums.OrderStatus
+import com.example.graduationproject.enums.PaymentMethods
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -23,13 +29,36 @@ class AfterSelectedItemFragment : Fragment() {
     private lateinit var binding: FragmentAfterSelectedItemBinding
     private var dataFood: DataFood? = null
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentAfterSelectedItemBinding.inflate(inflater, container, false)
         return binding.root
-
     }
+
+    @SuppressLint("InflateParams")
+    private fun showDialogForVisaPayment(jsonObject: JSONObject, jsonArray: JSONArray) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.paymentdialog, null)
+        val alertDialogBuilder = AlertDialog.Builder(requireContext()).apply {
+            setView(dialogView)
+            setCancelable(false)
+        }
+        val alertDialog = alertDialogBuilder.create()
+        dialogView.apply {
+            val payBtn = findViewById<Button>(R.id.paymentButton)
+            val cancelBtn = findViewById<Button>(R.id.cancelButton)
+            alertDialog.apply {
+                payBtn?.setOnClickListener {
+                    dismiss()
+                    jsonObject.put(Constants.PAYMENT_METHOD, PaymentMethods.VISA.name)
+                    jsonArray.put(jsonObject)
+                    saveAllOrder(jsonArray)
+                    replaceFragment(HomeFragmentHungry())
+                }
+                cancelBtn?.setOnClickListener { dismiss() }
+            }.show()
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,15 +68,27 @@ class AfterSelectedItemFragment : Fragment() {
         binding.orderItem.setOnClickListener {
             val jsonArray = Storage.allOrder(requireContext()) ?: JSONArray()
             val jsonObjectOrder = JSONObject()
+            jsonObjectOrder.put(Constants.ORDER_ID, generateOrderId(jsonArray))
             jsonObjectOrder.put(Constants.FOOD_ID, dataFood?.foodId)
             jsonObjectOrder.put(Constants.CURRENT_CHEF, dataFood?.chefEmail)
             jsonObjectOrder.put(Constants.User, CacheManager.getCurrentUser())
             jsonObjectOrder.put(Constants.QUANTITY, binding.editQuantity.text.toString())
-            jsonArray.put(jsonObjectOrder)
-            saveAllOrder(jsonArray)
-            replaceFragment(HomeFragmentHungry())
-        }
+            jsonObjectOrder.put(Constants.ORDER_STATUS, OrderStatus.PENDING.name)
+            val radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
+            when (radioGroup.checkedRadioButtonId) {
 
+                R.id.pay_cash -> {
+                    jsonObjectOrder.put(Constants.PAYMENT_METHOD, PaymentMethods.CASH.name)
+                    jsonArray.put(jsonObjectOrder)
+                    saveAllOrder(jsonArray)
+                    replaceFragment(HomeFragmentHungry())
+                }
+
+                R.id.pay_visa -> {
+                    showDialogForVisaPayment(jsonObjectOrder, jsonArray)
+                }
+            }
+        }
     }
 
     private fun saveAllOrder(jsonArray: JSONArray) {
@@ -80,15 +121,27 @@ class AfterSelectedItemFragment : Fragment() {
     private fun setButtonEnability() {
         binding.apply {
             orderItem.isEnabled =
-                editQuantity.text?.isNotEmpty() == true
+                radioGroup.checkedRadioButtonId != -1 && editQuantity.text.isNotEmpty() == true
         }
     }
 
     private fun setUpEditFields() {
         binding.apply {
+            radioGroup.setOnCheckedChangeListener { _, _ ->
+                setButtonEnability()
+            }
             editQuantity.doOnTextChanged { _, _, _, _ ->
                 setButtonEnability()
             }
+        }
+    }
+
+    private fun generateOrderId(jsonArray: JSONArray): Int {
+        return if (jsonArray.length() == 0) {
+            1
+        } else {
+            val jsonObject = jsonArray.getJSONObject(jsonArray.length() - 1)
+            jsonObject.getInt(Constants.ORDER_ID) + 1
         }
     }
 }

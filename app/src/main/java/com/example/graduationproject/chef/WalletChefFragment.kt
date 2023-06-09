@@ -1,60 +1,85 @@
 package com.example.graduationproject.chef
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.graduationproject.R
+import androidx.fragment.app.Fragment
+import com.example.graduationproject.CacheManager
+import com.example.graduationproject.Constants
+import com.example.graduationproject.Storage
+import com.example.graduationproject.Util
+import com.example.graduationproject.databinding.FragmentWalletChefBinding
+import org.json.JSONArray
+import org.json.JSONObject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [WalletChefFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class WalletChefFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var binding: FragmentWalletChefBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentWalletChefBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val allWallet = Storage.getAllWallet(requireContext()) ?: JSONArray()
+        var balance = ""
+        var objectPosition = 0
+        var jsonObjectWallet: JSONObject
+        for (position in 0 until allWallet.length()) {
+            jsonObjectWallet = allWallet.getJSONObject(position)
+            val chefEmail = jsonObjectWallet?.getString(Constants.CURRENT_CHEF)
+            allWallet.let {
+                if (chefEmail == CacheManager.getCurrentUser()) {
+                    objectPosition = position
+                    balance = jsonObjectWallet.getString(Constants.BALANCE)
+                }
+            }
+        }
+
+        binding.apply {
+            WalletEmailChef.text = CacheManager.getCurrentUser()
+            if (balance == "") {
+                WalletBalance.text = Util.currencyFormat("0")
+                WalletWithdrawMoney.visibility = View.GONE
+                btnOk.visibility = View.GONE
+                withdrowText.visibility = View.GONE
+            } else WalletBalance.text = Util.currencyFormat(balance)
+
+            btnOk.setOnClickListener {
+                if (WalletWithdrawMoney.text.toString().toDouble() > balance.toDouble()) {
+                    Util.showToastMsg(requireContext(),"No sufficient balance" )
+                } else {
+                    allWallet.remove(objectPosition)
+                    val newBalance =
+                        balance.toDouble() - WalletWithdrawMoney.text.toString().toDouble()
+                    balance = newBalance.toString()
+                    val newObject = JSONObject()
+                    newObject.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
+                    newObject.put(Constants.BALANCE, newBalance.toString())
+                    allWallet.put(newObject)
+                    saveAllWallets(allWallet)
+                    WalletBalance.text = newBalance.toString()
+                    Util.showToastMsg(requireContext(),"Your transaction has been submitted" )
+                    WalletWithdrawMoney.setText("")
+                }
+            }
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wallet_chef, container, false)
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment WalletChefFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            WalletChefFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun saveAllWallets(jsonArray: JSONArray) {
+        val jsonString = jsonArray.toString()
+        val sharedPreferences =
+            activity?.getSharedPreferences(Constants.WALLET, Context.MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.putString(Constants.WALLET_List, jsonString)
+        editor?.apply()
     }
 }

@@ -6,7 +6,8 @@
     android:background="@drawable/img_5"
     android:orientation="vertical"
     android:padding="18dp">
-        <ImageView
+
+    <ImageView
             android:id="@+id/cancel"
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -19,7 +20,9 @@
         android:layout_height="70dp"
         android:background="@drawable/logo"
         android:src="@drawable/logoai" />
+
     <TextView
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/android_knowledge"
@@ -27,6 +30,7 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"

@@ -45,7 +45,6 @@ class CartFragment : Fragment() {
                             val familiarName = jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
                             val price = jsonObjectDataFood?.getString(Constants.PRICE)
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
-                           // val rate = jsonObjectDataFood?.getString(Constants.Rate)
                             val description = jsonObjectDataFood?.getString(Constants.DESCRIPTION)
                             val chefEmail = jsonObjectDataFood?.getString(Constants.CURRENT_CHEF)
                             dataOrder.add(
@@ -71,5 +70,3 @@ class CartFragment : Fragment() {
         }
     }
 }
-
-

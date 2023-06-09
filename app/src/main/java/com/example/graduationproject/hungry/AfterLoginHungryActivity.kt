@@ -5,15 +5,20 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.graduationproject.CacheManager
+import com.example.graduationproject.Constants
 import com.example.graduationproject.R
+import com.example.graduationproject.Storage
 import com.example.graduationproject.chef.OrdersChefFragment
 import com.example.graduationproject.chef.WalletChefFragment
 import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
+import org.json.JSONArray
 
 class AfterLoginHungryActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -29,7 +34,7 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                         replaceFragment(CartFragment())
                         true
                     }
-                    else->false
+                    else -> false
                 }
             }
 
@@ -38,6 +43,12 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                     drawerLayoutHungry.closeDrawer(GravityCompat.START)
                 else drawerLayoutHungry.openDrawer(GravityCompat.START)
             }
+
+            navView.getHeaderView(0).apply {
+                findViewById<TextView>(R.id.user_email).text = CacheManager.getCurrentUser()
+                findViewById<TextView>(R.id.username).text = getUserName()
+            }
+
             navView.setNavigationItemSelectedListener { menuItem ->
                 drawerLayoutHungry.closeDrawer(GravityCompat.START)
                 when (menuItem.itemId) {
@@ -112,7 +123,6 @@ class AfterLoginHungryActivity : AppCompatActivity() {
         }
 
     }
-    
 
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
@@ -121,5 +131,15 @@ class AfterLoginHungryActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-
+    private fun getUserName(): String {
+        var userName = ""
+        val allUsers = Storage.getAllUsers(this) ?: JSONArray()
+        for (i in 0 until allUsers.length()) {
+            val json = allUsers.getJSONObject(i)
+            if (json.getString(Constants.Email) == CacheManager.getCurrentUser()) {
+                userName = json.getString(Constants.FULL_NAME)
+            }
+        }
+        return userName
+    }
 }

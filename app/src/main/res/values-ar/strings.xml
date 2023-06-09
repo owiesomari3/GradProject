@@ -100,5 +100,22 @@
     <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
     <string name="hungry_email">Hungry Email:</string>
     <string name="total_price">Total Price:</string>
+    <string name="accept">Accept</string>
+    <string name="cancel">Cancel</string>
+    <string name="status">Status:</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="credit_card_number">Credit Card Number:</string>
+    <string name="cvv">CVV</string>
+    <string name="payment">Payment</string>
+    <string name="choose_the_payment_method">Choose the payment method:</string>
+    <string name="visa">Visa</string>
+    <string name="cash">Cash</string>
+    <string name="payment_by_visa">Payment by Visa</string>
+    <string name="enter_expiry_date_mm_yy">Enter expiry date (MM/YY)</string>
+    <string name="enter_cvv">Enter CVV</string>
+    <string name="make_payment">Make Payment</string>
+    <string name="chef_email">Chef Email:</string>
+    <string name="balance">Balance:</string>
+    <string name="withdraw_money">Withdraw money:</string>
 
 </resources>

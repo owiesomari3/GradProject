@@ -33,17 +33,20 @@ class OrdersChefsFragment : Fragment() {
         allOrders?.let {
             for (position in 0 until allOrders.length()) {
                 val jsonObjectOrder = allOrders.getJSONObject(position)
+                val orderId = jsonObjectOrder.getString(Constants.ORDER_ID)
                 val foodOrderId = jsonObjectOrder.getString(Constants.FOOD_ID)
-               // val userEmail = jsonObjectOrder.getString(Constants.User)
                 val chefEmail = jsonObjectOrder?.getString(Constants.CURRENT_CHEF)
                 val quantity = jsonObjectOrder?.getString(Constants.QUANTITY)
-                val userEmail =  jsonObjectOrder?.getString(Constants.User)
+                val userEmail = jsonObjectOrder?.getString(Constants.User)
+                val hungryPhone = getHungryPhone(userEmail)
+                val orderStatus = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
                 if (CacheManager.getCurrentUser() == chefEmail) {
                     for (i in 0 until allFoods.length()) {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
                         val foodId = jsonObjectDataFood?.getString(Constants.FOOD_ID)
                         if (foodOrderId == foodId) {
-                            val familiarName = jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
+                            val familiarName =
+                                jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
                             val price = jsonObjectDataFood?.getString(Constants.PRICE)
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
                             dataOrder.add(
@@ -51,9 +54,13 @@ class OrdersChefsFragment : Fragment() {
                                     familiarName,
                                     price,
                                     image,
-                                    quantity,
+                                    foodOrderId,
                                     userEmail,
-                                    foodOrderId
+                                    quantity,
+                                    "5",
+                                    orderId,
+                                    orderStatus,
+                                    hungryPhone
                                 )
                             )
                         }
@@ -67,6 +74,15 @@ class OrdersChefsFragment : Fragment() {
             adapter = orderAdapter
         }
     }
+
+    private fun getHungryPhone(email: String?): String {
+        var phoneNumber = ""
+        val allUsers = Storage.getAllUsers(requireContext()) ?: JSONArray()
+        for (i in 0 until allUsers.length()) {
+            val json = allUsers.getJSONObject(i)
+            if (json.getString(Constants.Email) == email)
+                phoneNumber = json.getString(Constants.Phone)
+        }
+        return phoneNumber
+    }
 }
-
-

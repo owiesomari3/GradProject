@@ -8,6 +8,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
@@ -31,18 +32,20 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        binding.btnRegisterInApp.setOnClickListener {
-            binding.animationBee.pauseAnimation()
-            dialogReg()
-        }
         binding.apply {
+            btnRegisterInApp.setOnClickListener {
+                binding.animationBee.pauseAnimation()
+                dialogReg()
+            }
+
             fulNameETReg.onFocusChangeListener = this@RegisterALLActivity
             emailETReg.onFocusChangeListener = this@RegisterALLActivity
             passETReg.onFocusChangeListener = this@RegisterALLActivity
             confPassETReg.onFocusChangeListener = this@RegisterALLActivity
+            phoneETReg.onFocusChangeListener = this@RegisterALLActivity
         }
-        setUpEditFields()
 
+        setUpEditFields()
     }
 
     @SuppressLint("MissingInflatedId")
@@ -154,17 +157,19 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         var errorMessage: String? = null
         val value: String = binding.phoneETReg.text.toString()
         val phonePattern = Regex("^[+][0-9]{10,13}\$")
+        Log.d("owies", value)
         if (value.isEmpty())
             errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
         else if (!phonePattern.matches(value))
-            errorMessage =
-                getString(R.string.Correct_Format92xxxxxxxxxx)
+            errorMessage = getString(R.string.Correct_Format92xxxxxxxxxx)
 
         if (errorMessage != null) {
             binding.phoneTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
+        } else {
+            binding.phoneTilReg.isErrorEnabled = false
         }
         return errorMessage == null
     }
@@ -228,24 +233,21 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                         } else validFullName()
                     }
 
-
                     R.id.email_ET_reg -> {
                         if (hasFocus) {
                             if (emailTilReg.isErrorEnabled) {
                                 emailTilReg.isErrorEnabled = false
                             }
                         } else validEmail()
-
                     }
+
                     R.id.phone_ET_reg -> {
                         if (hasFocus) {
                             if (phoneTilReg.isErrorEnabled) {
                                 phoneTilReg.isErrorEnabled = false
                             }
                         } else validPhone()
-
                     }
-
 
                     R.id.pass_ET_reg -> {
                         if (hasFocus) {
@@ -265,6 +267,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                             } else validPass()
                         }
                     }
+
                     R.id.conf_pass_ET_reg -> {
                         if (hasFocus) {
                             if (confPassTilReg.isErrorEnabled) {
@@ -283,7 +286,6 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                             } else validateConf()
                         }
                     }
-
                 }
             }
         }
