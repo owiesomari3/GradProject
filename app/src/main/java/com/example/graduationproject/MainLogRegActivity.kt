@@ -1,6 +1,5 @@
 package com.example.graduationproject
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -16,14 +15,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.chef.LoginChefActivity
 import com.example.graduationproject.databinding.ActivityMainLogRegBinding
+
 import com.example.graduationproject.hungry.LoginHungryActivity
 import java.util.*
 
 class MainLogRegActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-
-    private lateinit var binding: ActivityMainLogRegBinding
-
-    @SuppressLint("MissingInflatedId", "SuspiciousIndentation")
+    private lateinit var binding:ActivityMainLogRegBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainLogRegBinding.inflate(layoutInflater)
@@ -94,7 +91,7 @@ class MainLogRegActivity : AppCompatActivity(), AdapterView.OnItemSelectedListen
 
     private fun setLocale(localeName: String?) {
         val configuration = resources.configuration
-        configuration.setLocale(Locale(localeName))
+        configuration.setLocale(localeName?.let { Locale(it) })
         resources.updateConfiguration(configuration, resources.displayMetrics)
         saveLanguage(localeName)
         recreate()

@@ -35,6 +35,7 @@ object Constants {
     const val CART_LIST = "CART_LIST"
     const val ORDER_STATUS = "ORDER_STATUS"
     const val PAYMENT_METHOD = "PAYMENT_METHOD"
+    const val OFFER_PRICE = "OFFER_PRICE"
 
 
 }

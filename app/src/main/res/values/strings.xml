@@ -124,5 +124,11 @@
     <string name="chef_email">Chef Email:</string>
     <string name="balance">Balance:</string>
     <string name="withdraw_money">Withdraw money:</string>
+    <string name="make_offers">Make offers</string>
+    <string name="offers_price">Offers Price :</string>
+    <string name="add_offer">Add Offer</string>
+    <string name="remove_from_offers">Remove from offers</string>
+    <string name="offer_price">Offer Price :</string>
+
 
 </resources>

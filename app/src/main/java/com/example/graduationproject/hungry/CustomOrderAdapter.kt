@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.Order
 import com.example.graduationproject.R
+import com.example.graduationproject.enums.OrderStatus
 
 class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
     RecyclerView.Adapter<CustomOrderAdapter.ViewHolder>() {
@@ -37,6 +39,11 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             description.text = data.description
             quantity.text = data.quantity
             chefEmail.text = data.chefEmail
+
+            if (data.status == OrderStatus.COMPLETED.name) {
+                continerfinish.visibility = View.VISIBLE
+                continer.visibility = View.GONE
+            }
         }
     }
 
@@ -50,6 +57,8 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
         var description: TextView
         var chefEmail: TextView
         var quantity: TextView
+        var continerfinish: CardView
+        var continer: CardView
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -59,7 +68,8 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             quantity = itemView.findViewById(R.id.order_quantity)
             image = itemView.findViewById(R.id.order_image_food)
             description = itemView.findViewById(R.id.order_description)
+            continerfinish = itemView.findViewById(R.id.finish)
+            continer = itemView.findViewById(R.id.order)
         }
     }
-
 }

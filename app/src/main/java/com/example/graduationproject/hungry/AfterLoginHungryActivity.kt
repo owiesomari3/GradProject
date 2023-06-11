@@ -15,7 +15,7 @@ import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
-import com.example.graduationproject.chef.OrdersChefFragment
+import com.example.graduationproject.chef.OrdersChefsFragment
 import com.example.graduationproject.chef.WalletChefFragment
 import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
 import org.json.JSONArray
@@ -116,12 +116,10 @@ class AfterLoginHungryActivity : AppCompatActivity() {
         binding.bottomNavigationViewHungry.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home-> replaceFragment(HomeFragmentHungry())
-                R.id.order_hungry -> replaceFragment(OrdersChefFragment())
-                R.id.search_hungry -> replaceFragment(WalletChefFragment())
+                R.id.offers_hungry -> replaceFragment(OffersHungryFragment())
             }
             true
         }
-
     }
 
     private fun replaceFragment(fragment: Fragment) {

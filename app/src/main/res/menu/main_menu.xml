@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/add_to_the_cart"
-        android:icon="@drawable/add_shopping_cart"
+        android:actionLayout="@layout/custom_notification_item"
         android:title="@string/cart"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
     <item
-        android:id="@+id/notification_main_bar"
-        app:actionLayout="@layout/custom_notification_item"
-        app:showAsAction="ifRoom"
-        android:title="@string/notification" />
+        android:id="@+id/search"
+        app:icon="@drawable/baseline_search_24"
+        android:title="@string/search"
+        app:showAsAction="ifRoom"/>
 </menu>

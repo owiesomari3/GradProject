@@ -5,18 +5,18 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/notification_ring"
+        android:id="@+id/add_to_the_cart"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/baseline_notifications_none_24" />
+        android:src="@drawable/add_shopping_cart" />
     <TextView
-        android:id="@+id/tv_notification_custom"
+        android:id="@+id/tv_add_to_the_cart"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:background="@drawable/custom_notification_shap"
-        android:layout_above="@+id/notification_ring"
-        android:layout_toRightOf="@id/notification_ring"
+        android:layout_above="@+id/add_to_the_cart"
+        android:layout_toRightOf="@id/add_to_the_cart"
         android:layout_marginStart="-15dp"
         android:layout_marginBottom="-15dp"
         android:text="9"

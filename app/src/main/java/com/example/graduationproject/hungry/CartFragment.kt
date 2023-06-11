@@ -27,6 +27,7 @@ class CartFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val allOrders = Storage.allOrder(requireContext())
@@ -47,15 +48,18 @@ class CartFragment : Fragment() {
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
                             val description = jsonObjectDataFood?.getString(Constants.DESCRIPTION)
                             val chefEmail = jsonObjectDataFood?.getString(Constants.CURRENT_CHEF)
+                            val status = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
                             dataOrder.add(
                                 Order(
                                     familiarName,
                                     price,
                                     image,
                                     description,
-                                    quantity,
+                                    foodOrderId,
                                     chefEmail,
-                                    foodOrderId
+                                    quantity,
+                                    "5",
+                                    status
                                 )
                             )
                         }

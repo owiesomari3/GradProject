@@ -1,4 +1,4 @@
-package com.example.graduationproject.hungry
+package com.example.graduationproject.chef
 
 import android.os.Build
 import android.os.Bundle
@@ -8,28 +8,31 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
-import com.example.graduationproject.databinding.FragmentHomeHungryBinding
+import com.example.graduationproject.databinding.FragmentOffersChefsBinding
+import com.example.graduationproject.hungry.AfterSelectedItemFragment
+import com.example.graduationproject.hungry.CustomAdapterFood
+import com.example.graduationproject.hungry.DataFood
 
-class HomeFragmentHungry : Fragment() {
-    private var rvAdapter: CustomAdapterFood? = null
-    private lateinit var binding: FragmentHomeHungryBinding
-    var foods = ArrayList<DataFood>()
+class OffersChefsFragment : Fragment() {
+    private var offerAdapter: CustomAdapterFood? = null
+    private lateinit var binding: FragmentOffersChefsBinding
+    var offerFoods = ArrayList<DataFood>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeHungryBinding.inflate(inflater, container, false)
+        binding = FragmentOffersChefsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val allFoods = Storage.getAllFoods(requireContext())
-
         allFoods?.let {
             for (i in allFoods.length() - 1 downTo 0) {
                 val jsonObject = allFoods.getJSONObject(i)
@@ -39,30 +42,34 @@ class HomeFragmentHungry : Fragment() {
                 val description = jsonObject.getString(Constants.DESCRIPTION)
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
-                val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
-                foods.add(
-                    DataFood(
-                        name,
-                        price,
-                        image,
-                        5.0,
-                        description,
-                        id,
-                        chefEmail,
-                        offersPrice
+                val offerPrice = jsonObject.getString(Constants.OFFER_PRICE)
+                if (jsonObject.getString(Constants.CURRENT_CHEF) == CacheManager.getCurrentUser()
+                    &&jsonObject.getString(Constants.OFFER_PRICE) !="0")
+                    offerFoods.add(
+                        DataFood(
+                            name,
+                            price,
+                            image,
+                            5.0,
+                            description,
+                            id,
+                            chefEmail,
+                            offerPrice
+                        )
                     )
-                )
             }
         }
-        rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
+
+        offerAdapter = CustomAdapterFood(offerFoods, object : CustomAdapterFood.ItemClickInterface {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun onItemClick(data: DataFood) {
                 replaceFragment(AfterSelectedItemFragment(), data)
             }
-        },"hungry")
-        binding.recyclerHomeHungry.apply {
+        },"offers_chef")
+
+        binding.recyclerOfferChef.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = rvAdapter
+            adapter = offerAdapter
         }
     }
 
@@ -73,7 +80,7 @@ class HomeFragmentHungry : Fragment() {
         fragment.arguments = data1
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        fragmentTransaction?.replace(R.id.frame_layout_hungry, fragment)
+        fragmentTransaction?.replace(R.id.frame_layout_chef, fragment)
         fragmentTransaction?.commit()
     }
 }

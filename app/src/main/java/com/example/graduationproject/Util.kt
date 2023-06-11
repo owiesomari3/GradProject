@@ -19,9 +19,9 @@ object Util {
 
     fun showToastMsg(context: Context, msg: Any) {
         when (msg) {
-            is String -> Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+            is String -> Toast.makeText(context, msg, Toast.LENGTH_LONG).show()
 
-            is Int -> Toast.makeText(context, context.getText(msg), Toast.LENGTH_SHORT).show()
+            is Int -> Toast.makeText(context, context.getText(msg), Toast.LENGTH_LONG).show()
         }
     }
 }

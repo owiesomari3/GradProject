@@ -4,14 +4,10 @@
         android:id="@+id/home"
         android:title="@string/home"
         android:icon="@drawable/baseline_home_24"/>
-    <item
-        android:id="@+id/order_hungry"
-        android:title="@string/order"
-        android:icon="@drawable/baseline_food_bank_24"/>
 
     <item
-        android:id="@+id/search_hungry"
-        android:title="@string/search"
-        android:icon="@drawable/baseline_search_24"/>
+        android:id="@+id/offers_hungry"
+        android:title="@string/offers"
+        android:icon="@drawable/baseline_local_offer_24"/>
 
 </menu>

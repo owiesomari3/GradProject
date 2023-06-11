@@ -23,7 +23,8 @@ class HomeFragmentChef : Fragment() {
     var foods = ArrayList<DataFood>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeChefBinding.inflate(inflater, container, false)
@@ -43,8 +44,21 @@ class HomeFragmentChef : Fragment() {
                 val description = jsonObject.getString(Constants.DESCRIPTION)
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
+                val offerPrice = jsonObject?.getString(Constants.OFFER_PRICE)
+
                 if (jsonObject.getString(Constants.CURRENT_CHEF) == CacheManager.getCurrentUser())
-                    foods.add(DataFood(name, price, image, 5.0, description, id,chefEmail))
+                    foods.add(
+                        DataFood(
+                            name,
+                            price,
+                            image,
+                            5.0,
+                            description,
+                            id,
+                            chefEmail,
+                            offerPrice
+                        )
+                    )
             }
         }
 
@@ -53,7 +67,7 @@ class HomeFragmentChef : Fragment() {
             override fun onItemClick(data: DataFood) {
                 replaceFragment(AfterSelectedItemFragment(), data)
             }
-        })
+        },"chef")
 
         binding.recyclerHomeChef.apply {
             layoutManager = LinearLayoutManager(requireContext())

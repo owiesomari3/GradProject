@@ -11,18 +11,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
-import com.example.graduationproject.databinding.FragmentHomeHungryBinding
+import com.example.graduationproject.databinding.OffersHungryBinding
 
-class HomeFragmentHungry : Fragment() {
+class OffersHungryFragment : Fragment() {
     private var rvAdapter: CustomAdapterFood? = null
-    private lateinit var binding: FragmentHomeHungryBinding
+    private lateinit var binding: OffersHungryBinding
     var foods = ArrayList<DataFood>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeHungryBinding.inflate(inflater, container, false)
+        binding = OffersHungryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,27 +40,29 @@ class HomeFragmentHungry : Fragment() {
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
-                foods.add(
-                    DataFood(
-                        name,
-                        price,
-                        image,
-                        5.0,
-                        description,
-                        id,
-                        chefEmail,
-                        offersPrice
+                if (jsonObject.getString(Constants.OFFER_PRICE) != "0")
+                    foods.add(
+                        DataFood(
+                            name,
+                            price,
+                            image,
+                            5.0,
+                            description,
+                            id,
+                            chefEmail,
+                            offersPrice
+                        )
                     )
-                )
             }
         }
+
         rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun onItemClick(data: DataFood) {
                 replaceFragment(AfterSelectedItemFragment(), data)
             }
-        },"hungry")
-        binding.recyclerHomeHungry.apply {
+        }, "offers_hungry")
+        binding.recyclerOffersHungry.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = rvAdapter
         }

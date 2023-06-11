@@ -7,17 +7,16 @@
         android:icon="@drawable/baseline_home_24"
         android:title="@string/home" />
     <item
-        android:id="@+id/search_chef"
-        android:icon="@drawable/baseline_search_24"
-        android:title="@string/search"
-        app:showAsAction="collapseActionView"/>
+
+        android:id="@+id/offers"
+        android:icon="@drawable/baseline_local_offer_24"
+        android:title="offers" />
 
     <item android:title=""/>
     <item
         android:id="@+id/wallet_chef"
         android:icon="@drawable/baseline_wallet_24"
         android:title="@string/wallet" />
-
 
     <item
         android:id="@+id/order_chefs"

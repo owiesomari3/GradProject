@@ -66,6 +66,7 @@
                 android:layout_gravity="bottom"
                 android:background="?android:attr/windowBackground"
                 android:elevation="7dp" />
+
        </com.google.android.material.appbar.CollapsingToolbarLayout>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"

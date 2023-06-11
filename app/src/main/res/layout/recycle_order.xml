@@ -8,7 +8,7 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/order_contener"
+        android:id="@+id/order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -106,15 +106,38 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/green" />
+
                     <TextView
                         android:id="@+id/order_quantity"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/green"/>
+                        android:textColor="@color/green" />
 
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/finish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="12dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationBee"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/delivery" />
+
 
     </androidx.cardview.widget.CardView>
 

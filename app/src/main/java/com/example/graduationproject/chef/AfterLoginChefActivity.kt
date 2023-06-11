@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -110,19 +109,17 @@ class AfterLoginChefActivity : AppCompatActivity() {
                 }
             }
 
-        }
-
-        binding.apply {
             fab.setOnClickListener {
                 // Perform action when FAB is clicked
                 showFabActions()
             }
+
         }
 
         replaceFragment(HomeFragmentChef())
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.home -> {
+                R.id.home_chef -> {
                     replaceFragment(HomeFragmentChef())
                 }
                 R.id.order_chefs -> {
@@ -131,13 +128,12 @@ class AfterLoginChefActivity : AppCompatActivity() {
                 R.id.wallet_chef -> {
                     replaceFragment(WalletChefFragment())
                 }
-                R.id.search_chef -> {
-                    replaceFragment(SearchFragment())
+                R.id.offers -> {
+                    replaceFragment(OffersChefsFragment())
                 }
             }
             true
         }
-
     }
 
     @SuppressLint("ResourceType")
