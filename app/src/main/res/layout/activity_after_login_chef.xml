@@ -39,15 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            app:headerLayout="@layout/nav_header"
-            app:menu="@menu/nav_menu_chef"
-            app:itemIconTint="@color/yallow"
-            app:itemTextColor="@color/green"/>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -79,4 +71,14 @@
             android:layout_gravity="center|bottom"
             android:contentDescription="@string/todo" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/nav_header"
+        app:itemIconTint="@color/yallow"
+        app:itemTextColor="@color/green"
+        app:menu="@menu/nav_menu_chef" />
 </androidx.drawerlayout.widget.DrawerLayout>

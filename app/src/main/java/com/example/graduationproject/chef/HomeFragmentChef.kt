@@ -13,7 +13,6 @@ import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentHomeChefBinding
-import com.example.graduationproject.hungry.AfterSelectedItemFragment
 import com.example.graduationproject.hungry.CustomAdapterFood
 import com.example.graduationproject.hungry.DataFood
 
@@ -65,7 +64,7 @@ class HomeFragmentChef : Fragment() {
         rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun onItemClick(data: DataFood) {
-                replaceFragment(AfterSelectedItemFragment(), data)
+                replaceFragment(AfterSelectedItemChefFragment(), data)
             }
         },"chef")
 

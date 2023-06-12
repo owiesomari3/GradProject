@@ -120,9 +120,11 @@
     <string name="make_offers">Make offers</string>
     <string name="offers_price">Offers Price :</string>
     <string name="add_offer">Add Offer</string>
-    <string name="open_with_google_maps">Open With Google Maps</string>
+    <string name="open_with_google_maps">عرض الاتجاهات</string>
     <string name="open_location">OPen location</string>
     <string name="cooking">Cooking</string>
     <string name="withdraw">withdraw</string>
+    <string name="update">Update</string>
+    <string name="search_here">search here..</string>
 
 </resources>

@@ -44,6 +44,14 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
                 continerfinish.visibility = View.VISIBLE
                 continer.visibility = View.GONE
             }
+           if (data.status == OrderStatus.CANCELED.name) {
+                continercancel.visibility = View.VISIBLE
+                continer.visibility = View.GONE
+            }
+            if (data.status == OrderStatus.COOKING.name) {
+                continercooking.visibility = View.VISIBLE
+                continer.visibility = View.GONE
+            }
         }
     }
 
@@ -59,6 +67,8 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
         var quantity: TextView
         var continerfinish: CardView
         var continer: CardView
+        var continercancel: CardView
+        var continercooking: CardView
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -70,6 +80,8 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             description = itemView.findViewById(R.id.order_description)
             continerfinish = itemView.findViewById(R.id.finish)
             continer = itemView.findViewById(R.id.order)
+            continercancel = itemView.findViewById(R.id.continercancel)
+            continercooking = itemView.findViewById(R.id.continercooking)
         }
     }
 }

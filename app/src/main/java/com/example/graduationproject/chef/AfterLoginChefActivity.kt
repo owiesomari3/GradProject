@@ -10,8 +10,10 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -24,6 +26,7 @@ import org.json.JSONArray
 class AfterLoginChefActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAfterLoginChefBinding
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityAfterLoginChefBinding.inflate(layoutInflater)
@@ -41,12 +44,26 @@ class AfterLoginChefActivity : AppCompatActivity() {
             navView.getHeaderView(0).apply {
                 findViewById<TextView>(R.id.user_email).text = CacheManager.getCurrentUser()
                 findViewById<TextView>(R.id.username).text = getUserName()
+                findViewById<ImageView>(R.id.cancel).setOnClickListener {
+                    binding.drawerLayoutChef.closeDrawer(GravityCompat.START)
+                }
             }
+
+            val toggle = ActionBarDrawerToggle(
+                this@AfterLoginChefActivity,
+                binding.drawerLayoutChef,
+                null,
+                R.string.open_nav,
+                R.string.close_nav
+            )
+
+            binding.drawerLayoutChef.addDrawerListener(toggle)
+            toggle.syncState()
 
             navView.setNavigationItemSelectedListener { menuItem ->
                 drawerLayoutChef.closeDrawer(GravityCompat.START)
                 when (menuItem.itemId) {
-                    R.id.nav_settings_chef-> {
+                    R.id.nav_settings_chef -> {
                         false
                     }
                     R.id.nav_share_chef -> {
@@ -69,22 +86,13 @@ class AfterLoginChefActivity : AppCompatActivity() {
                         true
                     }
                     R.id.send_us_an_email -> {
-                        startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("mail:" + "Warmth@team.com" + "?subject=" + "HungryWarmth")
-                            )
-                        )
+                        sendEmail(recipientEmail = "Warmth@team.com")
                         true
                     }
 
                     R.id.nav_logout_chef -> {
+                        onBackPressed()
                         false
-                    }
-
-                    R.id.cancel -> {
-                        binding.drawerLayoutChef.closeDrawer(GravityCompat.START)
-                        true
                     }
 
                     else -> false
@@ -95,7 +103,6 @@ class AfterLoginChefActivity : AppCompatActivity() {
                 // Perform action when FAB is clicked
                 showFabActions()
             }
-
         }
 
         replaceFragment(HomeFragmentChef())
@@ -116,6 +123,20 @@ class AfterLoginChefActivity : AppCompatActivity() {
             }
             true
         }
+    }
+
+    private fun sendEmail(
+        subject: String = "HungryWarmth",
+        body: String = "",
+        recipientEmail: String
+    ) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+        startActivity(intent)
     }
 
     @SuppressLint("ResourceType")

@@ -13,15 +13,19 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
-import com.example.graduationproject.enums.UserType
+import com.example.graduationproject.chef.OffersChefsFragment
 
 class CustomAdapterFood(
     private val foodList: ArrayList<DataFood>,
     private val callback: ItemClickInterface,
-    private val screenSource: String
+    private val screenSource: String,
+    private val  activity:AppCompatActivity ?=null
 
 ) : RecyclerView.Adapter<CustomAdapterFood.ViewHolder>() {
 
@@ -69,22 +73,24 @@ class CustomAdapterFood(
                             addOffer.context,
                             "Your offer has been deleted successfully"
                         )
+
+                        replaceFragment(OffersChefsFragment())
                     }
                 }
             }
 
-            if (CacheManager.getUserType() == UserType.CHEF) {
-                rateTv.visibility = View.GONE
-                foodNameTv.visibility = View.GONE
-                priceTv.visibility = View.GONE
+            /* if (CacheManager.getUserType() == UserType.CHEF) {
+                 rateTv.visibility = View.GONE
+                 foodNameTv.visibility = View.GONE
+                 priceTv.visibility = View.GONE
 
-                rateEditText.visibility = View.VISIBLE
-                foodNameEditText.visibility = View.VISIBLE
-                priceEditText.visibility = View.VISIBLE
-            }
+                 rateEditText.visibility = View.VISIBLE
+                 foodNameEditText.visibility = View.VISIBLE
+                 priceEditText.visibility = View.VISIBLE
+             }*/
 
-            rateEditText.setText(data.rate.toString())
-            foodNameEditText.setText(data.familiar_name)
+            // rateEditText.setText(data.rate.toString())
+            //  foodNameEditText.setText(data.familiar_name)
 
             if (screenSource == "offers_chef" || screenSource == "offers_hungry") {
                 priceEditText.setText(data.offerPrice)
@@ -178,6 +184,13 @@ class CustomAdapterFood(
             offerPriceValue = itemView.findViewById(R.id.offer_price_value)
             priceTitle = itemView.findViewById(R.id.price_title)
 
+        }
+
+        fun replaceFragment(fragment: Fragment) {
+            val fragmentManager = activity?.supportFragmentManager
+            val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+            fragmentTransaction?.add(R.id.frame_layout_chef, fragment)
+            fragmentTransaction?.commit()
         }
     }
 

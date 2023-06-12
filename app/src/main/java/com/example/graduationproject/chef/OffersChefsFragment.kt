@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.CacheManager
@@ -65,7 +66,7 @@ class OffersChefsFragment : Fragment() {
             override fun onItemClick(data: DataFood) {
                 replaceFragment(AfterSelectedItemFragment(), data)
             }
-        },"offers_chef")
+        },"offers_chef", activity as AppCompatActivity?)
 
         binding.recyclerOfferChef.apply {
             layoutManager = LinearLayoutManager(requireContext())

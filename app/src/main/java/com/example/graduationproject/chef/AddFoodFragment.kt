@@ -1,6 +1,7 @@
 package com.example.graduationproject.chef
 
 import android.graphics.Bitmap
+import android.media.audiofx.AudioEffect.Descriptor
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -84,15 +85,16 @@ class AddFoodFragment : Fragment() {
             price.doOnTextChanged { _, _, _, _ ->
                 setButtonEnability()
             }
+            description.doOnTextChanged { _, _, _, _ ->
+                setButtonEnability()
+            }
         }
     }
     private fun setButtonEnability() {
         binding.apply {
             save.isEnabled =
-                familiarName.text.isNotEmpty()==true && price.text.isNotEmpty() == true
+                familiarName.text.isNotEmpty()==true && description.text.isNotEmpty() == true
                         && price.text.toString().toDouble()>0==true
-                       // && Rate.text.isNotEmpty() == true
         }
     }
-
 }

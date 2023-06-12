@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
@@ -45,6 +46,9 @@ class WalletChefFragment : Fragment() {
         }
 
         binding.apply {
+            WalletWithdrawMoney.doOnTextChanged { _, _, _, _ ->
+                btnOk.isEnabled = WalletWithdrawMoney.text.toString().isNotEmpty()
+            }
             WalletEmailChef.text = CacheManager.getCurrentUser()
             if (balance == "") {
                 WalletBalance.text = Util.currencyFormat("0")
@@ -54,8 +58,11 @@ class WalletChefFragment : Fragment() {
             } else WalletBalance.text = Util.currencyFormat(balance)
 
             btnOk.setOnClickListener {
-                if (WalletWithdrawMoney.text.toString().toDouble() > balance.toDouble()) {
-                    Util.showToastMsg(requireContext(),"No sufficient balance" )
+                if (WalletWithdrawMoney.text.toString()
+                        .toDouble() > balance.toDouble() && WalletWithdrawMoney.text.toString()
+                        .toDouble() > 0
+                ) {
+                    Util.showToastMsg(requireContext(), "No sufficient balance")
                 } else {
                     allWallet.remove(objectPosition)
                     val newBalance =

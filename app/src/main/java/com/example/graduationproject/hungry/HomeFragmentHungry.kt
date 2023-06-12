@@ -16,7 +16,7 @@ import com.example.graduationproject.databinding.FragmentHomeHungryBinding
 class HomeFragmentHungry : Fragment() {
     private var rvAdapter: CustomAdapterFood? = null
     private lateinit var binding: FragmentHomeHungryBinding
-    var foods = ArrayList<DataFood>()
+    private var foods = ArrayList<DataFood>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

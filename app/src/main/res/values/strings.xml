@@ -51,7 +51,7 @@
     <string name="your_menu">Your Menu</string>
     <string name="chose">Chose</string>
     <string name="order">Order</string>
-    <string name="settings_account">Settings Account</string>
+    <string name="settings_account">Account Settings</string>
     <string name="location">Location</string>
     <string name="favorite_in_your_menu">Favorite in your menu</string>
     <string name="your_orders">Your orders</string>
@@ -129,10 +129,12 @@
     <string name="add_offer">Add Offer</string>
     <string name="remove_from_offers">Remove from offers</string>
     <string name="offer_price">Offer Price :</string>
-    <string name="open_with_google_maps">Open With Google Maps</string>
+    <string name="open_with_google_maps">Show directions</string>
     <string name="open_location">OPen location</string>
     <string name="cooking">Cooking</string>
     <string name="withdraw">withdraw</string>
+    <string name="update">Update</string>
+    <string name="search_here">search here..</string>
 
 
 </resources>

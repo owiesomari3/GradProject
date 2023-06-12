@@ -13,6 +13,8 @@ object Constants {
     const val walletWithdrawMoney = "walletWithdrawMoney"
     const val totalPrice = "totalPrice"
     const val BALANCE = "BALANCE"
+    const val UPDATE = "UPDATE"
+    const val UPDATE_LIST = "UPDATE_LIST"
 
     const val IMAGE = "image"
     const val CURRENT_CHEF = "CURRENT_CHEF"

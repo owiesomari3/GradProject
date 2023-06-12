@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -15,23 +17,30 @@ import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
-import com.example.graduationproject.chef.OrdersChefsFragment
-import com.example.graduationproject.chef.WalletChefFragment
 import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
 import org.json.JSONArray
 
 class AfterLoginHungryActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityAfterLoginHungryBinding
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("MissingInflatedId", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityAfterLoginHungryBinding = ActivityAfterLoginHungryBinding.inflate(layoutInflater)
+        binding = ActivityAfterLoginHungryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        handleNavigationView()
         binding.apply {
-            toolbarHungry.setOnMenuItemClickListener {menuItem ->
-                when(menuItem.itemId){
+            toolbarHungry.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
                     R.id.add_to_the_cart -> {
                         replaceFragment(CartFragment())
+                        true
+                    }
+
+                    R.id.search -> {
+                        replaceFragment(SearchFragment())
                         true
                     }
                     else -> false
@@ -47,28 +56,53 @@ class AfterLoginHungryActivity : AppCompatActivity() {
             navView.getHeaderView(0).apply {
                 findViewById<TextView>(R.id.user_email).text = CacheManager.getCurrentUser()
                 findViewById<TextView>(R.id.username).text = getUserName()
+                findViewById<ImageView>(R.id.cancel).setOnClickListener {
+                    binding.drawerLayoutHungry.closeDrawer(GravityCompat.START)
+                }
             }
 
-            navView.setNavigationItemSelectedListener { menuItem ->
-                drawerLayoutHungry.closeDrawer(GravityCompat.START)
-                when (menuItem.itemId) {
+            val toggle = ActionBarDrawerToggle(
+                this@AfterLoginHungryActivity,
+                binding.drawerLayoutHungry,
+                null,
+                R.string.open_nav,
+                R.string.close_nav
+            )
+            binding.drawerLayoutHungry.addDrawerListener(toggle)
+            toggle.syncState()
+        }
+
+        replaceFragment(HomeFragmentHungry())
+        binding.bottomNavigationViewHungry.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home -> replaceFragment(HomeFragmentHungry())
+                R.id.offers_hungry -> replaceFragment(OffersHungryFragment())
+            }
+            true
+        }
+    }
+
+    private fun sendEmail(subject: String = "HungryWarmth", body: String = "", recipientEmail: String) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:")
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(recipientEmail))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, body)
+        }
+         startActivity(intent)
+    }
+
+    private fun handleNavigationView() {
+        binding.navView.apply {
+            setNavigationItemSelectedListener {
+                when (it.itemId) {
                     R.id.send_a_complaint_via_email -> {
-                        startActivity(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse("mail:" + "Warmth@team.com" + "?subject=" + "HungryWarmth")
-                            )
-                        )
-                        true
+                        sendEmail(recipientEmail = "support@warth.com")
                     }
 
-                    R.id.nav_settings_hungry -> {
-                        false
-                    }
+                    R.id.nav_settings_hungry -> {}
 
-                    R.id.home -> {
-                        false
-                    }
+                    R.id.home -> {}
 
                     R.id.nav_share_hungry -> {
                         val googlePlay = Intent()
@@ -85,32 +119,18 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                                     "Choose the app you want to share with"
                                 )
                             )
-
                         }
-                        true
+
                     }
 
                     R.id.nav_logout_hungry -> {
-                        false
-                    }
-                    R.id.cancel -> {
-                        drawerLayoutHungry.closeDrawer(GravityCompat.START)
-                        true
+                        onBackPressed()
                     }
 
-                    else -> false
+                    else -> {}
                 }
-
+                true
             }
-        }
-
-        replaceFragment(HomeFragmentHungry())
-        binding.bottomNavigationViewHungry.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home-> replaceFragment(HomeFragmentHungry())
-                R.id.offers_hungry -> replaceFragment(OffersHungryFragment())
-            }
-            true
         }
     }
 

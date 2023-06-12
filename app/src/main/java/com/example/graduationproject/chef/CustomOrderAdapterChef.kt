@@ -54,9 +54,18 @@ class CustomOrderAdapterChef(
             phoneNumber.text = data.hungryPhone
             status.text = data.orderStatus
 
-            if (data.orderStatus != OrderStatus.PENDING.name) {
+            if (data.orderStatus == OrderStatus.COMPLETED.name||
+                data.orderStatus==OrderStatus.CANCELED.name) {
                 btnAccept.visibility = View.GONE
                 btnCancel.visibility = View.GONE
+                cooking_btn.visibility=View.GONE
+            }
+            if(data.orderStatus==OrderStatus.CANCELED.name)
+                openLocation.visibility=View.GONE
+            if( data.orderStatus==OrderStatus.COOKING.name){
+                btnAccept.visibility=View.VISIBLE
+            btnCancel.visibility = View.GONE
+                cooking_btn.visibility=View.GONE
             }
             totalPrice.text =
                 (price.text.toString().toDouble() * quantity.text.toString().toDouble()).toString()
@@ -80,6 +89,14 @@ class CustomOrderAdapterChef(
             openLocation.setOnClickListener {
                 replaceFragment(MapsFragment(), data, activity)
             }
+            cooking_btn.setOnClickListener {
+                changeOrderStatus(
+                    OrderStatus.COOKING,
+                    it.context,
+                    orderList[position].orderId, ""
+                )
+            }
+
         }
     }
 
@@ -98,6 +115,7 @@ class CustomOrderAdapterChef(
         val btnCancel: Button
         val phoneNumber: TextView
         val openLocation: Button
+        val cooking_btn:Button
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -112,6 +130,7 @@ class CustomOrderAdapterChef(
             btnCancel = itemView.findViewById(R.id.Order_Cancel)
             phoneNumber = itemView.findViewById(R.id.phone_number)
             openLocation = itemView.findViewById(R.id.open_location)
+            cooking_btn = itemView.findViewById(R.id.cooking_btn)
 
 
         }
@@ -174,7 +193,7 @@ class CustomOrderAdapterChef(
         if (s == OrderStatus.CANCELED) Util.showToastMsg(
             context,
             "Order has been cancelled successfully"
-        )
+        )else if (s==OrderStatus.COOKING)Util.showToastMsg(context,"Order has been cooking")
         else Util.showToastMsg(context, "Order Accepted successfully")
     }
 
