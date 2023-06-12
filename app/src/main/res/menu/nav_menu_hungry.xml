@@ -6,16 +6,6 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/offers_hungry"
-            android:icon="@drawable/baseline_local_offer_24"
-            android:title="@string/offers" />
-
-        <item
-            android:id="@+id/Notification_hungry"
-            android:icon="@drawable/baseline_notifications_active_24"
-            android:title="@string/notification" />
-
-        <item
             android:id="@+id/send_a_complaint_via_email"
             android:icon="@drawable/baseline_newspaper_24"
             android:title="@string/send_a_complaint_via_email" />

@@ -129,6 +129,10 @@
     <string name="add_offer">Add Offer</string>
     <string name="remove_from_offers">Remove from offers</string>
     <string name="offer_price">Offer Price :</string>
+    <string name="open_with_google_maps">Open With Google Maps</string>
+    <string name="open_location">OPen location</string>
+    <string name="cooking">Cooking</string>
+    <string name="withdraw">withdraw</string>
 
 
 </resources>

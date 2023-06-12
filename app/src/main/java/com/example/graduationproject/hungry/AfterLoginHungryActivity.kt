@@ -52,18 +52,6 @@ class AfterLoginHungryActivity : AppCompatActivity() {
             navView.setNavigationItemSelectedListener { menuItem ->
                 drawerLayoutHungry.closeDrawer(GravityCompat.START)
                 when (menuItem.itemId) {
-                    R.id.offers_hungry -> {
-                        false
-                    }
-
-                    R.id.Notification_hungry -> {
-                        false
-                    }
-
-                    R.id.home -> {
-                        false
-                    }
-
                     R.id.send_a_complaint_via_email -> {
                         startActivity(
                             Intent(
@@ -75,6 +63,10 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                     }
 
                     R.id.nav_settings_hungry -> {
+                        false
+                    }
+
+                    R.id.home -> {
                         false
                     }
 

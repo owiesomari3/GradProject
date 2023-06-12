@@ -6,10 +6,7 @@
     android:insetLeft="5dp"
     android:insetBottom="5dp">
     <shape android:shape="rectangle">
-        <stroke android:color="@color/light_green"
-            android:dashWidth="3dp"
-            android:dashGap="5dp"
-            android:width="10dp" />
+
               <corners android:radius="20dp"/>
                  <solid android:color="@color/white" />
     </shape>

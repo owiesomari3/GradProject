@@ -54,6 +54,7 @@ class HomeFragmentHungry : Fragment() {
                 )
             }
         }
+
         rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun onItemClick(data: DataFood) {

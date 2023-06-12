@@ -36,6 +36,7 @@ object Constants {
     const val ORDER_STATUS = "ORDER_STATUS"
     const val PAYMENT_METHOD = "PAYMENT_METHOD"
     const val OFFER_PRICE = "OFFER_PRICE"
-
+    const val LATITUDE = "latitude"
+    const val LONGITUDE = "longitude"
 
 }

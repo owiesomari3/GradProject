@@ -3,6 +3,8 @@ package com.example.graduationproject.chef
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.os.Build
+import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -10,22 +12,29 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
 import com.example.graduationproject.enums.OrderStatus
 import com.example.graduationproject.enums.PaymentMethods
 import org.json.JSONArray
 import org.json.JSONObject
-import org.w3c.dom.Text
 
-class CustomOrderAdapterChef(private val orderList: ArrayList<OrderChef>) :
+class CustomOrderAdapterChef(
+    private val orderList: ArrayList<OrderChef>,
+    private val activity: AppCompatActivity? = null
+) :
     RecyclerView.Adapter<CustomOrderAdapterChef.ViewHolder>() {
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.recycle_order_chfe, parent, false)
+        val v =
+            LayoutInflater.from(parent.context).inflate(R.layout.recycle_order_chfe, parent, false)
         return ViewHolder(v)
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data: OrderChef = orderList[position]
         holder.apply {
@@ -67,6 +76,10 @@ class CustomOrderAdapterChef(private val orderList: ArrayList<OrderChef>) :
                     orderList[position].orderId, ""
                 )
             }
+
+            openLocation.setOnClickListener {
+                replaceFragment(MapsFragment(), data, activity)
+            }
         }
     }
 
@@ -83,7 +96,8 @@ class CustomOrderAdapterChef(private val orderList: ArrayList<OrderChef>) :
         var totalPrice: TextView
         val btnAccept: Button
         val btnCancel: Button
-        val phoneNumber : TextView
+        val phoneNumber: TextView
+        val openLocation: Button
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -97,6 +111,8 @@ class CustomOrderAdapterChef(private val orderList: ArrayList<OrderChef>) :
             btnAccept = itemView.findViewById(R.id.Order_Accept)
             btnCancel = itemView.findViewById(R.id.Order_Cancel)
             phoneNumber = itemView.findViewById(R.id.phone_number)
+            openLocation = itemView.findViewById(R.id.open_location)
+
 
         }
     }
@@ -176,5 +192,17 @@ class CustomOrderAdapterChef(private val orderList: ArrayList<OrderChef>) :
         val editor = sharedPreferences.edit()
         editor.putString(Constants.WALLET_List, jsonString)
         editor.apply()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun replaceFragment(fragment: Fragment, data: OrderChef, activity: AppCompatActivity?) {
+        val data1 = Bundle()
+        data1.putString(Constants.LATITUDE, data.lat)
+        data1.putString(Constants.LONGITUDE, data.long)
+        fragment.arguments = data1
+        val fragmentManager = activity?.supportFragmentManager
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.replace(R.id.frame_layout_chef, fragment)
+        fragmentTransaction?.commit()
     }
 }

@@ -46,26 +46,9 @@ class AfterLoginChefActivity : AppCompatActivity() {
             navView.setNavigationItemSelectedListener { menuItem ->
                 drawerLayoutChef.closeDrawer(GravityCompat.START)
                 when (menuItem.itemId) {
-                    R.id.num_account_chef -> {
+                    R.id.nav_settings_chef-> {
                         false
                     }
-                    R.id.favorite_in_your_menue -> {
-                        false
-                    }
-                    R.id.evaluation_chef -> {
-                        false
-                    }
-                    R.id.your_menu_chef -> {
-                        false
-                    }
-                    R.id.location_chef -> {
-                        false
-                    }
-
-                    R.id.nav_settings_chef -> {
-                        false
-                    }
-
                     R.id.nav_share_chef -> {
                         val googlePlay = Intent()
                         googlePlay.apply {
@@ -85,11 +68,6 @@ class AfterLoginChefActivity : AppCompatActivity() {
 
                         true
                     }
-
-                    R.id.nav_logout_chef -> {
-                        false
-                    }
-
                     R.id.send_us_an_email -> {
                         startActivity(
                             Intent(
@@ -98,6 +76,10 @@ class AfterLoginChefActivity : AppCompatActivity() {
                             )
                         )
                         true
+                    }
+
+                    R.id.nav_logout_chef -> {
+                        false
                     }
 
                     R.id.cancel -> {
