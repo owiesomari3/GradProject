@@ -11,7 +11,6 @@ data class OrderChef(
     var foodId: String?,
     var chefEmail: String?,
     var quantity: String?,
-    var rate: String? = "5",
     var orderId: String?,
     var orderStatus: String?,
     var hungryPhone:String?,

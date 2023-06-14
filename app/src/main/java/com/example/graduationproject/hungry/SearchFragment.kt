@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.*
 import com.example.graduationproject.databinding.FragmentSearchBinding
-import org.json.JSONArray
 
 class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
@@ -86,7 +85,6 @@ class SearchFragment : Fragment() {
                                 name,
                                 price,
                                 image,
-                                5.0,
                                 description,
                                 id,
                                 chefEmail,
@@ -95,6 +93,11 @@ class SearchFragment : Fragment() {
                         )
                     }
                 }
+            }
+
+            if (foods.isNotEmpty()) {
+                binding.notFound.visibility = View.GONE
+                binding.found.visibility = View.VISIBLE
             }
 
             rvAdapter?.notifyDataSetChanged()

@@ -58,7 +58,6 @@ class CartFragment : Fragment() {
                                     foodOrderId,
                                     chefEmail,
                                     quantity,
-                                    "5",
                                     status
                                 )
                             )
@@ -67,6 +66,12 @@ class CartFragment : Fragment() {
                 }
             }
         }
+
+        if (dataOrder.isEmpty()) {
+            binding.noFoodsLayout.visibility = View.VISIBLE
+            binding.mainLayout.visibility = View.GONE
+        }
+
         orderAdapter = CustomOrderAdapter(dataOrder)
         binding.recyclerOrderHungry.apply {
             layoutManager = LinearLayoutManager(requireContext())

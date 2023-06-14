@@ -11,6 +11,5 @@ data class Order(
     var foodId: String?,
     var chefEmail: String?,
     var quantity: String?,
-    var rate: String?="5",
     var status: String?
 ) : Parcelable

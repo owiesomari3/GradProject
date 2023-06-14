@@ -91,7 +91,6 @@ class AfterSelectedItemFragment : Fragment() {
             tvFamiliarName.text = dataFood?.familiar_name
             tvDescribtion.text = dataFood?.description
             tvPrice.text = dataFood?.price
-            tvRate.text = dataFood?.rate.toString()
         }
     }
 

@@ -51,7 +51,6 @@ class HomeFragmentChef : Fragment() {
                             name,
                             price,
                             image,
-                            5.0,
                             description,
                             id,
                             chefEmail,
@@ -61,12 +60,17 @@ class HomeFragmentChef : Fragment() {
             }
         }
 
+        if (foods.isEmpty()) {
+            binding.noFoodsLayout.visibility = View.VISIBLE
+            binding.mainLayout.visibility = View.GONE
+        }
+
         rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun onItemClick(data: DataFood) {
                 replaceFragment(AfterSelectedItemChefFragment(), data)
             }
-        },"chef")
+        }, "chef")
 
         binding.recyclerHomeChef.apply {
             layoutManager = LinearLayoutManager(requireContext())

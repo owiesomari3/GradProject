@@ -41,12 +41,8 @@ class OrdersChefsFragment : Fragment() {
                 val userEmail = jsonObjectOrder?.getString(Constants.User)
                 val hungryPhone = getHungryPhone(userEmail)
                 val orderStatus = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
-
                 val lat = jsonObjectOrder?.getString(Constants.LATITUDE)
-
-
                 val long = jsonObjectOrder?.getString(Constants.LONGITUDE)
-
                 if (CacheManager.getCurrentUser() == chefEmail) {
                     for (i in 0 until allFoods.length()) {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
@@ -64,7 +60,6 @@ class OrdersChefsFragment : Fragment() {
                                     foodOrderId,
                                     userEmail,
                                     quantity,
-                                    "5",
                                     orderId,
                                     orderStatus,
                                     hungryPhone,
@@ -76,6 +71,10 @@ class OrdersChefsFragment : Fragment() {
                     }
                 }
             }
+        }
+        if (dataOrder.isEmpty()) {
+            binding.noFoodsLayout.visibility = View.VISIBLE
+            binding.mainLayout.visibility = View.GONE
         }
         orderAdapter = CustomOrderAdapterChef(dataOrder, activity as AppCompatActivity?)
         binding.recyclerOrderChef.apply {

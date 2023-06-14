@@ -126,5 +126,10 @@
     <string name="withdraw">withdraw</string>
     <string name="update">Update</string>
     <string name="search_here">search here..</string>
+    <string name="past_password">Past Password</string>
+    <string name="new_email">New Email</string>
+    <string name="old_email">Old Email</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 
 </resources>

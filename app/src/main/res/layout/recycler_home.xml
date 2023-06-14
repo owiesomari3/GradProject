@@ -7,7 +7,6 @@
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
-       android:numColumns="2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -126,12 +125,6 @@
                 android:layout_marginStart="10dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/rate"
-                    android:textColor="@color/green" />
 
                 <EditText
                     android:id="@+id/edit_rate"
@@ -144,13 +137,6 @@
                     android:stepSize="0.5"
                     android:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/tv_rate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:singleLine="true"
-                    android:textColor="@color/green" />
             </LinearLayout>
 
             <LinearLayout

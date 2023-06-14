@@ -7,32 +7,55 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
-
-<LinearLayout
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <EditText
-        android:id="@+id/fulNameETSearch"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_here"
-        android:drawableStart="@drawable/baseline_search_24"
-        android:inputType="text" />
-
-    <Button
-        android:id="@+id/btnSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:textAllCaps="false"
-        android:text="@string/search" />
-</LinearLayout>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_search_hungry"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/fulNameETSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/baseline_search_24"
+            android:hint="@string/search_here"
+            android:inputType="text" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:text="@string/search"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search_hungry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/not_found"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/notfound" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.text.Html
+import android.text.Layout
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.core.view.contains
+import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
+import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
@@ -53,6 +59,7 @@ class CustomAdapterFood(
                 }
             }
 
+
             if (screenSource == "offers_chef") {
                 addOffer.visibility = View.VISIBLE
                 addOffer.text = addOffer.context.getString(R.string.remove_from_offers)
@@ -79,19 +86,6 @@ class CustomAdapterFood(
                 }
             }
 
-            /* if (CacheManager.getUserType() == UserType.CHEF) {
-                 rateTv.visibility = View.GONE
-                 foodNameTv.visibility = View.GONE
-                 priceTv.visibility = View.GONE
-
-                 rateEditText.visibility = View.VISIBLE
-                 foodNameEditText.visibility = View.VISIBLE
-                 priceEditText.visibility = View.VISIBLE
-             }*/
-
-            // rateEditText.setText(data.rate.toString())
-            //  foodNameEditText.setText(data.familiar_name)
-
             if (screenSource == "offers_chef" || screenSource == "offers_hungry") {
                 priceEditText.setText(data.offerPrice)
                 priceTv.text = (data.offerPrice)
@@ -99,9 +93,7 @@ class CustomAdapterFood(
                 priceEditText.setText(data.price)
                 priceTv.text = (data.price)
             }
-            rateTv.text = (data.rate.toString())
             foodNameTv.text = (data.familiar_name)
-
 
             container.setOnClickListener {
                 callback.onItemClick(data)
@@ -116,6 +108,7 @@ class CustomAdapterFood(
                 priceTv.text = Html.fromHtml(delPriceValue, Html.FROM_HTML_MODE_COMPACT)
             }
         }
+
     }
 
     @SuppressLint("InflateParams")
@@ -158,8 +151,6 @@ class CustomAdapterFood(
         var foodNameTv: TextView
         var priceEditText: EditText
         var priceTv: TextView
-        var rateEditText: EditText
-        var rateTv: TextView
         var myImage: ImageView
         var container: CardView
         var addOffer: Button
@@ -168,12 +159,9 @@ class CustomAdapterFood(
         var offerPriceValue: TextView
         var priceTitle: TextView
 
-
         init {
             foodNameEditText = itemView.findViewById(R.id.edit_familiar_name)
             foodNameTv = itemView.findViewById(R.id.tv_familiar_name)
-            rateEditText = itemView.findViewById(R.id.edit_rate)
-            rateTv = itemView.findViewById(R.id.tv_rate)
             priceEditText = itemView.findViewById(R.id.edit_price)
             priceTv = itemView.findViewById(R.id.tv_price)
             myImage = itemView.findViewById(R.id.image_food)
@@ -183,6 +171,9 @@ class CustomAdapterFood(
             offerPriceTitle = itemView.findViewById(R.id.offer_price_title)
             offerPriceValue = itemView.findViewById(R.id.offer_price_value)
             priceTitle = itemView.findViewById(R.id.price_title)
+
+
+
 
         }
 

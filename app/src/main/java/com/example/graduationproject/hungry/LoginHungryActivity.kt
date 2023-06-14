@@ -8,10 +8,13 @@ import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.graduationproject.CacheManager
+import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.ActivityLoginHungryBinding
 import com.example.graduationproject.enums.UserType
+import org.json.JSONArray
+import org.json.JSONObject
 
 class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFocusChangeListener,
     View.OnKeyListener {
@@ -38,6 +41,8 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                     CacheManager.setUserType(UserType.HUNGRY)
                     CacheManager.setCurrentUser(it)
                     incorrectPassword.visibility = View.GONE
+                    checkAndSaveRememberMe()
+                    Storage.saveEmail(this@LoginHungryActivity, binding.etEmail.text.toString())
                     startActivity(
                         Intent(
                             this@LoginHungryActivity,
@@ -90,7 +95,6 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                             }
                         } else {
                             validEmail()
-
                         }
                     }
 
@@ -106,8 +110,41 @@ class LoginHungryActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         }
     }
 
-    override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-     return false
+    private fun checkAndSaveRememberMe() {
+        val jsonArray = Storage.getAlleRememberMe(this) ?: JSONArray()
+        if (jsonArray.length() == 0) {
+            val jsonObject = JSONObject()
+            jsonObject.put(Constants.REMEMBER_ME, binding.rememberMeHungry.isChecked.toString())
+            jsonObject.put(Constants.Email, binding.etEmail.text.toString())
+            jsonObject.put(Constants.USER_TYPE, UserType.HUNGRY.name)
+            jsonArray.put(jsonObject)
+        } else {
+            var isUserExist = false
+            var jsonObject = JSONObject()
+            for (i in 0 until jsonArray.length()) {
+                jsonObject = jsonArray.getJSONObject(i)
+                val email = jsonObject.get(Constants.Email)
+                if (email == binding.etEmail.text.toString()) {
+                    isUserExist = true
+                    break
+                }
+            }
+
+            if (isUserExist) {
+                jsonObject.put(Constants.REMEMBER_ME, binding.rememberMeHungry.isChecked.toString())
+            } else {
+                val newJsonObject = JSONObject()
+                newJsonObject.put(Constants.REMEMBER_ME, binding.rememberMeHungry.isChecked.toString())
+                newJsonObject.put(Constants.Email, binding.etEmail.text.toString())
+                newJsonObject.put(Constants.USER_TYPE, UserType.HUNGRY.name)
+                jsonArray.put(newJsonObject)
+            }
+        }
+
+        Storage.saveRememberMe(this, jsonArray)
     }
 
+    override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+        return false
+    }
 }

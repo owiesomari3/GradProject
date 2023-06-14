@@ -26,14 +26,13 @@ import org.json.JSONArray
 class AfterLoginChefActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAfterLoginChefBinding
-
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    @SuppressLint("MissingInflatedId", "ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = ActivityAfterLoginChefBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
+        binding = ActivityAfterLoginChefBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbarChef)
-
+        handleNavigationView()
         binding.apply {
             menuClick.setOnClickListener {
                 if (drawerLayoutChef.isDrawerOpen(GravityCompat.START))
@@ -60,11 +59,43 @@ class AfterLoginChefActivity : AppCompatActivity() {
             binding.drawerLayoutChef.addDrawerListener(toggle)
             toggle.syncState()
 
-            navView.setNavigationItemSelectedListener { menuItem ->
-                drawerLayoutChef.closeDrawer(GravityCompat.START)
+
+
+            fab.setOnClickListener {
+                // Perform action when FAB is clicked
+                showFabActions()
+            }
+        }
+
+        replaceFragment(HomeFragmentChef())
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.home_chef -> {
+                    replaceFragment(HomeFragmentChef())
+                }
+                R.id.order_chefs -> {
+                    replaceFragment(OrdersChefsFragment())
+                }
+                R.id.wallet_chef -> {
+                    replaceFragment(WalletChefFragment())
+                }
+                R.id.offers -> {
+                    replaceFragment(OffersChefsFragment())
+                }
+            }
+            true
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun handleNavigationView() {
+        binding.navView.apply {
+            setNavigationItemSelectedListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.nav_settings_chef -> {
-                        false
+                        binding.drawerLayoutChef.closeDrawer(GravityCompat.START)
+                        replaceFragment(SettingAccChefFragment())
+                        true
                     }
                     R.id.nav_share_chef -> {
                         val googlePlay = Intent()
@@ -91,37 +122,14 @@ class AfterLoginChefActivity : AppCompatActivity() {
                     }
 
                     R.id.nav_logout_chef -> {
-                        onBackPressed()
+                        checkAndSaveRememberMe()
+                        finish()
                         false
                     }
 
                     else -> false
                 }
             }
-
-            fab.setOnClickListener {
-                // Perform action when FAB is clicked
-                showFabActions()
-            }
-        }
-
-        replaceFragment(HomeFragmentChef())
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.home_chef -> {
-                    replaceFragment(HomeFragmentChef())
-                }
-                R.id.order_chefs -> {
-                    replaceFragment(OrdersChefsFragment())
-                }
-                R.id.wallet_chef -> {
-                    replaceFragment(WalletChefFragment())
-                }
-                R.id.offers -> {
-                    replaceFragment(OffersChefsFragment())
-                }
-            }
-            true
         }
     }
 
@@ -249,15 +257,26 @@ class AfterLoginChefActivity : AppCompatActivity() {
         fragmentTransaction.commit()
     }
 
-    private  fun getUserName():String{
+    private  fun getUserName():String {
         var userName = ""
-        val allUsers = Storage.getAllUsers(this)?: JSONArray()
-        for( i in 0 until  allUsers.length()){
+        val allUsers = Storage.getAllUsers(this) ?: JSONArray()
+        for (i in 0 until allUsers.length()) {
             val json = allUsers.getJSONObject(i)
-            if(json.getString(Constants.Email) == CacheManager.getCurrentUser()){
+            if (json.getString(Constants.Email) == CacheManager.getCurrentUser()) {
                 userName = json.getString(Constants.FULL_NAME)
             }
         }
         return userName
+    }
+
+    private fun checkAndSaveRememberMe() {
+        val jsonArray = Storage.getAlleRememberMe(this) ?: JSONArray()
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val email = jsonObject.get(Constants.Email)
+            if (email == CacheManager.getCurrentUser())
+                jsonObject.put(Constants.REMEMBER_ME, "false")
+        }
+        Storage.saveRememberMe(this, jsonArray)
     }
 }

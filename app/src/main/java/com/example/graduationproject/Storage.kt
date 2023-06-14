@@ -1,6 +1,5 @@
 package com.example.graduationproject
 
-import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
@@ -80,6 +79,7 @@ object Storage {
             null
         }
     }
+
     fun allOrder(context: Context): JSONArray? {
         val sharedPreferences = context.getSharedPreferences(
             Constants.ORDER,
@@ -132,5 +132,46 @@ object Storage {
                 return email
         }
         return null
+    }
+
+    fun saveRememberMe(context: Context, jsonArray: JSONArray) {
+        val jsonString = jsonArray.toString()
+        val sharedPreferences =
+            context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.REMEMBER_ME, jsonString)
+        editor.apply()
+    }
+
+    fun getAlleRememberMe(context: Context): JSONArray? {
+        val sharedPreferences = context.getSharedPreferences(
+            "mainSharedPrefs",
+            Context.MODE_PRIVATE
+        )
+        val jsonString = sharedPreferences.getString(Constants.REMEMBER_ME, null)
+        return if (jsonString != null) {
+            try {
+                JSONArray(jsonString)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
+        } else {
+            null
+        }
+    }
+
+    fun saveEmail(context: Context, email: String) {
+        val sharedPreferences =
+            context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.Email, email)
+        editor.apply()
+    }
+
+    fun getEmail(context: Context): String? {
+        val sharedPreferences =
+            context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.Email, null)
     }
 }

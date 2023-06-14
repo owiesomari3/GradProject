@@ -33,7 +33,6 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
                 e.printStackTrace()
             }
 
-            rate.text = data.rate
             familiarName.text = data.familiar_name
             price.text = data.price
             description.text = data.description
@@ -60,7 +59,6 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val familiarName: TextView
         var price: TextView
-        var rate: TextView
         var image: ImageView
         var description: TextView
         var chefEmail: TextView
@@ -72,7 +70,6 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
-            rate = itemView.findViewById(R.id.order_rate)
             chefEmail = itemView.findViewById(R.id.order_chefEmail)
             price = itemView.findViewById(R.id.order_price)
             quantity = itemView.findViewById(R.id.order_quantity)

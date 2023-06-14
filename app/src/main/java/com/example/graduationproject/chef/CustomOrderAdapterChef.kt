@@ -46,7 +46,6 @@ class CustomOrderAdapterChef(
                 e.printStackTrace()
             }
 
-            rate.text = data.rate
             familiarName.text = data.familiar_name
             price.text = data.price
             quantity.text = data.quantity
@@ -105,7 +104,6 @@ class CustomOrderAdapterChef(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val familiarName: TextView
         var price: TextView
-        var rate: TextView
         var image: ImageView
         var hungryEmail: TextView
         var quantity: TextView
@@ -119,7 +117,6 @@ class CustomOrderAdapterChef(
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
-            rate = itemView.findViewById(R.id.order_rate)
             status = itemView.findViewById(R.id.order_status)
             hungryEmail = itemView.findViewById(R.id.order_HungryEmail)
             price = itemView.findViewById(R.id.order_price)

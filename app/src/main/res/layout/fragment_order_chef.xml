@@ -6,9 +6,31 @@ android:layout_height="match_parent"
 android:paddingBottom="50dp"
 android:background="@color/white"
 android:orientation="vertical">
-
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/recycler_order_chef"
+<LinearLayout
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_order_chef"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
+    <LinearLayout
+        android:id="@+id/no_foods_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/noorder" />
+
+    </LinearLayout>
+
+
 </LinearLayout>

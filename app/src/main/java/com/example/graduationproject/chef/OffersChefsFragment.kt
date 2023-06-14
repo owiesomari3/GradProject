@@ -51,7 +51,6 @@ class OffersChefsFragment : Fragment() {
                             name,
                             price,
                             image,
-                            5.0,
                             description,
                             id,
                             chefEmail,
@@ -59,6 +58,10 @@ class OffersChefsFragment : Fragment() {
                         )
                     )
             }
+        }
+        if (offerFoods.isEmpty()) {
+            binding.noOffersLayout.visibility = View.VISIBLE
+            binding.mainLayout.visibility = View.GONE
         }
 
         offerAdapter = CustomAdapterFood(offerFoods, object : CustomAdapterFood.ItemClickInterface {

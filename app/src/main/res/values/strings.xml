@@ -19,7 +19,6 @@
     <string name="welcome_how_are_you_wish_you_are_fine">Welcome, how are you, wish you are fine</string>
     <string name="Welcome_we_have_been_waiting_for_you_for_a_long_time">Welcome, we have been waiting for you for a long time</string>
     <string name="my_rating">My Rating?</string>
-    <string name="would_you_like_to_rate_us_on_the_app_store">Would you like to rate us on the App Store?</string>
     <string name="add_the_food">Add the food..</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
@@ -63,7 +62,10 @@
     <string name="the_familiar_name">The familiar name:</string>
     <string name="the_description">Description:</string>
     <string name="chefEmail">Chef Email:</string>
-    <string name="the_rate">The Rate:</string>
+    <string name="rate">Rate</string>
+    <string name="the_rate">The Rate</string>
+    <string name="would_you_like_to_rate_us_on_the_app_store">Would you like to rate us on the app store?</string>
+
     <string name="price">price:</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="register">Register</string>
@@ -85,11 +87,10 @@
     <string name="add_from_use">Add from use :</string>
     <string name="SELECT_LANGUAGE">Select language</string>
     <string name="FULL_NAME_IS_REQUIRED">This field is required</string>
-    <string name="INCORRECT_USER_NAME_OR_PASSWORD">incorrect username or password</string>
+    <string name="INCORRECT_USER_NAME_OR_PASSWORD">incorrect email or password</string>
     <string name="open_nav" translatable="false">Open Navigation Drawer</string>
     <string name="close_nav" translatable="false">Close Navigation Drawer</string>
     <string name="todo">TODO</string>
-    <string name="rate">Rate:</string>
     <string name="familiar_name">Familiar Name :</string>
     <string name="Will_you_allow_me_access_to_the_camera">Will you allow me access to the camera</string>
     <string name="Will_you_allow_me_access_to_photo_library">Will you allow me access to the photo library?</string>
@@ -135,6 +136,11 @@
     <string name="withdraw">withdraw</string>
     <string name="update">Update</string>
     <string name="search_here">search here..</string>
+    <string name="past_password">Past Password</string>
+    <string name="new_email">New Email</string>
+    <string name="old_email">Old Email</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 
 
 </resources>

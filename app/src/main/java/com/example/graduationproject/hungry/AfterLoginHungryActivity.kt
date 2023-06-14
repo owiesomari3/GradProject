@@ -13,10 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.graduationproject.CacheManager
-import com.example.graduationproject.Constants
-import com.example.graduationproject.R
-import com.example.graduationproject.Storage
+import com.example.graduationproject.*
 import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
 import org.json.JSONArray
 
@@ -100,7 +97,10 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                         sendEmail(recipientEmail = "support@warth.com")
                     }
 
-                    R.id.nav_settings_hungry -> {}
+                    R.id.nav_settings_hungry -> {
+                        binding.drawerLayoutHungry.closeDrawer(GravityCompat.START)
+                        replaceFragment(SettingAccountFragment())
+                    }
 
                     R.id.home -> {}
 
@@ -124,7 +124,8 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                     }
 
                     R.id.nav_logout_hungry -> {
-                        onBackPressed()
+                        checkAndSaveRememberMe()
+                        finish()
                     }
 
                     else -> {}
@@ -151,5 +152,16 @@ class AfterLoginHungryActivity : AppCompatActivity() {
             }
         }
         return userName
+    }
+
+    private fun checkAndSaveRememberMe() {
+        val jsonArray = Storage.getAlleRememberMe(this) ?: JSONArray()
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val email = jsonObject.get(Constants.Email)
+            if (email == CacheManager.getCurrentUser())
+                jsonObject.put(Constants.REMEMBER_ME, "false")
+        }
+        Storage.saveRememberMe(this, jsonArray)
     }
 }
