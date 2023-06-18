@@ -41,23 +41,24 @@ class OffersHungryFragment : Fragment() {
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
                 if (jsonObject.getString(Constants.OFFER_PRICE) != "0")
-                    foods.add(
-                        DataFood(
-                            name,
-                            price,
-                            image,
-                            description,
-                            id,
-                            chefEmail,
-                            offersPrice
+                        foods.add(
+                            DataFood(
+                                name,
+                                price,
+                                image,
+                                description,
+                                id,
+                                chefEmail,
+                                offersPrice
+                            )
                         )
-                    )
             }
         }
         if (foods.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE
         }
+
         rvAdapter = CustomAdapterFood(foods, object : CustomAdapterFood.ItemClickInterface {
             @RequiresApi(Build.VERSION_CODES.TIRAMISU)
             override fun onItemClick(data: DataFood) {

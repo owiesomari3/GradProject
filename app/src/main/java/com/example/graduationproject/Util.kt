@@ -8,11 +8,11 @@ import java.util.*
 
 object Util {
 
-    fun currencyFormat(amount: String): String {
+    fun currencyFormat(amount: String?): String {
         val currencyCode = "JOD"
         val pattern = "#,##0.000"
         val dec = DecimalFormat(pattern, DecimalFormatSymbols(Locale.US))
-        val value = if (amount.isEmpty()) "" else dec.format(amount.toDouble())
+        val value = if (amount?.isEmpty() == true) "" else dec.format(amount?.toDouble())
         val symbol = Currency.getInstance(currencyCode).currencyCode
         return "$value $symbol"
     }

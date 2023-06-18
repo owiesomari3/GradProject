@@ -10,26 +10,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
 import com.example.graduationproject.Storage
-import com.example.graduationproject.databinding.FragmentOrderChefBinding
+import com.example.graduationproject.databinding.FragmentOrderHistoryBinding
 import com.example.graduationproject.enums.OrderStatus
 import org.json.JSONArray
 
-class OrdersChefsFragment : Fragment() {
+class OrderHistoryFragment : Fragment() {
 
-    private lateinit var binding: FragmentOrderChefBinding
-    private lateinit var orderAdapter: CustomOrderAdapterChef
+    private lateinit var binding: FragmentOrderHistoryBinding
+    private lateinit var orderAdapter: OrderHistoryAdapter
     private var dataOrder = ArrayList<OrderChef>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentOrderChefBinding.inflate(inflater, container, false)
+        binding = FragmentOrderHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val allOrders = Storage.allOrder(requireContext())
         val allFoods = Storage.getAllFoods(requireContext()) ?: JSONArray()
         allOrders?.let {
@@ -75,14 +75,19 @@ class OrdersChefsFragment : Fragment() {
                 }
             }
         }
-        val notCanceledOrders =
-            dataOrder.filter { it.orderStatus != OrderStatus.CANCELED.name && it.orderStatus != OrderStatus.DONE.name }
-        if (notCanceledOrders.isEmpty()) {
+
+        val canceledOrders = dataOrder.filter { it.orderStatus == OrderStatus.CANCELED.name || it.orderStatus == OrderStatus.DONE.name }
+
+        if (canceledOrders.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE
         }
 
-        orderAdapter = CustomOrderAdapterChef(dataOrder, activity as AppCompatActivity?)
+        orderAdapter = OrderHistoryAdapter(
+            canceledOrders as ArrayList<OrderChef>,
+            activity as AppCompatActivity?
+        )
+
         binding.recyclerOrderChef.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter

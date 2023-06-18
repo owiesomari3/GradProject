@@ -120,18 +120,20 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validFullName(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.fulNameETReg.text.toString()
-        val fullNamePattern = Regex("^[a-zA-Z ]+\$")
-        if (value.isEmpty())
+        val fullNamePattern = Regex("^[a-zA-Z\\p{IsArabic} ]+\$")
+        if (value.isEmpty()) {
             errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (!fullNamePattern.matches(value))
-            errorMessage =
-                getString(R.string.INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED)
+        } else if (!fullNamePattern.matches(value)) {
+            errorMessage = getString(R.string.INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED)
+        }
 
         if (errorMessage != null) {
             binding.fulNameTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
+        } else {
+            binding.fulNameTilReg.isErrorEnabled = false
         }
         return errorMessage == null
     }
@@ -139,16 +141,19 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validEmail(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.emailETReg.text.toString()
-        if (value.isEmpty())
-            errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches())
+        if (value.isEmpty()) {
+            errorMessage = getString(R.string.EMAIL_IS_REQUIRED)
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
             errorMessage = getString(R.string.EMAIL_ADDRESS_IS_INVALID)
+        }
 
         if (errorMessage != null) {
             binding.emailTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
+        } else {
+            binding.emailTilReg.isErrorEnabled = false
         }
         return errorMessage == null
     }
@@ -156,12 +161,12 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validPhone(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.phoneETReg.text.toString()
-        val phonePattern = Regex("^[+][0-9]{10,13}\$")
-        Log.d("owies", value)
-        if (value.isEmpty())
-            errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (!phonePattern.matches(value))
+        val phonePattern = Regex("^[+٠-٩0-9]{10,13}\$")
+        if (value.isEmpty()) {
+            errorMessage = getString(R.string.PHONE_IS_REQUIRED)
+        } else if (!phonePattern.matches(value)) {
             errorMessage = getString(R.string.Correct_Format92xxxxxxxxxx)
+        }
 
         if (errorMessage != null) {
             binding.phoneTilReg.apply {
@@ -177,29 +182,39 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validPass(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.passETReg.text.toString()
-        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (value.length < 8) errorMessage =
-            getString(R.string.PASSWORD_MUST_BE_8_CHARACTERS_LONG)
+        if (value.isEmpty()) {
+            errorMessage = getString(R.string.PASSWORD_IS_REQUIRED)
+        } else if (value.length < 8) {
+            errorMessage = getString(R.string.PASSWORD_MUST_BE_8_CHARACTERS_LONG)
+        }
+
         if (errorMessage != null) {
             binding.passTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
+        } else {
+            binding.passTilReg.isErrorEnabled = false
         }
         return errorMessage == null
     }
 
     private fun validateConf(): Boolean {
         var errorMessage: String? = null
-        val value: String = binding.passETReg.text.toString()
-        if (value.isEmpty()) errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
-        else if (value.length < 8) errorMessage =
-            getString(R.string.Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG)
+        val value: String = binding.confPassETReg.text.toString()
+        if (value.isEmpty()) {
+            errorMessage = getString(R.string.CONFIRM_PASSWORD_IS_REQUIRED)
+        } else if (value.length < 8) {
+            errorMessage = getString(R.string.CONFIRM_PASSWORD_MUST_BE_8_CHARACTERS_LONG)
+        }
+
         if (errorMessage != null) {
             binding.confPassTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
+        } else {
+            binding.confPassTilReg.isErrorEnabled = false
         }
         return errorMessage == null
     }
@@ -208,16 +223,21 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
         var errorMessage: String? = null
         val password: String = binding.passETReg.text.toString()
         val confirmPass: String = binding.confPassETReg.text.toString()
-        if (confirmPass != password) errorMessage =
-            getString(R.string.CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD)
+        if (confirmPass != password) {
+            errorMessage = getString(R.string.CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD)
+        }
+
         if (errorMessage != null) {
             binding.confPassTilReg.apply {
                 isErrorEnabled = true
                 error = errorMessage
             }
+        } else {
+            binding.confPassTilReg.isErrorEnabled = false
         }
         return errorMessage == null
     }
+
 
     override fun onClick(view: View?) {}
 

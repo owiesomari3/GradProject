@@ -17,6 +17,7 @@
         android:orientation="vertical">
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_chef"
+            app:menu="@menu/main_menu_chef"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/yallow"

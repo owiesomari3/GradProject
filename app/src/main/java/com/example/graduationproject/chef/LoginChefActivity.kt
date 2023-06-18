@@ -7,10 +7,7 @@ import android.util.Patterns
 import android.view.KeyEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import com.example.graduationproject.CacheManager
-import com.example.graduationproject.Constants
-import com.example.graduationproject.R
-import com.example.graduationproject.Storage
+import com.example.graduationproject.*
 import com.example.graduationproject.databinding.ActivityLoginChefBinding
 import com.example.graduationproject.enums.UserType
 import org.json.JSONArray
@@ -60,29 +57,39 @@ class LoginChefActivity : AppCompatActivity(), View.OnClickListener, View.OnFocu
             jsonObject.put(Constants.USER_TYPE, UserType.CHEF.name)
             jsonArray.put(jsonObject)
         } else {
-            var isUserExist = false
-            var jsonObject = JSONObject()
             for (i in 0 until jsonArray.length()) {
-                jsonObject = jsonArray.getJSONObject(i)
-                val email = jsonObject.get(Constants.Email)
-                if (email == binding.etEmail.text.toString()) {
-                    isUserExist = true
-                    break
+                val jsonObject = jsonArray.getJSONObject(i)
+                if (isUserFound())
+                    jsonObject.put(
+                        Constants.REMEMBER_ME,
+                        binding.remeberMerChef.isChecked.toString()
+                    )
+                else {
+                    val jsonObject2 = JSONObject()
+                    jsonObject2.put(
+                        Constants.REMEMBER_ME,
+                        binding.remeberMerChef.isChecked.toString()
+                    )
+                    jsonObject2.put(Constants.Email, binding.etEmail.text.toString())
+                    jsonObject2.put(Constants.USER_TYPE, UserType.CHEF.name)
+                    jsonArray.put(jsonObject2)
+                    jsonArray.put(jsonObject)
                 }
-            }
-
-            if (isUserExist) {
-                jsonObject.put(Constants.REMEMBER_ME, binding.remeberMerChef.isChecked.toString())
-            } else {
-                val newJsonObject = JSONObject()
-                newJsonObject.put(Constants.REMEMBER_ME, binding.remeberMerChef.isChecked.toString())
-                newJsonObject.put(Constants.Email, binding.etEmail.text.toString())
-                newJsonObject.put(Constants.USER_TYPE, UserType.CHEF.name)
-                jsonArray.put(newJsonObject)
             }
         }
 
         Storage.saveRememberMe(this, jsonArray)
+    }
+
+    private fun isUserFound(): Boolean {
+        var found = false
+        val jsonArray = Storage.getAlleRememberMe(this) ?: JSONArray()
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val email = jsonObject.get(Constants.Email)
+            if (email == binding.etEmail.text.toString()) found = true
+        }
+        return found
     }
 
     private fun validEmail(): Boolean {
@@ -128,7 +135,7 @@ class LoginChefActivity : AppCompatActivity(), View.OnClickListener, View.OnFocu
                                 tilEmail.isErrorEnabled = false
                             }
                         } else {
-                           validEmail()
+                            validEmail()
 
                         }
                     }
@@ -139,16 +146,24 @@ class LoginChefActivity : AppCompatActivity(), View.OnClickListener, View.OnFocu
                                 tilPass.isErrorEnabled = false
                             }
                         } else validPass()
-                        }
                     }
                 }
             }
         }
-
+    }
 
 
     override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
         return false
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        // Check if the current activity is the one you want to handle differently
+        // Perform custom back action for the selected activity
+        val intent = Intent(this, MainLogRegActivity::class.java)
+        startActivity(intent)
+        finish() // Optionally, you can finish the current activity
     }
 }
 

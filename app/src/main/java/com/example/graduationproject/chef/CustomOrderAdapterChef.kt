@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
@@ -47,55 +49,122 @@ class CustomOrderAdapterChef(
             }
 
             familiarName.text = data.familiar_name
-            price.text = data.price
+            price.text = Util.currencyFormat(data.price.toString())
             quantity.text = data.quantity
             hungryEmail.text = data.chefEmail
             phoneNumber.text = data.hungryPhone
             status.text = data.orderStatus
 
-            if (data.orderStatus == OrderStatus.COMPLETED.name||
-                data.orderStatus==OrderStatus.CANCELED.name) {
+            if (data.orderStatus == OrderStatus.CANCELED.name) {
+               /* btnAccept.visibility = View.GONE
+                btnCancel.visibility = View.GONE
+                cookingBtn.visibility = View.GONE
+                done.visibility = View.GONE*/
+                orderContainer.visibility = View.GONE
+            }
+
+            if (data.orderStatus == OrderStatus.COMPLETED.name) {
                 btnAccept.visibility = View.GONE
                 btnCancel.visibility = View.GONE
-                cooking_btn.visibility=View.GONE
+                cookingBtn.visibility = View.GONE
+                done.visibility = View.VISIBLE
             }
-            if(data.orderStatus==OrderStatus.CANCELED.name)
-                openLocation.visibility=View.GONE
-            if( data.orderStatus==OrderStatus.COOKING.name){
-                btnAccept.visibility=View.VISIBLE
-            btnCancel.visibility = View.GONE
-                cooking_btn.visibility=View.GONE
+
+            if (data.orderStatus == OrderStatus.CANCELED.name) openLocation.visibility = View.GONE
+
+            if (data.orderStatus == OrderStatus.COOKING.name) {
+                btnAccept.visibility = View.VISIBLE
+                btnCancel.visibility = View.GONE
+                cookingBtn.visibility = View.GONE
+                done.visibility = View.VISIBLE
             }
-            totalPrice.text =
-                (price.text.toString().toDouble() * quantity.text.toString().toDouble()).toString()
+
+            if (data.orderStatus == OrderStatus.DONE.name) {
+               /* btnAccept.visibility = View.GONE
+                btnCancel.visibility = View.GONE
+                cookingBtn.visibility = View.GONE
+                btnCancel.visibility = View.GONE
+                done.visibility = View.GONE
+                openLocation.visibility = View.GONE*/
+                orderContainer.visibility = View.GONE
+            }
+
+            if (data.orderStatus == OrderStatus.PENDING.name) {
+                btnAccept.visibility = View.VISIBLE
+                btnCancel.visibility = View.VISIBLE
+                cookingBtn.visibility = View.VISIBLE
+                btnCancel.visibility = View.VISIBLE
+                done.visibility = View.VISIBLE
+                openLocation.visibility = View.VISIBLE
+            }
+
+            totalPrice.text = Util.currencyFormat(
+                (data.price.toString().toDouble() * data.quantity.toString().toDouble()).toString()
+            )
+
             btnAccept.setOnClickListener {
                 changeOrderStatus(
                     OrderStatus.COMPLETED,
                     it.context,
-                    orderList[position].orderId,
-                    (price.text.toString().toDouble() * quantity.text.toString()
-                        .toDouble()).toString()
+                    orderList[position].orderId, ""
                 )
+                replaceFragment(OrdersChefsFragment(), null, activity)
             }
+
             btnCancel.setOnClickListener {
                 changeOrderStatus(
                     OrderStatus.CANCELED,
                     it.context,
                     orderList[position].orderId, ""
                 )
+               /* val jsonArray = Storage.allOrder(it.context) ?: JSONArray()
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    if (jsonObject.getString(Constants.ORDER_ID) == data.orderId) {
+                        jsonArray.remove(i)
+                        break
+                    }
+                }
+
+                saveAllOrder(it.context, jsonArray)*/
+                replaceFragment(OrdersChefsFragment(), null, activity)
+
             }
 
             openLocation.setOnClickListener {
                 replaceFragment(MapsFragment(), data, activity)
             }
-            cooking_btn.setOnClickListener {
+
+            cookingBtn.setOnClickListener {
                 changeOrderStatus(
                     OrderStatus.COOKING,
                     it.context,
                     orderList[position].orderId, ""
                 )
+                replaceFragment(OrdersChefsFragment(), null, activity)
             }
 
+            done.setOnClickListener {
+                changeOrderStatus(
+                    OrderStatus.DONE,
+                    it.context,
+                    orderList[position].orderId,
+                    (data.price.toString().toDouble() * data.quantity.toString().toDouble()).toString()
+                )
+
+             /*   Log.d("owies",data.orderId.toString())
+                val jsonArray = Storage.allOrder(it.context) ?: JSONArray()
+                for (i in 0 until jsonArray.length()) {
+                    val jsonObject = jsonArray.getJSONObject(i)
+                    if (jsonObject.getString(Constants.ORDER_ID) == data.orderId) {
+                        jsonArray.remove(i)
+                        break
+                    }
+                }
+
+                saveAllOrder(it.context, jsonArray)*/
+                replaceFragment(OrdersChefsFragment(), null, activity)
+            }
         }
     }
 
@@ -113,7 +182,9 @@ class CustomOrderAdapterChef(
         val btnCancel: Button
         val phoneNumber: TextView
         val openLocation: Button
-        val cooking_btn:Button
+        val cookingBtn: Button
+        val done: Button
+        val orderContainer : CardView
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -127,9 +198,9 @@ class CustomOrderAdapterChef(
             btnCancel = itemView.findViewById(R.id.Order_Cancel)
             phoneNumber = itemView.findViewById(R.id.phone_number)
             openLocation = itemView.findViewById(R.id.open_location)
-            cooking_btn = itemView.findViewById(R.id.cooking_btn)
-
-
+            cookingBtn = itemView.findViewById(R.id.cooking_btn)
+            done = itemView.findViewById(R.id.done)
+            orderContainer = itemView.findViewById(R.id.order_contener)
         }
     }
 
@@ -154,7 +225,7 @@ class CustomOrderAdapterChef(
             saveAllOrder(allOrders, context)
         }
 
-        if (s == OrderStatus.COMPLETED && isVisa) {
+        if (s == OrderStatus.DONE && isVisa) {
             val allWallets = Storage.getAllWallet(context) ?: JSONArray()
             if (allWallets.length() == 0) {
                 val json = JSONObject()
@@ -191,7 +262,8 @@ class CustomOrderAdapterChef(
             context,
             "Order has been cancelled successfully"
         )else if (s==OrderStatus.COOKING)Util.showToastMsg(context,"Order has been cooking")
-        else Util.showToastMsg(context, "Order Accepted successfully")
+        else if(s==OrderStatus.COMPLETED) Util.showToastMsg(context, "Order Accepted successfully")
+        else Util.showToastMsg(context,"Order Done  successfully")
     }
 
     private fun saveAllOrder(jsonArray: JSONArray, context: Context) {
@@ -211,11 +283,14 @@ class CustomOrderAdapterChef(
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    private fun replaceFragment(fragment: Fragment, data: OrderChef, activity: AppCompatActivity?) {
-        val data1 = Bundle()
-        data1.putString(Constants.LATITUDE, data.lat)
-        data1.putString(Constants.LONGITUDE, data.long)
-        fragment.arguments = data1
+    private fun replaceFragment(fragment: Fragment, data: OrderChef?, activity: AppCompatActivity?) {
+        data?.let {
+            val data1 = Bundle()
+            data1.putString(Constants.LATITUDE, data.lat)
+            data1.putString(Constants.LONGITUDE, data.long)
+            fragment.arguments = data1
+        }
+
         val fragmentManager = activity?.supportFragmentManager
         val fragmentTransaction = fragmentManager?.beginTransaction()
         fragmentTransaction?.replace(R.id.frame_layout_chef, fragment)

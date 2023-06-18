@@ -41,6 +41,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun navigateToTheCorrectActivity() {
+        var isUserFound = false
         val jsonArray = Storage.getAlleRememberMe(this) ?: JSONArray()
         if (jsonArray.length() == 0) {
             startActivity(Intent(this@SplashActivity, MainLogRegActivity::class.java))
@@ -49,6 +50,7 @@ class SplashActivity : AppCompatActivity() {
                 val jsonObject = jsonArray.getJSONObject(i)
                 val email = jsonObject.getString(Constants.Email)
                 if (email == Storage.getEmail(this)) {
+                    isUserFound = true
                     if (jsonObject.getString(Constants.REMEMBER_ME) == "true") {
                         CacheManager.setCurrentUser(email)
                         if (jsonObject.getString(Constants.USER_TYPE) == UserType.HUNGRY.name)
@@ -70,5 +72,8 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
+
+        if(!isUserFound)
+            startActivity(Intent(this@SplashActivity, MainLogRegActivity::class.java))
     }
 }

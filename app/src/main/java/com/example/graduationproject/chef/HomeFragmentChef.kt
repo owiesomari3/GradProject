@@ -6,12 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.graduationproject.CacheManager
-import com.example.graduationproject.Constants
-import com.example.graduationproject.R
-import com.example.graduationproject.Storage
+import com.example.graduationproject.*
 import com.example.graduationproject.databinding.FragmentHomeChefBinding
 import com.example.graduationproject.hungry.CustomAdapterFood
 import com.example.graduationproject.hungry.DataFood
@@ -30,6 +28,7 @@ class HomeFragmentChef : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val allFoods = Storage.getAllFoods(requireContext())
@@ -44,19 +43,20 @@ class HomeFragmentChef : Fragment() {
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offerPrice = jsonObject?.getString(Constants.OFFER_PRICE)
-
                 if (jsonObject.getString(Constants.CURRENT_CHEF) == CacheManager.getCurrentUser())
-                    foods.add(
-                        DataFood(
-                            name,
-                            price,
-                            image,
-                            description,
-                            id,
-                            chefEmail,
-                            offerPrice
+                    if (offerPrice != null) {
+                        foods.add(
+                            DataFood(
+                                name,
+                                price,
+                                image,
+                                description,
+                                id,
+                                chefEmail,
+                                offerPrice
+                            )
                         )
-                    )
+                    }
             }
         }
 
@@ -70,7 +70,7 @@ class HomeFragmentChef : Fragment() {
             override fun onItemClick(data: DataFood) {
                 replaceFragment(AfterSelectedItemChefFragment(), data)
             }
-        }, "chef")
+        }, "chef", activity = activity as AppCompatActivity?)
 
         binding.recyclerHomeChef.apply {
             layoutManager = LinearLayoutManager(requireContext())

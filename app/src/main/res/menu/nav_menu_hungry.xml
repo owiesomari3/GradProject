@@ -4,21 +4,19 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-
+        <item
+            android:id="@+id/nav_settings_hungry"
+            android:icon="@drawable/baseline_settings_24"
+            android:title="@string/settings_account" />
+        <item
+            android:id="@+id/nav_share_hungry"
+            android:icon="@drawable/baseline_share_24"
+            android:title="@string/share" />
         <item
             android:id="@+id/send_a_complaint_via_email"
             android:icon="@drawable/baseline_newspaper_24"
             android:title="@string/send_a_complaint_via_email" />
 
-        <item
-            android:id="@+id/nav_settings_hungry"
-            android:icon="@drawable/baseline_settings_24"
-            android:title="@string/settings_account" />
-
-        <item
-            android:id="@+id/nav_share_hungry"
-            android:icon="@drawable/baseline_share_24"
-            android:title="@string/share" />
 
     </group>
     <item android:title="">

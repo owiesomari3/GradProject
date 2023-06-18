@@ -19,6 +19,7 @@ object Constants {
     const val FULL_NAME = "Full Name"
     const val Email = "Email"
     const val Phone = "Phone"
+    const val PhoneChef = "PhoneChef"
     const val PASSWORD = "Password"
     const val USER_TYPE = "USER_TYPE"
     const val ORDER_LIST = "ORDER_LIST"
@@ -32,4 +33,5 @@ object Constants {
     const val LATITUDE = "latitude"
     const val LONGITUDE = "longitude"
     const val REMEMBER_ME = "REMEMBER_ME"
+    const val IS_ORDER_RATED = "IS_ORDER_RATED"
 }

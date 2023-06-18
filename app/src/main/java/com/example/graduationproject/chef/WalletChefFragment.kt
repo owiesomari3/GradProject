@@ -12,6 +12,7 @@ import com.example.graduationproject.Constants
 import com.example.graduationproject.Storage
 import com.example.graduationproject.Util
 import com.example.graduationproject.databinding.FragmentWalletChefBinding
+import com.example.graduationproject.enums.OrderStatus
 import org.json.JSONArray
 import org.json.JSONObject
 
@@ -50,12 +51,22 @@ class WalletChefFragment : Fragment() {
                 btnOk.isEnabled = WalletWithdrawMoney.text.toString().isNotEmpty()
             }
             WalletEmailChef.text = CacheManager.getCurrentUser()
-            if (balance == "") {
+            if (balance == "" || balance == "0") {
                 WalletBalance.text = Util.currencyFormat("0")
                 WalletWithdrawMoney.visibility = View.GONE
                 btnOk.visibility = View.GONE
                 withdrowText.visibility = View.GONE
-            } else WalletBalance.text = Util.currencyFormat(balance)
+            } else {
+                val allOrders = Storage.allOrder(requireContext())
+                if (allOrders != null) {
+                    for (position in 0 until allOrders.length()) {
+                        val jsonObjectOrder = allOrders.getJSONObject(position)
+                        val orderStatus = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
+                        if (OrderStatus.DONE.name == orderStatus)
+                            WalletBalance.text = Util.currencyFormat(balance)
+                    }
+                }
+            }
 
             btnOk.setOnClickListener {
                 if (WalletWithdrawMoney.text.toString()
@@ -66,7 +77,8 @@ class WalletChefFragment : Fragment() {
                 } else {
                     allWallet.remove(objectPosition)
                     val newBalance =
-                        balance.toDouble() - WalletWithdrawMoney.text.toString().toDouble()
+                        balance.toDouble() - WalletWithdrawMoney.text.toString()
+                            .toDouble()
                     balance = newBalance.toString()
                     val newObject = JSONObject()
                     newObject.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
@@ -74,9 +86,14 @@ class WalletChefFragment : Fragment() {
                     allWallet.put(newObject)
                     saveAllWallets(allWallet)
                     WalletBalance.text = newBalance.toString()
-                    Util.showToastMsg(requireContext(),"Your transaction has been submitted" )
+                    Util.showToastMsg(
+                        requireContext(),
+                        "Your transaction has been submitted"
+                    )
                     WalletWithdrawMoney.setText("")
                 }
+
+
             }
         }
     }

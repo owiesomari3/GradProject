@@ -7,10 +7,18 @@
     <string name="CONTINUE_WITH_FACEBOOK">إستمرار عبر فيسبوك</string>
     <string name="OR">أو</string>
     <string name="EMAIL">البريد الألكتروني</string>
+    <string name="Invalid_price_or_quantity">Invalid price or quantity</string>
     <string name="PASSWORD">كلمة المرور</string>
     <string name="KEEP_ME_LOGGED_IN">ابق متصلاً</string>
     <string name="FORGET_PASSWORD">نسيت كلمة المرور؟</string>
     <string name="WELCOME">مرحبا</string>
+    <string name="EMAIL_IS_REQUIRED" >Email is Required</string>
+    <string name="PHONE_IS_REQUIRED">Phone is required </string>
+    <string name="PASSWORD_IS_REQUIRED">Password is required </string>
+    <string name="remove_from_offers">Remove from offers</string>
+    <string name="offer_price">Offer Price :</string>
+    <string name="CONFIRM_PASSWORD_IS_REQUIRED"> Confirm password is required </string>
+    <string name="CONFIRM_PASSWORD_MUST_BE_8_CHARACTERS_LONG"> Confirm password must be 8 character long </string>
     <string name="you_have_come_to_us_as_the_sun_comes_to_light_the_world">لقد جئت الينا كما تأتي الشمس لتضئ الدنيا</string>
     <string name="welcome_how_are_you_wish_you_are_fine">مرحبا بك , كيف حالك , اتمنى ان تكون بخير</string>
     <string name="Welcome_we_have_been_waiting_for_you_for_a_long_time">اهلا بك ,لقد انتظرنا قدومك منذ وقت طويل</string>
@@ -131,5 +139,11 @@
     <string name="old_email">Old Email</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
+    <string name="done">Done</string>
+    <string name="your_rating_on_food">Your rating on food:</string>
+    <string name="submit">Submit</string>
+    <string name="chef_phone">Chef phone:</string>
+    <string name="delete">Delete</string>
+    <string name="offer_history">Delete</string>
 
 </resources>

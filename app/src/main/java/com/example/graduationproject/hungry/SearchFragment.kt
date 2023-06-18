@@ -3,11 +3,11 @@ package com.example.graduationproject.hungry
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.*
 import com.example.graduationproject.databinding.FragmentSearchBinding
@@ -74,7 +74,9 @@ class SearchFragment : Fragment() {
 
                     if (name.contains(query,  true)) {
                         val id = jsonObject.getString(Constants.FOOD_ID)
-                        val price = jsonObject.getString(Constants.PRICE)
+                        var price = jsonObject.getString(Constants.PRICE)
+                        var oferprice = jsonObject.getString(Constants.OFFER_PRICE)
+
                         val description = jsonObject.getString(Constants.DESCRIPTION)
                         val image = jsonObject.getString(Constants.IMAGE)
                         val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
@@ -83,7 +85,7 @@ class SearchFragment : Fragment() {
                         foods.add(
                             DataFood(
                                 name,
-                                price,
+                                if(oferprice == "0") price else oferprice,
                                 image,
                                 description,
                                 id,

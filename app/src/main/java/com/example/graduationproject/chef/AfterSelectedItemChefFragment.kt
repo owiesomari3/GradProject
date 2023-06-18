@@ -6,12 +6,14 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.graduationproject.Constants
 import com.example.graduationproject.R
 import com.example.graduationproject.Storage
+import com.example.graduationproject.Util
 import com.example.graduationproject.databinding.FragmentAfterSelectedItimeChefBinding
 import com.example.graduationproject.hungry.DataFood
 import org.json.JSONArray
@@ -51,6 +53,11 @@ class AfterSelectedItemChefFragment : Fragment() {
                 }
             }
             Storage.saveAllFoodsList(requireContext(), allFoods)
+            Toast.makeText(
+                context,
+                "Update the data Successfully",
+                Toast.LENGTH_LONG
+            ).show()
             replaceFragment(HomeFragmentChef())
         }
     }
@@ -60,7 +67,7 @@ class AfterSelectedItemChefFragment : Fragment() {
             editDescribtion.doOnTextChanged { _, _, _, _ ->
                 setButtonEnability()
             }
-            editDescribtion.doOnTextChanged { _, _, _, _ ->
+            editFamiliarName.doOnTextChanged { _, _, _, _ ->
                 setButtonEnability()
             }
         }
@@ -78,7 +85,7 @@ class AfterSelectedItemChefFragment : Fragment() {
         val bitmap = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
         binding.apply {
             imageFood.setImageBitmap(bitmap)
-            tvPrice.text = dataFood?.price
+            tvPrice.text =  Util.currencyFormat(dataFood?.price.toString())
         }
 
         binding.apply {

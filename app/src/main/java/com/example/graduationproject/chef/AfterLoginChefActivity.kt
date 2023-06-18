@@ -21,6 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.graduationproject.*
 import com.example.graduationproject.databinding.ActivityAfterLoginChefBinding
+import com.example.graduationproject.hungry.CartFragment
+import com.example.graduationproject.hungry.SearchFragment
 import org.json.JSONArray
 
 class AfterLoginChefActivity : AppCompatActivity() {
@@ -34,6 +36,19 @@ class AfterLoginChefActivity : AppCompatActivity() {
         setContentView(binding.root)
         handleNavigationView()
         binding.apply {
+            toolbarChef.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.order_history -> {
+                        replaceFragment(OrderHistoryFragment())
+                        true
+                    }
+                    else -> false
+                }
+            }
+
+
+
+
             menuClick.setOnClickListener {
                 if (drawerLayoutChef.isDrawerOpen(GravityCompat.START))
                     drawerLayoutChef.closeDrawer(GravityCompat.START)
@@ -97,6 +112,9 @@ class AfterLoginChefActivity : AppCompatActivity() {
                         replaceFragment(SettingAccChefFragment())
                         true
                     }
+
+
+
                     R.id.nav_share_chef -> {
                         val googlePlay = Intent()
                         googlePlay.apply {
@@ -116,6 +134,7 @@ class AfterLoginChefActivity : AppCompatActivity() {
 
                         true
                     }
+
                     R.id.send_us_an_email -> {
                         sendEmail(recipientEmail = "Warmth@team.com")
                         true
@@ -134,7 +153,7 @@ class AfterLoginChefActivity : AppCompatActivity() {
     }
 
     private fun sendEmail(
-        subject: String = "HungryWarmth",
+        subject: String = "ChefWarmth",
         body: String = "",
         recipientEmail: String
     ) {

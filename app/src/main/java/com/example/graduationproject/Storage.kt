@@ -162,8 +162,7 @@ object Storage {
     }
 
     fun saveEmail(context: Context, email: String) {
-        val sharedPreferences =
-            context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
+        val sharedPreferences = context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString(Constants.Email, email)
         editor.apply()
@@ -173,5 +172,12 @@ object Storage {
         val sharedPreferences =
             context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString(Constants.Email, null)
+    }
+
+     fun saveAllOrder(context: Context,jsonArray: JSONArray) {
+        val sharedPreferences = context.getSharedPreferences(Constants.ORDER, Context.MODE_PRIVATE)
+        val editor = sharedPreferences?.edit()
+        editor?.putString(Constants.ORDER_LIST, jsonArray.toString())
+        editor?.apply()
     }
 }

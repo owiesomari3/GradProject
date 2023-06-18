@@ -4,5 +4,6 @@ enum class OrderStatus {
     PENDING,
     CANCELED,
     COMPLETED,
-    COOKING
+    COOKING,
+    DONE
 }

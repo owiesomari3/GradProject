@@ -9,5 +9,10 @@
         android:id="@+id/offers_hungry"
         android:title="@string/offers"
         android:icon="@drawable/baseline_local_offer_24"/>
+    <item
+        android:id="@+id/order_history"
+        android:icon="@drawable/baseline_history_edu_24"
+        android:title="@string/offer_history" />
+
 
 </menu>

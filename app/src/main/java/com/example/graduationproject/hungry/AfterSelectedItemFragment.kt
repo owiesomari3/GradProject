@@ -47,23 +47,25 @@ class AfterSelectedItemFragment : Fragment() {
             setView(dialogView)
             setCancelable(false)
         }
+
         val alertDialog = alertDialogBuilder.create()
         dialogView.apply {
             val payBtn = findViewById<Button>(R.id.paymentButton)
             val cancelBtn = findViewById<Button>(R.id.cancelButton)
             alertDialog.apply {
                 payBtn?.setOnClickListener {
-                    dismiss()
                     jsonObject.put(Constants.PAYMENT_METHOD, PaymentMethods.VISA.name)
                     jsonArray.put(jsonObject)
                     saveAllOrder(jsonArray)
+                    dismiss() // Dismiss the dialog
                     replaceFragment(HomeFragmentHungry())
                 }
-                cancelBtn?.setOnClickListener { dismiss() }
+                cancelBtn?.setOnClickListener {
+                    dismiss() // Dismiss the dialog
+                }
             }.show()
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,7 +92,12 @@ class AfterSelectedItemFragment : Fragment() {
             imageFood.setImageBitmap(bitmap)
             tvFamiliarName.text = dataFood?.familiar_name
             tvDescribtion.text = dataFood?.description
-            tvPrice.text = dataFood?.price
+            val data = arguments?.getParcelable<DataFood>("food")
+            data?.let {
+                if (it.offerPrice == "0") tvPrice.text =
+                    Util.currencyFormat(dataFood?.price.toString()) else tvPrice.text =
+                    Util.currencyFormat(it.offerPrice!!)
+            }
         }
     }
 
@@ -162,23 +169,36 @@ class AfterSelectedItemFragment : Fragment() {
                     jsonObjectOrder.put(Constants.ORDER_STATUS, OrderStatus.PENDING.name)
                     jsonObjectOrder.put(Constants.LATITUDE, location.latitude.toString())
                     jsonObjectOrder.put(Constants.LONGITUDE, location.longitude.toString())
+                    jsonObjectOrder.put(Constants.IS_ORDER_RATED, "false")
+                    if (binding.editQuantity.text.toString() == "0") {
+                        Util.showToastMsg(
+                            requireContext(),
+                            "The value of the quantity must be greater than zero "
+                        )
+                        replaceFragment(HomeFragmentHungry())
+                    } else {
+                        val radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
+                        when (radioGroup.checkedRadioButtonId) {
+                            R.id.pay_cash -> {
+                                jsonObjectOrder.put(
+                                    Constants.PAYMENT_METHOD,
+                                    PaymentMethods.CASH.name
+                                )
+                                jsonArray.put(jsonObjectOrder)
+                                saveAllOrder(jsonArray)
+                                replaceFragment(HomeFragmentHungry())
+                            }
 
-                    val radioGroup = view.findViewById<RadioGroup>(R.id.radioGroup)
-                    when (radioGroup.checkedRadioButtonId) {
-                        R.id.pay_cash -> {
-                            jsonObjectOrder.put(Constants.PAYMENT_METHOD, PaymentMethods.CASH.name)
-                            jsonArray.put(jsonObjectOrder)
-                            saveAllOrder(jsonArray)
-                            replaceFragment(HomeFragmentHungry())
-                        }
-
-                        R.id.pay_visa -> {
-                            showDialogForVisaPayment(jsonObjectOrder, jsonArray)
+                            R.id.pay_visa -> {
+                                showDialogForVisaPayment(jsonObjectOrder, jsonArray)
+                            }
                         }
                     }
                 }
             }
-            .addOnFailureListener {}
+            .addOnFailureListener {
+                Util.showToastMsg(requireContext(), "Please turn on the location from settings")
+            }
     }
 
     companion object {

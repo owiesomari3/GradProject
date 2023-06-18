@@ -74,6 +74,7 @@ class AfterLoginHungryActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.home -> replaceFragment(HomeFragmentHungry())
                 R.id.offers_hungry -> replaceFragment(OffersHungryFragment())
+                R.id.order_history -> { replaceFragment(HistoryOrderFragment()) }
             }
             true
         }

@@ -43,7 +43,7 @@ class AddFoodFragment : Fragment() {
                 jsonObject.put(Constants.FOOD_ID, generateFoodId(jsonArray))
                 jsonObject.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
                 jsonObject.put(Constants.FAMILIAR_NAME, familiarName.text.toString())
-                jsonObject.put(Constants.PRICE, price.text.toString())
+                jsonObject.put(Constants.PRICE,price.text.toString())
                 jsonObject.put(Constants.DESCRIPTION, description.text.toString())
                 jsonObject.put(Constants.OFFER_PRICE, "0")
 

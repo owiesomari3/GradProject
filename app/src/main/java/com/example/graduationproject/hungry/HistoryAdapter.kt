@@ -1,21 +1,23 @@
 package com.example.graduationproject.hungry
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.BitmapFactory
-import android.os.Handler
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
 import com.example.graduationproject.enums.OrderStatus
 
-class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
-    RecyclerView.Adapter<CustomOrderAdapter.ViewHolder>() {
+class HistoryAdapter(
+    private val orderList: ArrayList<Order>,
+    private val activity: AppCompatActivity? = null
+) :
+    RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     @SuppressLint("InflateParams")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.recycle_order, parent, false)
@@ -32,58 +34,15 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
+            continer.visibility = View.VISIBLE
+            statusLayout.visibility = View.VISIBLE
             familiarName.text = data.familiar_name
             price.text = Util.currencyFormat(data.price.toString())
             description.text = data.description
             quantity.text = data.quantity
             chefEmail.text = data.chefEmail
             Phone.text = data.chefPhone
-
-            if (data.status == OrderStatus.PENDING.name) continer.visibility = View.VISIBLE
-
-            if (data.status == OrderStatus.COMPLETED.name) {
-                continerfinish.visibility = View.VISIBLE
-                continer.visibility = View.GONE
-                chef_email.text = data.chefEmail
-                chef_phone.text = data.chefPhone
-            }
-
-            if (data.status == OrderStatus.CANCELED.name) {
-                continer.visibility = View.GONE
-            }
-
-            if (data.status == OrderStatus.COOKING.name) {
-                continercooking.visibility = View.VISIBLE
-                continer.visibility = View.GONE
-                chef_email_cooking.text = data.chefEmail
-                chef_phone_cooking.text = data.chefPhone
-            }
-
-            if (data.status == OrderStatus.DONE.name && data.isOrderRated == "false") {
-                continerDone.visibility = View.VISIBLE
-                continer.visibility = View.GONE
-                submitBtn.setOnClickListener {
-                    rating_layout.visibility = View.GONE
-                    thx.visibility = View.VISIBLE
-                    Handler().postDelayed({ thx.visibility = View.GONE }, 10000)
-                    changeIsRating(data.orderId, it.context)
-                }
-            }
-
-            if (data.isOrderRated == "false") rating_layout.visibility = View.VISIBLE
-        }
-    }
-
-    private fun changeIsRating(orderId: String?, context: Context) {
-        val jsonArray = Storage.allOrder(context)
-        jsonArray?.let {
-            for (i in 0 until it.length()) {
-                val jsonObject = it.getJSONObject(i)
-                if (jsonObject.getString(Constants.ORDER_ID) == orderId)
-                    jsonObject.put(Constants.IS_ORDER_RATED, "true")
-            }
-            Storage.saveAllOrder(context, jsonArray)
+            statusValue.text = data.status
         }
     }
 
@@ -98,6 +57,7 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
         var quantity: TextView
         var continerfinish: CardView
         var continer: CardView
+        var continercancel: CardView
         var continercooking: CardView
         var continerDone: CardView
         var ratingBar: RatingBar
@@ -106,9 +66,13 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
         val thx: LinearLayout
         val chef_email: TextView
         val chef_phone: TextView
+        val chef_email_cancel: TextView
+        val chefPhoneCancel: TextView
         val chef_email_cooking: TextView
         val chef_phone_cooking: TextView
         val Phone: TextView
+        val statusLayout: LinearLayout
+        val statusValue: TextView
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -119,6 +83,7 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             description = itemView.findViewById(R.id.order_description)
             continerfinish = itemView.findViewById(R.id.finish)
             continer = itemView.findViewById(R.id.order)
+            continercancel = itemView.findViewById(R.id.continercancel)
             continercooking = itemView.findViewById(R.id.continercooking)
             continerDone = itemView.findViewById(R.id.continerDone)
             ratingBar = itemView.findViewById(R.id.ratingBar)
@@ -126,12 +91,14 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             rating_layout = itemView.findViewById(R.id.rating_layout)
             thx = itemView.findViewById(R.id.thx)
             chef_email = itemView.findViewById(R.id.chef_email)
+            chef_email_cancel = itemView.findViewById(R.id.chef_email_cancel)
+            chefPhoneCancel = itemView.findViewById(R.id.chef_phone_cancel)
             chef_phone = itemView.findViewById(R.id.chef_phone)
             chef_email_cooking = itemView.findViewById(R.id.chef_email_cooking)
             chef_phone_cooking = itemView.findViewById(R.id.chef_phone_cooking)
             Phone = itemView.findViewById(R.id.order_chefphone)
+            statusLayout = itemView.findViewById(R.id.status_layout)
+            statusValue = itemView.findViewById(R.id.status_value)
         }
     }
-
-
 }

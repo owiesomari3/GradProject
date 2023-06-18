@@ -6,7 +6,7 @@ import org.json.JSONObject
 @Parcelize
 data class OrderChef(
     var familiar_name: String?,
-    var price: String?,
+    var price:String ?,
     var image: String?,
     var foodId: String?,
     var chefEmail: String?,

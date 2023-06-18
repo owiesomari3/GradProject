@@ -1,5 +1,6 @@
 package com.example.graduationproject.hungry
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ class HomeFragmentHungry : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val allFoods = Storage.getAllFoods(requireContext())
@@ -40,17 +42,18 @@ class HomeFragmentHungry : Fragment() {
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
-                foods.add(
-                    DataFood(
-                        name,
-                        price,
-                        image,
-                        description,
-                        id,
-                        chefEmail,
-                        offersPrice
+                    foods.add(
+                        DataFood(
+                            name,
+                            price,
+                            image,
+                            description,
+                            id,
+                            chefEmail,
+                            offersPrice
+                        )
                     )
-                )
+
             }
         }
         if (foods.isEmpty()) {

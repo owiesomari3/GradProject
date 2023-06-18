@@ -4,18 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.graduationproject.*
-import com.example.graduationproject.databinding.FragmentCartBinding
+import com.example.graduationproject.CacheManager
+import com.example.graduationproject.Constants
+import com.example.graduationproject.Order
+import com.example.graduationproject.Storage
+import com.example.graduationproject.databinding.FragmentHistoryOrderBinding
 import com.example.graduationproject.enums.OrderStatus
 import org.json.JSONArray
 
-class CartFragment : Fragment() {
+class HistoryOrderFragment : Fragment() {
 
-    private lateinit var binding: FragmentCartBinding
-    private lateinit var orderAdapter: CustomOrderAdapter
+    private lateinit var binding: FragmentHistoryOrderBinding
+    private lateinit var orderAdapter: HistoryAdapter
     private var dataOrder = ArrayList<Order>()
 
     override fun onCreateView(
@@ -23,7 +26,7 @@ class CartFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentCartBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryOrderBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,15 +40,13 @@ class CartFragment : Fragment() {
                 val foodOrderId = jsonObjectOrder.getString(Constants.FOOD_ID)
                 val userEmail = jsonObjectOrder.getString(Constants.User)
                 val quantity = jsonObjectOrder?.getString(Constants.QUANTITY)
-                val orderId = jsonObjectOrder.getString(Constants.ORDER_ID)
-                val isOrderRated = jsonObjectOrder.getString(Constants.IS_ORDER_RATED)
-
                 if (CacheManager.getCurrentUser() == userEmail) {
                     for (i in 0 until allFoods.length()) {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
                         val foodId = jsonObjectDataFood?.getString(Constants.FOOD_ID)
                         if (foodOrderId == foodId) {
-                            val familiarName = jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
+                            val familiarName =
+                                jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
                             val price = jsonObjectDataFood?.getString(Constants.PRICE)
                             val offerPrice = jsonObjectDataFood?.getString(Constants.OFFER_PRICE)
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
@@ -57,16 +58,14 @@ class CartFragment : Fragment() {
                                 dataOrder.add(
                                     Order(
                                         familiarName,
-                                        if(offerPrice == "0") price.toDouble() else offerPrice?.toDouble(),
+                                        if (offerPrice == "0") price.toDouble() else offerPrice?.toDouble(),
                                         image,
                                         description,
                                         foodOrderId,
                                         chefEmail,
                                         quantity,
                                         status,
-                                        hungryPhone,
-                                        orderId,
-                                        isOrderRated
+                                        hungryPhone
                                     )
                                 )
                             }
@@ -76,29 +75,22 @@ class CartFragment : Fragment() {
             }
         }
 
-        val filteredData = dataOrder.filter { it.status!=OrderStatus.CANCELED.name && it.status !=OrderStatus.DONE.name }
-        if(filteredData.isEmpty()){
+        val canceledOrders =
+            dataOrder.filter { it.status == OrderStatus.CANCELED.name || it.status == OrderStatus.DONE.name }
+        if (canceledOrders.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE
         }
 
-        orderAdapter = CustomOrderAdapter(dataOrder)
+        orderAdapter = HistoryAdapter(
+            canceledOrders as ArrayList<Order>,
+            activity as AppCompatActivity?
+        )
+
         binding.recyclerOrderHungry.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter
         }
-
-        val onBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val fragmentManager = requireActivity().supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
-                val homeFragmentHungry = HomeFragmentHungry()
-                fragmentTransaction.replace(R.id.frame_layout_hungry, homeFragmentHungry)
-                fragmentTransaction.commit()
-            }
-        }
-
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     private fun getChefPhone(email: String?): String {

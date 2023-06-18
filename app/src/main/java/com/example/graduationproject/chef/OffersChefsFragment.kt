@@ -9,10 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.graduationproject.CacheManager
-import com.example.graduationproject.Constants
-import com.example.graduationproject.R
-import com.example.graduationproject.Storage
+import com.example.graduationproject.*
 import com.example.graduationproject.databinding.FragmentOffersChefsBinding
 import com.example.graduationproject.hungry.AfterSelectedItemFragment
 import com.example.graduationproject.hungry.CustomAdapterFood

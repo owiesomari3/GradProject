@@ -26,6 +26,7 @@
     <string name="about_us">About Us</string>
     <string name="logout">Logout</string>
     <string name="upload_a_video">Upload a video</string>
+    <string name="Invalid_price_or_quantity">Invalid price or quantity</string>
     <string name="upload_a_picture">Upload a picture</string>
     <string name="upload_image">Upload image</string>
     <string name="the_most_wanted">the most wanted</string>
@@ -66,11 +67,16 @@
     <string name="the_rate">The Rate</string>
     <string name="would_you_like_to_rate_us_on_the_app_store">Would you like to rate us on the app store?</string>
 
-    <string name="price">price:</string>
+    <string name="price">Price:</string>
+    <string name="EMAIL_IS_REQUIRED">Email is Required</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="register">Register</string>
     <string name="full_name">Full Name</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="PHONE_IS_REQUIRED">Phone is required </string>
+    <string name="PASSWORD_IS_REQUIRED">Password is required </string>
+    <string name="CONFIRM_PASSWORD_IS_REQUIRED"> Confirm password is required </string>
+    <string name="CONFIRM_PASSWORD_MUST_BE_8_CHARACTERS_LONG"> Confirm password must be 8 character long </string>
     <string name="send_us_an_email">Send us an email</string>
     <string name="send_a_complaint_via_email">Send a complaint via email</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
@@ -102,7 +108,7 @@
     <string name="EMAIL_ALREADY_REGISTERED">Email already registered</string>
     <string name="CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD">"Confirm password doesn't match with Password"</string>
     <string name="PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Password must be 8 characters long"</string>
-    <string name="Correct_Format92xxxxxxxxxx">Correct Format:+92xxxxxxxxxx</string>
+    <string name="Correct_Format92xxxxxxxxxx">Correct Format:+962xxxxxxxxx</string>
     <string name="Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Confirm Password must be 8 characters long"</string>
     <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
     <string name="hungry_email">Hungry Email:</string>
@@ -127,11 +133,11 @@
     <string name="withdraw_money">Withdraw money:</string>
     <string name="make_offers">Make offers</string>
     <string name="offers_price">Offers Price :</string>
-    <string name="add_offer">Add Offer</string>
+    <string name="add_offer">Add offer</string>
     <string name="remove_from_offers">Remove from offers</string>
     <string name="offer_price">Offer Price :</string>
     <string name="open_with_google_maps">Show directions</string>
-    <string name="open_location">OPen location</string>
+    <string name="open_location">Open location</string>
     <string name="cooking">Cooking</string>
     <string name="withdraw">withdraw</string>
     <string name="update">Update</string>
@@ -139,8 +145,14 @@
     <string name="past_password">Past Password</string>
     <string name="new_email">New Email</string>
     <string name="old_email">Old Email</string>
+
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
-
+    <string name="done">Done</string>
+    <string name="your_rating_on_food">Your rating on food:</string>
+    <string name="submit">Submit</string>
+    <string name="chef_phone">Chef phone:</string>
+    <string name="delete">Delete</string>
+    <string name="offer_history">Orders History</string>
 
 </resources>

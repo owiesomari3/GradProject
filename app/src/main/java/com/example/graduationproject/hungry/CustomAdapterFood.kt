@@ -4,28 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.text.Html
-import android.text.Layout
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.view.contains
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
-import androidx.core.view.size
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
+import com.example.graduationproject.chef.HomeFragmentChef
 import com.example.graduationproject.chef.OffersChefsFragment
+import org.json.JSONArray
 
 class CustomAdapterFood(
     private val foodList: ArrayList<DataFood>,
@@ -54,11 +47,24 @@ class CustomAdapterFood(
 
             if (data.offerPrice == "0" && screenSource == "chef") {
                 addOffer.visibility = View.VISIBLE
+                cancelOffer.visibility = View.VISIBLE
                 addOffer.setOnClickListener {
                     showDialogForOffer(itemView.context, data)
                 }
-            }
+                cancelOffer.setOnClickListener {
+                    val jsonArray = Storage.getAllFoods(it.context) ?: JSONArray()
+                    for (i in 0 until jsonArray.length()) {
+                        val jsonObject = jsonArray.getJSONObject(i)
+                        if (jsonObject.getString(Constants.FOOD_ID) == data.foodId) {
+                            jsonArray.remove(i)
+                            break
+                        }
+                    }
 
+                    Storage.saveAllFoodsList(it.context, jsonArray)
+                    replaceFragment(HomeFragmentChef())
+                }
+            }
 
             if (screenSource == "offers_chef") {
                 addOffer.visibility = View.VISIBLE
@@ -87,28 +93,29 @@ class CustomAdapterFood(
             }
 
             if (screenSource == "offers_chef" || screenSource == "offers_hungry") {
-                priceEditText.setText(data.offerPrice)
-                priceTv.text = (data.offerPrice)
+                priceEditText.setText(Util.currencyFormat(data.offerPrice.toString()))
+                priceTv.text = Util.currencyFormat(data.offerPrice.toString())
             } else {
-                priceEditText.setText(data.price)
-                priceTv.text = (data.price)
+                priceEditText.setText(data.price?.let { Util.currencyFormat(it) })
+                priceTv.text = Util.currencyFormat((data.price))
             }
-            foodNameTv.text = (data.familiar_name)
 
+            foodNameTv.text = (data.familiar_name)
+            destv.text = (data.description)
+            cheftv.text = (data.chefEmail)
             container.setOnClickListener {
                 callback.onItemClick(data)
             }
 
             if (screenSource == "offers_hungry") {
                 offerPriceContainer.visibility = View.VISIBLE
-                offerPriceValue.text = data.offerPrice
+                offerPriceValue.text = Util.currencyFormat(data.offerPrice.toString())
                 val delPrice = "<del>Price:</del>"
                 priceTitle.text = Html.fromHtml(delPrice, Html.FROM_HTML_MODE_COMPACT)
-                val delPriceValue = "<del>${data.price}</del>"
+                val delPriceValue = "<del>${Util.currencyFormat(data.price.toString())}</del>"
                 priceTv.text = Html.fromHtml(delPriceValue, Html.FROM_HTML_MODE_COMPACT)
             }
         }
-
     }
 
     @SuppressLint("InflateParams")
@@ -131,17 +138,42 @@ class CustomAdapterFood(
                         for (i in 0 until allFoods.length()) {
                             val offerObject = allFoods.getJSONObject(i)
                             val foodId = offerObject.getString(Constants.FOOD_ID)
+                            val price = offerObject.getString(Constants.PRICE)
                             if (foodId == data.foodId) {
-                                offerObject.put(Constants.OFFER_PRICE, offerPrice.text.toString())
-                                data.offerPrice = offerPrice.text.toString()
+                                val offerPriceValue = offerPrice.text.toString().toDoubleOrNull()
+                                val originalPriceValue = price.toDoubleOrNull()
+                                if (offerPriceValue == null || originalPriceValue == null) {
+                                    Toast.makeText(
+                                        context,
+                                        "Invalid offer price or original price",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    return@setOnClickListener
+                                } else if (offerPriceValue > originalPriceValue || offerPriceValue > originalPriceValue) {
+                                    Toast.makeText(
+                                        context,
+                                        "Offer price must be less than the original price",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    return@setOnClickListener
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "Offer price added successfully",
+                                        Toast.LENGTH_LONG
+                                    ).show()
+                                    offerObject.put(Constants.OFFER_PRICE, offerPriceValue)
+                                    data.offerPrice = offerPriceValue.toString()
+                                }
                             }
                         }
                         Storage.saveAllFoodsList(context, allFoods)
                     }
                 }
                 cancelBtn?.setOnClickListener { dismiss() }
-            }.show()
+            }
         }
+        alertDialog.show()
     }
 
     override fun getItemCount() = foodList.size
@@ -151,9 +183,15 @@ class CustomAdapterFood(
         var foodNameTv: TextView
         var priceEditText: EditText
         var priceTv: TextView
+        var editdes: EditText
+        var cheftdes: EditText
+        var destv: TextView
+        var cheftv: TextView
         var myImage: ImageView
         var container: CardView
+        var containerNoFood: CardView
         var addOffer: Button
+        var cancelOffer: Button
         var offerPriceContainer: View
         var offerPriceTitle: TextView
         var offerPriceValue: TextView
@@ -162,19 +200,21 @@ class CustomAdapterFood(
         init {
             foodNameEditText = itemView.findViewById(R.id.edit_familiar_name)
             foodNameTv = itemView.findViewById(R.id.tv_familiar_name)
+            editdes = itemView.findViewById(R.id.edit_des)
+            cheftdes = itemView.findViewById(R.id.cheftdes)
+            destv = itemView.findViewById(R.id.tv_des)
+            cheftv = itemView.findViewById(R.id.cheftv)
             priceEditText = itemView.findViewById(R.id.edit_price)
             priceTv = itemView.findViewById(R.id.tv_price)
             myImage = itemView.findViewById(R.id.image_food)
             container = itemView.findViewById(R.id.container_home)
+            containerNoFood = itemView.findViewById(R.id.container_no_food)
             addOffer = itemView.findViewById(R.id.add_offer)
+            cancelOffer = itemView.findViewById(R.id.Cancel_offer)
             offerPriceContainer = itemView.findViewById(R.id.offer_price_container)
             offerPriceTitle = itemView.findViewById(R.id.offer_price_title)
             offerPriceValue = itemView.findViewById(R.id.offer_price_value)
             priceTitle = itemView.findViewById(R.id.price_title)
-
-
-
-
         }
 
         fun replaceFragment(fragment: Fragment) {
@@ -188,5 +228,16 @@ class CustomAdapterFood(
     interface ItemClickInterface {
         fun onItemClick(data: DataFood)
     }
+
+    fun removeAllFood(context: Context) {
+        val sharedPreferences =
+            context.getSharedPreferences("mainSharedPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove("key_to_remove")
+        editor.apply()
+
+    }
+
+
 }
 
