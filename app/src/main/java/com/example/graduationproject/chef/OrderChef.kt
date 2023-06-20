@@ -14,6 +14,7 @@ data class OrderChef(
     var orderId: String?,
     var orderStatus: String?,
     var hungryPhone:String?,
+    var typePayment:String?,
     var lat: String? = null,
     var long: String? = null
     ) : Parcelable

@@ -46,6 +46,7 @@ class OrderHistoryAdapter(
             hungryEmail.text = data.chefEmail
             phoneNumber.text = data.hungryPhone
             status.text = data.orderStatus
+            Order_Type_payment.text=data.typePayment
             totalPrice.text = Util.currencyFormat(
                 (data.price.toString().toDouble() * data.quantity.toString().toDouble()).toString()
             )
@@ -68,6 +69,7 @@ class OrderHistoryAdapter(
         var quantity: TextView
         var status: TextView
         var totalPrice: TextView
+        var Order_Type_payment: TextView
         val btnAccept: Button
         val btnCancel: Button
         val phoneNumber: TextView
@@ -89,6 +91,7 @@ class OrderHistoryAdapter(
             cookingBtn = itemView.findViewById(R.id.cooking_btn)
             done = itemView.findViewById(R.id.done)
             open_location = itemView.findViewById(R.id.open_location)
+            Order_Type_payment = itemView.findViewById(R.id.Order_Type_payment)
         }
     }
 }

@@ -39,6 +39,7 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             quantity.text = data.quantity
             chefEmail.text = data.chefEmail
             Phone.text = data.chefPhone
+            order_status.text=data.status
 
             if (data.status == OrderStatus.PENDING.name) continer.visibility = View.VISIBLE
 
@@ -66,7 +67,7 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
                 submitBtn.setOnClickListener {
                     rating_layout.visibility = View.GONE
                     thx.visibility = View.VISIBLE
-                    Handler().postDelayed({ thx.visibility = View.GONE }, 10000)
+                    Handler().postDelayed({ thx.visibility = View.GONE }, 5000)
                     changeIsRating(data.orderId, it.context)
                 }
             }
@@ -109,6 +110,7 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
         val chef_email_cooking: TextView
         val chef_phone_cooking: TextView
         val Phone: TextView
+        val order_status:TextView
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -130,6 +132,7 @@ class CustomOrderAdapter(private val orderList: ArrayList<Order>) :
             chef_email_cooking = itemView.findViewById(R.id.chef_email_cooking)
             chef_phone_cooking = itemView.findViewById(R.id.chef_phone_cooking)
             Phone = itemView.findViewById(R.id.order_chefphone)
+            order_status = itemView.findViewById(R.id.order_status)
         }
     }
 

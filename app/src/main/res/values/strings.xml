@@ -59,7 +59,7 @@
     <string name="notification">Notification</string>
     <string name="vouchers">Vouchers</string>
     <string name="name">Name</string>
-    <string name="phone">Phone</string>
+    <string name="phone">Phone: </string>
     <string name="the_familiar_name">The familiar name:</string>
     <string name="the_description">Description:</string>
     <string name="chefEmail">Chef Email:</string>
@@ -108,7 +108,7 @@
     <string name="EMAIL_ALREADY_REGISTERED">Email already registered</string>
     <string name="CONFIRM_PASSWORD_DOESNOT_MATCH_WITH_PASSWORD">"Confirm password doesn't match with Password"</string>
     <string name="PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Password must be 8 characters long"</string>
-    <string name="Correct_Format92xxxxxxxxxx">Correct Format:+962xxxxxxxxx</string>
+    <string name="Correct_Format92xxxxxxxxxx">Correct Format:+962xxxxxxxx</string>
     <string name="Confirm_PASSWORD_MUST_BE_8_CHARACTERS_LONG">"Confirm Password must be 8 characters long"</string>
     <string name="INVALIDFULLNAMEONLYALPHABETICALCHARACTERSAREALLOWED">Invalid full name. Only alphabetical characters are allowed.</string>
     <string name="hungry_email">Hungry Email:</string>
@@ -154,5 +154,8 @@
     <string name="chef_phone">Chef phone:</string>
     <string name="delete">Delete</string>
     <string name="offer_history">Orders History</string>
+    <string name="order_status">Order status:</string>
+    <string name="payment_type">Payment type:</string>
+    <string name="payment_method">Payment method:</string>
 
 </resources>

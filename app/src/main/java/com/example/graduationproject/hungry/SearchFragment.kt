@@ -74,8 +74,8 @@ class SearchFragment : Fragment() {
 
                     if (name.contains(query,  true)) {
                         val id = jsonObject.getString(Constants.FOOD_ID)
-                        var price = jsonObject.getString(Constants.PRICE)
-                        var oferprice = jsonObject.getString(Constants.OFFER_PRICE)
+                        val price = jsonObject.getString(Constants.PRICE)
+                        val oferprice = jsonObject.getString(Constants.OFFER_PRICE)
 
                         val description = jsonObject.getString(Constants.DESCRIPTION)
                         val image = jsonObject.getString(Constants.IMAGE)

@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/green"
-                app:placeholderText="+92xxxxxxxxx"
+                app:placeholderText="+962xxxxxxxx"
                 android:textColorHighlight="@color/green"
                 android:textColorHint="@color/green"
                 android:textColorLink="@color/green"

@@ -54,7 +54,7 @@ class AfterSelectedItemFragment : Fragment() {
             val cancelBtn = findViewById<Button>(R.id.cancelButton)
             alertDialog.apply {
                 payBtn?.setOnClickListener {
-                    jsonObject.put(Constants.PAYMENT_METHOD, PaymentMethods.VISA.name)
+                    jsonObject.put(Constants.PAYMENT_METHOD, PaymentMethods.Visa.name)
                     jsonArray.put(jsonObject)
                     saveAllOrder(jsonArray)
                     dismiss() // Dismiss the dialog
@@ -182,7 +182,7 @@ class AfterSelectedItemFragment : Fragment() {
                             R.id.pay_cash -> {
                                 jsonObjectOrder.put(
                                     Constants.PAYMENT_METHOD,
-                                    PaymentMethods.CASH.name
+                                    PaymentMethods.Cash.name
                                 )
                                 jsonArray.put(jsonObjectOrder)
                                 saveAllOrder(jsonArray)

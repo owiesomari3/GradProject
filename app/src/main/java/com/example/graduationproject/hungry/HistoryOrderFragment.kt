@@ -32,6 +32,7 @@ class HistoryOrderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val allOrders = Storage.allOrder(requireContext())
         val allFoods = Storage.getAllFoods(requireContext()) ?: JSONArray()
         allOrders?.let {

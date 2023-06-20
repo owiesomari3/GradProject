@@ -120,7 +120,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
     private fun validFullName(): Boolean {
         var errorMessage: String? = null
         val value: String = binding.fulNameETReg.text.toString()
-        val fullNamePattern = Regex("^[a-zA-Z\\p{IsArabic} ]+\$")
+        val fullNamePattern = Regex("^[a-zA-Z]+\$")
         if (value.isEmpty()) {
             errorMessage = getString(R.string.FULL_NAME_IS_REQUIRED)
         } else if (!fullNamePattern.matches(value)) {

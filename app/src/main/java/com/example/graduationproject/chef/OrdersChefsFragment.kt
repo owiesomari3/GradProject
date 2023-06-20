@@ -4,14 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
+import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentOrderChefBinding
 import com.example.graduationproject.enums.OrderStatus
+import com.example.graduationproject.hungry.HomeFragmentHungry
 import org.json.JSONArray
 
 class OrdersChefsFragment : Fragment() {
@@ -42,6 +45,7 @@ class OrdersChefsFragment : Fragment() {
                 val userEmail = jsonObjectOrder?.getString(Constants.User)
                 val hungryPhone = getHungryPhone(userEmail)
                 val orderStatus = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
+                val payment = jsonObjectOrder?.getString(Constants.PAYMENT_METHOD)
                 val lat = jsonObjectOrder?.getString(Constants.LATITUDE)
                 val long = jsonObjectOrder?.getString(Constants.LONGITUDE)
                 if (CacheManager.getCurrentUser() == chefEmail) {
@@ -66,6 +70,7 @@ class OrdersChefsFragment : Fragment() {
                                     orderId,
                                     orderStatus,
                                     hungryPhone,
+                                    payment,
                                     lat,
                                     long
                                 )
@@ -87,6 +92,8 @@ class OrdersChefsFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter
         }
+
+
     }
 
     private fun getHungryPhone(email: String?): String {

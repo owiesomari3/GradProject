@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +53,8 @@ class CustomOrderAdapterChef(
             hungryEmail.text = data.chefEmail
             phoneNumber.text = data.hungryPhone
             status.text = data.orderStatus
+            Order_Type_payment.text=data.typePayment
+
 
             if (data.orderStatus == OrderStatus.CANCELED.name) {
                /* btnAccept.visibility = View.GONE
@@ -133,6 +134,7 @@ class CustomOrderAdapterChef(
 
             openLocation.setOnClickListener {
                 replaceFragment(MapsFragment(), data, activity)
+
             }
 
             cookingBtn.setOnClickListener {
@@ -181,6 +183,7 @@ class CustomOrderAdapterChef(
         val btnAccept: Button
         val btnCancel: Button
         val phoneNumber: TextView
+        val Order_Type_payment: TextView
         val openLocation: Button
         val cookingBtn: Button
         val done: Button
@@ -195,6 +198,7 @@ class CustomOrderAdapterChef(
             image = itemView.findViewById(R.id.order_image_food)
             totalPrice = itemView.findViewById(R.id.order_total)
             btnAccept = itemView.findViewById(R.id.Order_Accept)
+            Order_Type_payment = itemView.findViewById(R.id.Order_Type_payment)
             btnCancel = itemView.findViewById(R.id.Order_Cancel)
             phoneNumber = itemView.findViewById(R.id.phone_number)
             openLocation = itemView.findViewById(R.id.open_location)
@@ -219,7 +223,7 @@ class CustomOrderAdapterChef(
                 if (id == orderId) {
                     jsonObject.put(Constants.ORDER_STATUS, s.name)
                     val paymentMethod = jsonObject.get(Constants.PAYMENT_METHOD)
-                    isVisa = paymentMethod == PaymentMethods.VISA.name
+                    isVisa = paymentMethod == PaymentMethods.Visa.name
                 }
             }
             saveAllOrder(allOrders, context)

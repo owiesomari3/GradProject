@@ -75,8 +75,16 @@ class CartFragment : Fragment() {
                 }
             }
         }
+        val filteredData: ArrayList<Order> = ArrayList()
 
-        val filteredData = dataOrder.filter { it.status!=OrderStatus.CANCELED.name && it.status !=OrderStatus.DONE.name }
+        dataOrder.forEach {
+            if(it.status == OrderStatus.DONE.name && it.isOrderRated == "false") filteredData.add(it)
+        }
+
+        dataOrder.forEach {
+            if(it.status != OrderStatus.DONE.name && it.status != OrderStatus.CANCELED.name) filteredData.add(it)
+        }
+
         if(filteredData.isEmpty()){
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE

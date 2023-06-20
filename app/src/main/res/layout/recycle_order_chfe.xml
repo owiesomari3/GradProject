@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:orientation="vertical"
     android:background="@color/white">
@@ -83,6 +83,13 @@
                         android:layout_height="wrap_content"
                         android:text="@string/status"
                         android:textColor="@color/green" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/payment_method"
+                        android:textColor="@color/green" />
+
+
 
 
                 </LinearLayout>
@@ -133,7 +140,14 @@
 
                     <TextView
                         android:id="@+id/order_status"
+                        android:textAllCaps="false"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/green" />
+                    <TextView
+                        android:id="@+id/Order_Type_payment"
+                        android:layout_width="match_parent"
+                        android:textAllCaps="false"
                         android:layout_height="wrap_content"
                         android:textColor="@color/green" />
 
@@ -150,6 +164,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:layout_marginEnd="10dp"
                     android:id="@+id/cooking_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -162,6 +177,7 @@
                     android:textSize="20sp" />
 
                 <Button
+                    android:layout_marginStart="10dp"
                     android:id="@+id/Order_Accept"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -185,6 +201,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:layout_marginEnd="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -197,6 +214,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/size_text_small" />
             <Button
+                android:layout_marginStart="10dp"
                 android:id="@+id/done"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

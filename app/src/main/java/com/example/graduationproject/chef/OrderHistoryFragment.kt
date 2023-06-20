@@ -42,6 +42,7 @@ class OrderHistoryFragment : Fragment() {
                 val userEmail = jsonObjectOrder?.getString(Constants.User)
                 val hungryPhone = getHungryPhone(userEmail)
                 val orderStatus = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
+                val Order_Type_payment = jsonObjectOrder?.getString(Constants.PAYMENT_METHOD)
                 val lat = jsonObjectOrder?.getString(Constants.LATITUDE)
                 val long = jsonObjectOrder?.getString(Constants.LONGITUDE)
                 if (CacheManager.getCurrentUser() == chefEmail) {
@@ -66,6 +67,7 @@ class OrderHistoryFragment : Fragment() {
                                     orderId,
                                     orderStatus,
                                     hungryPhone,
+                                    Order_Type_payment,
                                     lat,
                                     long
                                 )

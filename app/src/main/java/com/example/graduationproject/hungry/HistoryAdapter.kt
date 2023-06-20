@@ -34,6 +34,7 @@ class HistoryAdapter(
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            bug.visibility=View.GONE
             continer.visibility = View.VISIBLE
             statusLayout.visibility = View.VISIBLE
             familiarName.text = data.familiar_name
@@ -64,6 +65,7 @@ class HistoryAdapter(
         var submitBtn: Button
         val rating_layout: LinearLayout
         val thx: LinearLayout
+        val bug: LinearLayout
         val chef_email: TextView
         val chef_phone: TextView
         val chef_email_cancel: TextView
@@ -75,6 +77,7 @@ class HistoryAdapter(
         val statusValue: TextView
 
         init {
+            bug = itemView.findViewById(R.id.bug)
             familiarName = itemView.findViewById(R.id.order_familiar_name)
             chefEmail = itemView.findViewById(R.id.order_chefEmail)
             price = itemView.findViewById(R.id.order_price)

@@ -7,8 +7,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.example.graduationproject.R
 import com.example.graduationproject.databinding.FragmentMapsBinding
+import com.example.graduationproject.hungry.HomeFragmentHungry
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -58,6 +61,19 @@ class MapsFragment : Fragment() {
                 startActivity(intent)
            // }
         }
+
+
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                val fragmentManager = requireActivity().supportFragmentManager
+                val fragmentTransaction = fragmentManager.beginTransaction()
+                val ordersChefsFragment = OrdersChefsFragment()
+                fragmentTransaction.replace(R.id.frame_layout_chef, ordersChefsFragment)
+                fragmentTransaction.commit()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, onBackPressedCallback)
     }
 
     override fun onResume() {

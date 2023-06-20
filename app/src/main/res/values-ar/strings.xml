@@ -145,5 +145,7 @@
     <string name="chef_phone">Chef phone:</string>
     <string name="delete">Delete</string>
     <string name="offer_history">Delete</string>
+    <string name="order_status">Order status:</string>
+    <string name="payment_method">Payment method:</string>
 
 </resources>
