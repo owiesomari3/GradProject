@@ -34,4 +34,5 @@ object Constants {
     const val LONGITUDE = "longitude"
     const val REMEMBER_ME = "REMEMBER_ME"
     const val IS_ORDER_RATED = "IS_ORDER_RATED"
+    const val IS_PAYMENT = "IS_PAYMENT"
 }

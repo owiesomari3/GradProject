@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.*
@@ -38,8 +39,7 @@ class CartFragment : Fragment() {
                 val userEmail = jsonObjectOrder.getString(Constants.User)
                 val quantity = jsonObjectOrder?.getString(Constants.QUANTITY)
                 val orderId = jsonObjectOrder.getString(Constants.ORDER_ID)
-                val isOrderRated = jsonObjectOrder.getString(Constants.IS_ORDER_RATED)
-
+                val payment = jsonObjectOrder.getString(Constants.PAYMENT_METHOD)
                 if (CacheManager.getCurrentUser() == userEmail) {
                     for (i in 0 until allFoods.length()) {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
@@ -57,7 +57,7 @@ class CartFragment : Fragment() {
                                 dataOrder.add(
                                     Order(
                                         familiarName,
-                                        if(offerPrice == "0") price.toDouble() else offerPrice?.toDouble(),
+                                        if (offerPrice == "0") price.toDouble() else offerPrice?.toDouble(),
                                         image,
                                         description,
                                         foodOrderId,
@@ -66,7 +66,7 @@ class CartFragment : Fragment() {
                                         status,
                                         hungryPhone,
                                         orderId,
-                                        isOrderRated
+                                        payment,
                                     )
                                 )
                             }
@@ -78,19 +78,19 @@ class CartFragment : Fragment() {
         val filteredData: ArrayList<Order> = ArrayList()
 
         dataOrder.forEach {
-            if(it.status == OrderStatus.DONE.name && it.isOrderRated == "false") filteredData.add(it)
+            if (it.status != OrderStatus.CompletedVisa.name
+                && it.status != OrderStatus.Canceled.name
+                && it.status != OrderStatus.CompletedCash.name
+            )
+                filteredData.add(it)
         }
 
-        dataOrder.forEach {
-            if(it.status != OrderStatus.DONE.name && it.status != OrderStatus.CANCELED.name) filteredData.add(it)
-        }
-
-        if(filteredData.isEmpty()){
+        if (filteredData.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE
         }
 
-        orderAdapter = CustomOrderAdapter(dataOrder)
+        orderAdapter = CustomOrderAdapter(filteredData, activity as AppCompatActivity?)
         binding.recyclerOrderHungry.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter

@@ -41,17 +41,18 @@ class OffersHungryFragment : Fragment() {
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
                 if (jsonObject.getString(Constants.OFFER_PRICE) != "0")
-                        foods.add(
-                            DataFood(
-                                name,
-                                price,
-                                image,
-                                description,
-                                id,
-                                chefEmail,
-                                offersPrice
-                            )
+                    foods.add(
+                        DataFood(
+                            name,
+                            price,
+                            image,
+                            description,
+                            id,
+                            chefEmail,
+                            offersPrice,
+
                         )
+                    )
             }
         }
         if (foods.isEmpty()) {

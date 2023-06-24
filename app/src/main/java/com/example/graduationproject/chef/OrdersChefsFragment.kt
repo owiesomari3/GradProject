@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.graduationproject.CacheManager
 import com.example.graduationproject.Constants
-import com.example.graduationproject.R
 import com.example.graduationproject.Storage
 import com.example.graduationproject.databinding.FragmentOrderChefBinding
 import com.example.graduationproject.enums.OrderStatus
-import com.example.graduationproject.hungry.HomeFragmentHungry
 import org.json.JSONArray
 
 class OrdersChefsFragment : Fragment() {
@@ -36,7 +33,7 @@ class OrdersChefsFragment : Fragment() {
         val allOrders = Storage.allOrder(requireContext())
         val allFoods = Storage.getAllFoods(requireContext()) ?: JSONArray()
         allOrders?.let {
-            for (position in allOrders.length() - 1 downTo 0) {
+            for (position in 0 until allOrders.length()) {
                 val jsonObjectOrder = allOrders.getJSONObject(position)
                 val orderId = jsonObjectOrder.getString(Constants.ORDER_ID)
                 val foodOrderId = jsonObjectOrder.getString(Constants.FOOD_ID)
@@ -53,11 +50,9 @@ class OrdersChefsFragment : Fragment() {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
                         val foodId = jsonObjectDataFood?.getString(Constants.FOOD_ID)
                         if (foodOrderId == foodId) {
-                            val familiarName =
-                                jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
+                            val familiarName = jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
                             val price = jsonObjectDataFood?.getString(Constants.PRICE)
                             val offerPrice = jsonObjectDataFood?.getString(Constants.OFFER_PRICE)
-
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
                             dataOrder.add(
                                 OrderChef(
@@ -80,20 +75,28 @@ class OrdersChefsFragment : Fragment() {
                 }
             }
         }
+
+
         val notCanceledOrders =
-            dataOrder.filter { it.orderStatus != OrderStatus.CANCELED.name && it.orderStatus != OrderStatus.DONE.name }
+            dataOrder.filter {
+                it.orderStatus != OrderStatus.Canceled.name
+                        && it.orderStatus != OrderStatus.Completed.name
+                        && it.orderStatus != OrderStatus.CompletedCash.name
+                        && it.orderStatus != OrderStatus.CompletedVisa.name
+            }
+
         if (notCanceledOrders.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE
         }
 
-        orderAdapter = CustomOrderAdapterChef(dataOrder, activity as AppCompatActivity?)
+
+        orderAdapter = CustomOrderAdapterChef(notCanceledOrders as ArrayList<OrderChef>, activity as AppCompatActivity?)
         binding.recyclerOrderChef.apply {
+            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = orderAdapter
         }
-
-
     }
 
     private fun getHungryPhone(email: String?): String {

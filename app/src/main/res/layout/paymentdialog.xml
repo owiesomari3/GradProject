@@ -80,17 +80,7 @@
             android:textAllCaps="false"
             android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/cancelButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@color/red"
-            android:paddingStart="24dp"
-            android:paddingEnd="24dp"
-            android:text="Cancel"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

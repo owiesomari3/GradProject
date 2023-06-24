@@ -76,12 +76,10 @@ class SearchFragment : Fragment() {
                         val id = jsonObject.getString(Constants.FOOD_ID)
                         val price = jsonObject.getString(Constants.PRICE)
                         val oferprice = jsonObject.getString(Constants.OFFER_PRICE)
-
                         val description = jsonObject.getString(Constants.DESCRIPTION)
                         val image = jsonObject.getString(Constants.IMAGE)
                         val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                         val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
-
                         foods.add(
                             DataFood(
                                 name,
@@ -90,7 +88,8 @@ class SearchFragment : Fragment() {
                                 description,
                                 id,
                                 chefEmail,
-                                offersPrice
+                                offersPrice,
+
                             )
                         )
                     }

@@ -19,9 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
 import com.example.graduationproject.enums.OrderStatus
-import com.example.graduationproject.enums.PaymentMethods
 import org.json.JSONArray
-import org.json.JSONObject
 
 class CustomOrderAdapterChef(
     private val orderList: ArrayList<OrderChef>,
@@ -53,118 +51,80 @@ class CustomOrderAdapterChef(
             hungryEmail.text = data.chefEmail
             phoneNumber.text = data.hungryPhone
             status.text = data.orderStatus
-            Order_Type_payment.text=data.typePayment
+            Order_Type_payment.text = data.typePayment
 
-
-            if (data.orderStatus == OrderStatus.CANCELED.name) {
-               /* btnAccept.visibility = View.GONE
-                btnCancel.visibility = View.GONE
-                cookingBtn.visibility = View.GONE
-                done.visibility = View.GONE*/
-                orderContainer.visibility = View.GONE
-            }
-
-            if (data.orderStatus == OrderStatus.COMPLETED.name) {
-                btnAccept.visibility = View.GONE
-                btnCancel.visibility = View.GONE
-                cookingBtn.visibility = View.GONE
-                done.visibility = View.VISIBLE
-            }
-
-            if (data.orderStatus == OrderStatus.CANCELED.name) openLocation.visibility = View.GONE
-
-            if (data.orderStatus == OrderStatus.COOKING.name) {
-                btnAccept.visibility = View.VISIBLE
-                btnCancel.visibility = View.GONE
-                cookingBtn.visibility = View.GONE
-                done.visibility = View.VISIBLE
-            }
-
-            if (data.orderStatus == OrderStatus.DONE.name) {
-               /* btnAccept.visibility = View.GONE
-                btnCancel.visibility = View.GONE
-                cookingBtn.visibility = View.GONE
-                btnCancel.visibility = View.GONE
-                done.visibility = View.GONE
-                openLocation.visibility = View.GONE*/
-                orderContainer.visibility = View.GONE
-            }
-
-            if (data.orderStatus == OrderStatus.PENDING.name) {
-                btnAccept.visibility = View.VISIBLE
+            if (data.orderStatus == OrderStatus.Pending.name) {
+                btnOnTheWay.visibility = View.VISIBLE
                 btnCancel.visibility = View.VISIBLE
                 cookingBtn.visibility = View.VISIBLE
-                btnCancel.visibility = View.VISIBLE
-                done.visibility = View.VISIBLE
+                btnCompleted.visibility = View.VISIBLE
                 openLocation.visibility = View.VISIBLE
+            }
+
+            if (data.orderStatus == OrderStatus.Canceled.name) {
+                orderContainer.visibility = View.GONE
+            }
+
+            if (data.orderStatus == OrderStatus.Cooking.name) {
+                btnCancel.visibility = View.GONE
+                cookingBtn.visibility = View.GONE
+            }
+
+            if (data.orderStatus == OrderStatus.OnTheWay.name) {
+                cookingBtn.visibility = View.GONE
+                btnOnTheWay.visibility = View.GONE
+                btnCancel.visibility = View.GONE
+            }
+
+            if (data.orderStatus == OrderStatus.CompletedCash.name) {
+                orderContainer.visibility = View.GONE
+            }
+
+            if (data.orderStatus == OrderStatus.CompletedVisa.name) {
+                orderContainer.visibility = View.GONE
             }
 
             totalPrice.text = Util.currencyFormat(
                 (data.price.toString().toDouble() * data.quantity.toString().toDouble()).toString()
             )
 
-            btnAccept.setOnClickListener {
+            btnOnTheWay.setOnClickListener {
                 changeOrderStatus(
-                    OrderStatus.COMPLETED,
+                    OrderStatus.OnTheWay,
                     it.context,
-                    orderList[position].orderId, ""
+                    orderList[position].orderId
                 )
                 replaceFragment(OrdersChefsFragment(), null, activity)
             }
 
             btnCancel.setOnClickListener {
                 changeOrderStatus(
-                    OrderStatus.CANCELED,
+                    OrderStatus.Canceled,
                     it.context,
-                    orderList[position].orderId, ""
+                    orderList[position].orderId
                 )
-               /* val jsonArray = Storage.allOrder(it.context) ?: JSONArray()
-                for (i in 0 until jsonArray.length()) {
-                    val jsonObject = jsonArray.getJSONObject(i)
-                    if (jsonObject.getString(Constants.ORDER_ID) == data.orderId) {
-                        jsonArray.remove(i)
-                        break
-                    }
-                }
-
-                saveAllOrder(it.context, jsonArray)*/
                 replaceFragment(OrdersChefsFragment(), null, activity)
-
             }
 
             openLocation.setOnClickListener {
                 replaceFragment(MapsFragment(), data, activity)
-
             }
 
             cookingBtn.setOnClickListener {
                 changeOrderStatus(
-                    OrderStatus.COOKING,
+                    OrderStatus.Cooking,
                     it.context,
-                    orderList[position].orderId, ""
+                    orderList[position].orderId
                 )
                 replaceFragment(OrdersChefsFragment(), null, activity)
             }
 
-            done.setOnClickListener {
+            btnCompleted.setOnClickListener {
                 changeOrderStatus(
-                    OrderStatus.DONE,
+                    OrderStatus.Completed,
                     it.context,
-                    orderList[position].orderId,
-                    (data.price.toString().toDouble() * data.quantity.toString().toDouble()).toString()
+                    orderList[position].orderId
                 )
-
-             /*   Log.d("owies",data.orderId.toString())
-                val jsonArray = Storage.allOrder(it.context) ?: JSONArray()
-                for (i in 0 until jsonArray.length()) {
-                    val jsonObject = jsonArray.getJSONObject(i)
-                    if (jsonObject.getString(Constants.ORDER_ID) == data.orderId) {
-                        jsonArray.remove(i)
-                        break
-                    }
-                }
-
-                saveAllOrder(it.context, jsonArray)*/
                 replaceFragment(OrdersChefsFragment(), null, activity)
             }
         }
@@ -180,14 +140,14 @@ class CustomOrderAdapterChef(
         var quantity: TextView
         var status: TextView
         var totalPrice: TextView
-        val btnAccept: Button
+        val btnOnTheWay: Button
         val btnCancel: Button
         val phoneNumber: TextView
         val Order_Type_payment: TextView
         val openLocation: Button
         val cookingBtn: Button
-        val done: Button
-        val orderContainer : CardView
+        val btnCompleted: Button
+        val orderContainer: CardView
 
         init {
             familiarName = itemView.findViewById(R.id.order_familiar_name)
@@ -197,13 +157,13 @@ class CustomOrderAdapterChef(
             quantity = itemView.findViewById(R.id.order_quantity)
             image = itemView.findViewById(R.id.order_image_food)
             totalPrice = itemView.findViewById(R.id.order_total)
-            btnAccept = itemView.findViewById(R.id.Order_Accept)
+            btnOnTheWay = itemView.findViewById(R.id.Order_Accept)
             Order_Type_payment = itemView.findViewById(R.id.Order_Type_payment)
             btnCancel = itemView.findViewById(R.id.Order_Cancel)
             phoneNumber = itemView.findViewById(R.id.phone_number)
             openLocation = itemView.findViewById(R.id.open_location)
             cookingBtn = itemView.findViewById(R.id.cooking_btn)
-            done = itemView.findViewById(R.id.done)
+            btnCompleted = itemView.findViewById(R.id.completedBTN)
             orderContainer = itemView.findViewById(R.id.order_contener)
         }
     }
@@ -212,62 +172,27 @@ class CustomOrderAdapterChef(
         s: OrderStatus,
         context: Context,
         orderId: String?,
-        totalPrice: String?
     ) {
         val allOrders = Storage.allOrder(context)
-        var isVisa = false
         allOrders?.let {
             for (i in 0 until it.length()) {
                 val jsonObject = allOrders.getJSONObject(i)
                 val id = jsonObject.getString(Constants.ORDER_ID)
                 if (id == orderId) {
                     jsonObject.put(Constants.ORDER_STATUS, s.name)
-                    val paymentMethod = jsonObject.get(Constants.PAYMENT_METHOD)
-                    isVisa = paymentMethod == PaymentMethods.Visa.name
                 }
             }
             saveAllOrder(allOrders, context)
         }
 
-        if (s == OrderStatus.DONE && isVisa) {
-            val allWallets = Storage.getAllWallet(context) ?: JSONArray()
-            if (allWallets.length() == 0) {
-                val json = JSONObject()
-                json.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
-                json.put(Constants.BALANCE, totalPrice)
-                allWallets.put(json)
-            } else {
-                var isUserFound = false
-                for (i in 0 until allWallets.length()) {
-                    val json = allWallets.getJSONObject(i)
-                    val email = json.get(Constants.CURRENT_CHEF)
-                    if (email == CacheManager.getCurrentUser()) {
-                        isUserFound = true
-                        var oldBalance = json.get(Constants.BALANCE).toString().toDouble()
-                        oldBalance += totalPrice?.toDouble()!!
-                        json.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
-                        json.put(Constants.BALANCE, oldBalance.toString())
-                        allWallets.remove(i)
-                        allWallets.put(json)
-                    }
-                }
-
-                if (!isUserFound) {
-                    val json = JSONObject()
-                    json.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
-                    json.put(Constants.BALANCE, totalPrice)
-                    allWallets.put(json)
-                }
-            }
-            saveAllWallets(context, allWallets)
+        val statusMessage: String = when (s) {
+            OrderStatus.Canceled -> "Order has been cancelled successfully"
+            OrderStatus.Cooking -> "Order is being cooked"
+            OrderStatus.OnTheWay -> "Order is on the way to the hungry"
+            else -> "Order completed successfully"
         }
 
-        if (s == OrderStatus.CANCELED) Util.showToastMsg(
-            context,
-            "Order has been cancelled successfully"
-        )else if (s==OrderStatus.COOKING)Util.showToastMsg(context,"Order has been cooking")
-        else if(s==OrderStatus.COMPLETED) Util.showToastMsg(context, "Order Accepted successfully")
-        else Util.showToastMsg(context,"Order Done  successfully")
+        Util.showToastMsg(context, statusMessage)
     }
 
     private fun saveAllOrder(jsonArray: JSONArray, context: Context) {
@@ -275,15 +200,6 @@ class CustomOrderAdapterChef(
         val editor = sharedPreferences?.edit()
         editor?.putString(Constants.ORDER_LIST, jsonArray.toString())
         editor?.apply()
-    }
-
-    private fun saveAllWallets(context: Context, jsonArray: JSONArray) {
-        val jsonString = jsonArray.toString()
-        val sharedPreferences =
-            context.getSharedPreferences(Constants.WALLET, Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putString(Constants.WALLET_List, jsonString)
-        editor.apply()
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)

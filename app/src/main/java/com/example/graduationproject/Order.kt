@@ -14,5 +14,6 @@ data class Order(
     var status: String?,
     var chefPhone: String?,
     var orderId: String? = null,
-    var isOrderRated: String? = null,
+  //  var ispayment: String? = null,
+    var payment_method:String?
 ) : Parcelable

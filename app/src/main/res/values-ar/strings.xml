@@ -147,5 +147,13 @@
     <string name="offer_history">Delete</string>
     <string name="order_status">Order status:</string>
     <string name="payment_method">Payment method:</string>
+    <string name="completed">COMPLETED</string>
+    <string name="deposit_money">Deposit money</string>
+    <string name="successfully_delivered">successfully delivered</string>
+    <string name="on_my_way">on my way</string>
+    <string name="is_it_paid">Is it paid?</string>
+    <string name="yes">Yes</string>
+    <string name="on_the_way">On the way</string>
+    <string name="of_course">Of course</string>
 
 </resources>

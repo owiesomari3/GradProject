@@ -10,9 +10,7 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.RadioGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
@@ -38,33 +36,6 @@ class AfterSelectedItemFragment : Fragment() {
     ): View {
         binding = FragmentAfterSelectedItemBinding.inflate(inflater, container, false)
         return binding.root
-    }
-
-    @SuppressLint("InflateParams")
-    private fun showDialogForVisaPayment(jsonObject: JSONObject, jsonArray: JSONArray) {
-        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.paymentdialog, null)
-        val alertDialogBuilder = AlertDialog.Builder(requireContext()).apply {
-            setView(dialogView)
-            setCancelable(false)
-        }
-
-        val alertDialog = alertDialogBuilder.create()
-        dialogView.apply {
-            val payBtn = findViewById<Button>(R.id.paymentButton)
-            val cancelBtn = findViewById<Button>(R.id.cancelButton)
-            alertDialog.apply {
-                payBtn?.setOnClickListener {
-                    jsonObject.put(Constants.PAYMENT_METHOD, PaymentMethods.Visa.name)
-                    jsonArray.put(jsonObject)
-                    saveAllOrder(jsonArray)
-                    dismiss() // Dismiss the dialog
-                    replaceFragment(HomeFragmentHungry())
-                }
-                cancelBtn?.setOnClickListener {
-                    dismiss() // Dismiss the dialog
-                }
-            }.show()
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -166,7 +137,8 @@ class AfterSelectedItemFragment : Fragment() {
                     jsonObjectOrder.put(Constants.CURRENT_CHEF, dataFood?.chefEmail)
                     jsonObjectOrder.put(Constants.User, CacheManager.getCurrentUser())
                     jsonObjectOrder.put(Constants.QUANTITY, binding.editQuantity.text.toString())
-                    jsonObjectOrder.put(Constants.ORDER_STATUS, OrderStatus.PENDING.name)
+                    jsonObjectOrder.put(Constants.PAYMENT_METHOD,dataFood?.payment )
+                    jsonObjectOrder.put(Constants.ORDER_STATUS, OrderStatus.Pending.name)
                     jsonObjectOrder.put(Constants.LATITUDE, location.latitude.toString())
                     jsonObjectOrder.put(Constants.LONGITUDE, location.longitude.toString())
                     jsonObjectOrder.put(Constants.IS_ORDER_RATED, "false")
@@ -190,7 +162,13 @@ class AfterSelectedItemFragment : Fragment() {
                             }
 
                             R.id.pay_visa -> {
-                                showDialogForVisaPayment(jsonObjectOrder, jsonArray)
+                                jsonObjectOrder.put(
+                                    Constants.PAYMENT_METHOD,
+                                    PaymentMethods.Visa.name
+                                )
+                                jsonArray.put(jsonObjectOrder)
+                                saveAllOrder(jsonArray)
+                                replaceFragment(HomeFragmentHungry())
                             }
                         }
                     }

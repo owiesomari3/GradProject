@@ -62,7 +62,7 @@ class WalletChefFragment : Fragment() {
                     for (position in 0 until allOrders.length()) {
                         val jsonObjectOrder = allOrders.getJSONObject(position)
                         val orderStatus = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
-                        if (OrderStatus.DONE.name == orderStatus)
+                        if (OrderStatus.CompletedVisa.name == orderStatus)
                             WalletBalance.text = Util.currencyFormat(balance)
                     }
                 }
@@ -85,7 +85,7 @@ class WalletChefFragment : Fragment() {
                     newObject.put(Constants.BALANCE, newBalance.toString())
                     allWallet.put(newObject)
                     saveAllWallets(allWallet)
-                    WalletBalance.text = newBalance.toString()
+                    WalletBalance.text = Util.currencyFormat(newBalance.toString())
                     Util.showToastMsg(
                         requireContext(),
                         "Your transaction has been submitted"

@@ -43,7 +43,7 @@ class AddFoodFragment : Fragment() {
                 jsonObject.put(Constants.FOOD_ID, generateFoodId(jsonArray))
                 jsonObject.put(Constants.CURRENT_CHEF, CacheManager.getCurrentUser())
                 jsonObject.put(Constants.FAMILIAR_NAME, familiarName.text.toString())
-                jsonObject.put(Constants.PRICE,price.text.toString())
+                jsonObject.put(Constants.PRICE, price.text.toString())
                 jsonObject.put(Constants.DESCRIPTION, description.text.toString())
                 jsonObject.put(Constants.OFFER_PRICE, "0")
 
@@ -66,10 +66,12 @@ class AddFoodFragment : Fragment() {
         return if (jsonArray.length() == 0) {
             1
         } else {
-            val jsonObject=  jsonArray.getJSONObject(jsonArray.length()-1)//get last object in the array
-            jsonObject.getInt(Constants.FOOD_ID) +1
+            val jsonObject =
+                jsonArray.getJSONObject(jsonArray.length() - 1)//get last object in the array
+            jsonObject.getInt(Constants.FOOD_ID) + 1
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = activity?.supportFragmentManager
@@ -77,9 +79,10 @@ class AddFoodFragment : Fragment() {
         fragmentTransaction?.replace(R.id.frame_layout_chef, fragment)
         fragmentTransaction?.commit()
     }
+
     private fun setUpEditFields() {
         binding.apply {
-            familiarName.doOnTextChanged  { _, _ ,_,_->
+            familiarName.doOnTextChanged { _, _, _, _ ->
                 setButtonEnability()
             }
             price.doOnTextChanged { _, _, _, _ ->
@@ -90,11 +93,37 @@ class AddFoodFragment : Fragment() {
             }
         }
     }
+
     private fun setButtonEnability() {
         binding.apply {
+            familiarName.apply {
+                error = if (text.isEmpty()) {
+                    "Please enter a familiar name"
+                } else {
+                    null
+                }
+            }
+
+            price.apply {
+                error = if (text.isEmpty()) {"Please enter price"
+                } else {
+                    null
+                }
+            }
+
+            description.apply {
+                error = if (text.isEmpty()) {
+                    "Please enter description"
+                } else {
+                    null
+                }
+            }
+
             save.isEnabled =
-                familiarName.text.isNotEmpty()==true && description.text.isNotEmpty() == true
-                        && price.text.toString().toDouble()>0==true
+                familiarName.text.isNotEmpty() && description.text.isNotEmpty() && price.text.toString()
+                    .toDouble() > 0
         }
     }
+
 }
+

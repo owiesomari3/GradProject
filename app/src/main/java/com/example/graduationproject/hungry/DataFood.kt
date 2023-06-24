@@ -11,5 +11,6 @@ data class DataFood(
     var description: String,
     var foodId: String,
     var chefEmail: String,
-    var offerPrice: String?
+    var offerPrice: String?,
+    var payment:String?=null
 ) : Parcelable

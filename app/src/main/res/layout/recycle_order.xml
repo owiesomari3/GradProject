@@ -205,12 +205,31 @@
                         android:textColor="@color/green" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/payment_method"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:id="@+id/order_payment_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/green" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/finish"
+        android:id="@+id/delevr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -228,7 +247,6 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
@@ -245,6 +263,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/chef_phone"
+                    android:textColor="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/familiar_name"
                     android:textColor="@color/green" />
             </LinearLayout>
 
@@ -268,11 +293,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/green" />
+
+                <TextView
+                    android:id="@+id/familir_n_drive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/green" />
             </LinearLayout>
         </LinearLayout>
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:id="@+id/animationBee"
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -281,77 +313,6 @@
             app:lottie_rawRes="@raw/delivery" />
 
 
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/continercancel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        app:cardCornerRadius="15dp"
-        app:cardElevation="12dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/chef_email"
-                    android:textColor="@color/green" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/chef_phone"
-                    android:textColor="@color/green" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/chef_email_cancel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/green" />
-
-                <TextView
-                    android:id="@+id/chef_phone_cancel"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/green" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/cancel" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -390,6 +351,13 @@
                     android:layout_weight="1"
                     android:text="@string/chef_phone"
                     android:textColor="@color/green" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/familiar_name"
+                    android:textColor="@color/green" />
             </LinearLayout>
 
             <LinearLayout
@@ -411,11 +379,18 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/green" />
+
+                <TextView
+                    android:id="@+id/fami_name_cooking"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/green" />
             </LinearLayout>
         </LinearLayout>
 
         <com.airbnb.lottie.LottieAnimationView
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             app:lottie_autoPlay="true"
@@ -426,7 +401,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/continerDone"
+        android:id="@+id/continerCompleted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -437,13 +412,91 @@
         app:cardElevation="12dp">
 
         <LinearLayout
+            android:id="@+id/com_pay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/payment_method"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/total_price"
+                        android:textColor="@color/green" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/pay_method"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:id="@+id/total"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/green" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/payment" />
+
+            <Button
+                android:id="@+id/DepositBTN"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/border"
+                android:backgroundTint="#924f9b"
+                android:text="@string/deposit_money"
+                android:textColor="@color/white"
+                android:textSize="@dimen/size_text_small" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/rating_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="gone"
             android:padding="10dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -477,6 +530,7 @@
             android:id="@+id/thx"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:visibility="gone">
 
             <com.airbnb.lottie.LottieAnimationView
@@ -485,6 +539,109 @@
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/thx" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cash_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/payment_method"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/total_price"
+                        android:textColor="@color/green" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/pay_method_cash"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:id="@+id/total_cash"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/green" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/cash" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
+                        android:text="@string/did_you_pay_cash"
+                        android:textColor="@color/green"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/ofCoursBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/border"
+                        android:backgroundTint="#A76F6F"
+                        android:text="@string/of_course"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/size_text_small" />
+
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
 

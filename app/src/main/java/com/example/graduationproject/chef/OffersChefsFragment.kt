@@ -41,6 +41,7 @@ class OffersChefsFragment : Fragment() {
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offerPrice = jsonObject.getString(Constants.OFFER_PRICE)
+
                 if (jsonObject.getString(Constants.CURRENT_CHEF) == CacheManager.getCurrentUser()
                     &&jsonObject.getString(Constants.OFFER_PRICE) !="0")
                     offerFoods.add(
@@ -51,7 +52,7 @@ class OffersChefsFragment : Fragment() {
                             description,
                             id,
                             chefEmail,
-                            offerPrice
+                            offerPrice,
                         )
                     )
             }

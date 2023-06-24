@@ -14,6 +14,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.graduationproject.*
+import com.example.graduationproject.chef.SettingAccChefFragment
 import com.example.graduationproject.databinding.ActivityAfterLoginHungryBinding
 import org.json.JSONArray
 
@@ -90,20 +91,16 @@ class AfterLoginHungryActivity : AppCompatActivity() {
          startActivity(intent)
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun handleNavigationView() {
         binding.navView.apply {
-            setNavigationItemSelectedListener {
-                when (it.itemId) {
-                    R.id.send_a_complaint_via_email -> {
-                        sendEmail(recipientEmail = "support@warth.com")
-                    }
-
-                    R.id.nav_settings_hungry -> {
+            setNavigationItemSelectedListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.nav_settings_chef -> {
                         binding.drawerLayoutHungry.closeDrawer(GravityCompat.START)
-                        replaceFragment(SettingAccountFragment())
+                        replaceFragment(SettingAccChefFragment())
+                        true
                     }
-
-                    R.id.home -> {}
 
                     R.id.nav_share_hungry -> {
                         val googlePlay = Intent()
@@ -122,20 +119,25 @@ class AfterLoginHungryActivity : AppCompatActivity() {
                             )
                         }
 
+                        true
+                    }
+
+                    R.id.send_a_complaint_via_email -> {
+                        sendEmail(recipientEmail = "Warmth@team.com")
+                        true
                     }
 
                     R.id.nav_logout_hungry -> {
                         checkAndSaveRememberMe()
                         finish()
+                        false
                     }
 
-                    else -> {}
+                    else -> false
                 }
-                true
             }
         }
     }
-
     private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()

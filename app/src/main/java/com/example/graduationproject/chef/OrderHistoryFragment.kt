@@ -33,8 +33,7 @@ class OrderHistoryFragment : Fragment() {
         val allOrders = Storage.allOrder(requireContext())
         val allFoods = Storage.getAllFoods(requireContext()) ?: JSONArray()
         allOrders?.let {
-            for (position in allOrders.length() - 1 downTo 0) {
-                val jsonObjectOrder = allOrders.getJSONObject(position)
+            for (position in allOrders.length() - 1 downTo 0) {  val jsonObjectOrder = allOrders.getJSONObject(position)
                 val orderId = jsonObjectOrder.getString(Constants.ORDER_ID)
                 val foodOrderId = jsonObjectOrder.getString(Constants.FOOD_ID)
                 val chefEmail = jsonObjectOrder?.getString(Constants.CURRENT_CHEF)
@@ -50,11 +49,9 @@ class OrderHistoryFragment : Fragment() {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
                         val foodId = jsonObjectDataFood?.getString(Constants.FOOD_ID)
                         if (foodOrderId == foodId) {
-                            val familiarName =
-                                jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
+                            val familiarName =jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
                             val price = jsonObjectDataFood?.getString(Constants.PRICE)
                             val offerPrice = jsonObjectDataFood?.getString(Constants.OFFER_PRICE)
-
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
                             dataOrder.add(
                                 OrderChef(
@@ -78,7 +75,11 @@ class OrderHistoryFragment : Fragment() {
             }
         }
 
-        val canceledOrders = dataOrder.filter { it.orderStatus == OrderStatus.CANCELED.name || it.orderStatus == OrderStatus.DONE.name }
+        val canceledOrders = dataOrder.filter {
+                   it.orderStatus == OrderStatus.Canceled.name
+                || it.orderStatus == OrderStatus.CompletedVisa.name
+                || it.orderStatus==OrderStatus.CompletedCash.name
+        }
 
         if (canceledOrders.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE

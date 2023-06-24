@@ -30,9 +30,10 @@ class HistoryOrderFragment : Fragment() {
         return binding.root
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val allOrders = Storage.allOrder(requireContext())
         val allFoods = Storage.getAllFoods(requireContext()) ?: JSONArray()
         allOrders?.let {
@@ -41,13 +42,13 @@ class HistoryOrderFragment : Fragment() {
                 val foodOrderId = jsonObjectOrder.getString(Constants.FOOD_ID)
                 val userEmail = jsonObjectOrder.getString(Constants.User)
                 val quantity = jsonObjectOrder?.getString(Constants.QUANTITY)
+                val orderId = jsonObjectOrder.getString(Constants.ORDER_ID)
                 if (CacheManager.getCurrentUser() == userEmail) {
                     for (i in 0 until allFoods.length()) {
                         val jsonObjectDataFood = allFoods.getJSONObject(i)
                         val foodId = jsonObjectDataFood?.getString(Constants.FOOD_ID)
                         if (foodOrderId == foodId) {
-                            val familiarName =
-                                jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
+                            val familiarName = jsonObjectDataFood?.getString(Constants.FAMILIAR_NAME)
                             val price = jsonObjectDataFood?.getString(Constants.PRICE)
                             val offerPrice = jsonObjectDataFood?.getString(Constants.OFFER_PRICE)
                             val image = jsonObjectDataFood?.getString(Constants.IMAGE)
@@ -55,18 +56,22 @@ class HistoryOrderFragment : Fragment() {
                             val chefEmail = jsonObjectDataFood?.getString(Constants.CURRENT_CHEF)
                             val hungryPhone = getChefPhone(chefEmail)
                             val status = jsonObjectOrder?.getString(Constants.ORDER_STATUS)
+                            val payment_method=jsonObjectOrder.getString(Constants.PAYMENT_METHOD)
                             if (price != null) {
                                 dataOrder.add(
                                     Order(
                                         familiarName,
-                                        if (offerPrice == "0") price.toDouble() else offerPrice?.toDouble(),
+                                        if(offerPrice == "0") price.toDouble() else offerPrice?.toDouble(),
                                         image,
                                         description,
                                         foodOrderId,
                                         chefEmail,
                                         quantity,
                                         status,
-                                        hungryPhone
+                                        hungryPhone,
+                                        orderId,
+                                        //isPayment,
+                                        payment_method
                                     )
                                 )
                             }
@@ -75,9 +80,10 @@ class HistoryOrderFragment : Fragment() {
                 }
             }
         }
-
         val canceledOrders =
-            dataOrder.filter { it.status == OrderStatus.CANCELED.name || it.status == OrderStatus.DONE.name }
+            dataOrder.filter { it.status == OrderStatus.Canceled.name
+                    || it.status == OrderStatus.CompletedVisa.name
+                    ||it .status==OrderStatus.CompletedCash.name }
         if (canceledOrders.isEmpty()) {
             binding.noFoodsLayout.visibility = View.VISIBLE
             binding.mainLayout.visibility = View.GONE

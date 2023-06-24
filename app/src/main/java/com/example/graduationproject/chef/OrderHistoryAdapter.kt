@@ -89,7 +89,7 @@ class OrderHistoryAdapter(
             btnCancel = itemView.findViewById(R.id.Order_Cancel)
             phoneNumber = itemView.findViewById(R.id.phone_number)
             cookingBtn = itemView.findViewById(R.id.cooking_btn)
-            done = itemView.findViewById(R.id.done)
+            done = itemView.findViewById(R.id.completedBTN)
             open_location = itemView.findViewById(R.id.open_location)
             Order_Type_payment = itemView.findViewById(R.id.Order_Type_payment)
         }

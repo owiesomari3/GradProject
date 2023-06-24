@@ -85,7 +85,7 @@ class RegisterALLActivity : AppCompatActivity(), View.OnClickListener, View.OnFo
                 {
                     logo.pauseAnimation()
                 },
-                4850
+                5000
             )
         }
     }

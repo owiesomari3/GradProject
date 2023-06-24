@@ -157,5 +157,14 @@
     <string name="order_status">Order status:</string>
     <string name="payment_type">Payment type:</string>
     <string name="payment_method">Payment method:</string>
+        <string name="completed">Completed</string>
+    <string name="deposit_money">Deposit money</string>
+    <string name="successfully_delivered">successfully delivered</string>
+    <string name="on_my_way">on my way</string>
+    <string name="is_it_paid">Is it paid?</string>
+    <string name="yes">Yes</string>
+    <string name="on_the_way">On the way</string>
+    <string name="did_you_pay_cash">Did you pay cash?</string>
+    <string name="of_course">Of course</string>
 
 </resources>

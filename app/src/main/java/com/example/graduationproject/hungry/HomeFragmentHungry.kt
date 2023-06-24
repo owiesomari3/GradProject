@@ -42,17 +42,19 @@ class HomeFragmentHungry : Fragment() {
                 val image = jsonObject.getString(Constants.IMAGE)
                 val chefEmail = jsonObject.getString(Constants.CURRENT_CHEF)
                 val offersPrice = jsonObject?.getString(Constants.OFFER_PRICE)
-                    foods.add(
-                        DataFood(
-                            name,
-                            price,
-                            image,
-                            description,
-                            id,
-                            chefEmail,
-                            offersPrice
-                        )
+
+                foods.add(
+                    DataFood(
+                        name,
+                        price,
+                        image,
+                        description,
+                        id,
+                        chefEmail,
+                        offersPrice,
+
                     )
+                )
 
             }
         }

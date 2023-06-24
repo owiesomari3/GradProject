@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.graduationproject.*
-import com.example.graduationproject.enums.OrderStatus
 
 class HistoryAdapter(
     private val orderList: ArrayList<Order>,
@@ -44,6 +43,7 @@ class HistoryAdapter(
             chefEmail.text = data.chefEmail
             Phone.text = data.chefPhone
             statusValue.text = data.status
+            order_payment_method.text=data.payment_method
         }
     }
 
@@ -58,7 +58,6 @@ class HistoryAdapter(
         var quantity: TextView
         var continerfinish: CardView
         var continer: CardView
-        var continercancel: CardView
         var continercooking: CardView
         var continerDone: CardView
         var ratingBar: RatingBar
@@ -68,13 +67,12 @@ class HistoryAdapter(
         val bug: LinearLayout
         val chef_email: TextView
         val chef_phone: TextView
-        val chef_email_cancel: TextView
-        val chefPhoneCancel: TextView
         val chef_email_cooking: TextView
         val chef_phone_cooking: TextView
         val Phone: TextView
         val statusLayout: LinearLayout
         val statusValue: TextView
+        val order_payment_method: TextView
 
         init {
             bug = itemView.findViewById(R.id.bug)
@@ -84,18 +82,16 @@ class HistoryAdapter(
             quantity = itemView.findViewById(R.id.order_quantity)
             image = itemView.findViewById(R.id.order_image_food)
             description = itemView.findViewById(R.id.order_description)
-            continerfinish = itemView.findViewById(R.id.finish)
+            continerfinish = itemView.findViewById(R.id.delevr)
             continer = itemView.findViewById(R.id.order)
-            continercancel = itemView.findViewById(R.id.continercancel)
             continercooking = itemView.findViewById(R.id.continercooking)
-            continerDone = itemView.findViewById(R.id.continerDone)
+            continerDone = itemView.findViewById(R.id.continerCompleted)
             ratingBar = itemView.findViewById(R.id.ratingBar)
             submitBtn = itemView.findViewById(R.id.submitBtn)
             rating_layout = itemView.findViewById(R.id.rating_layout)
             thx = itemView.findViewById(R.id.thx)
             chef_email = itemView.findViewById(R.id.chef_email)
-            chef_email_cancel = itemView.findViewById(R.id.chef_email_cancel)
-            chefPhoneCancel = itemView.findViewById(R.id.chef_phone_cancel)
+            order_payment_method = itemView.findViewById(R.id.order_payment_method)
             chef_phone = itemView.findViewById(R.id.chef_phone)
             chef_email_cooking = itemView.findViewById(R.id.chef_email_cooking)
             chef_phone_cooking = itemView.findViewById(R.id.chef_phone_cooking)

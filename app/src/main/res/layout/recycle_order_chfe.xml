@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:id="@+id/order_contener"
         android:layout_width="match_parent"
@@ -40,8 +41,8 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:paddingBottom="18dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="18dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -52,25 +53,27 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/green"
-                        android:text="@string/price" />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/green"
-                        android:text="@string/hungry_email" />
+                        android:text="@string/price"
+                        android:textColor="@color/green" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/green"
-                        android:text="@string/quantity" />
+                        android:text="@string/hungry_email"
+                        android:textColor="@color/green" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/green"
-                        android:text="@string/total_price" />
+                        android:text="@string/quantity"
+                        android:textColor="@color/green" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/total_price"
+                        android:textColor="@color/green" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -83,14 +86,12 @@
                         android:layout_height="wrap_content"
                         android:text="@string/status"
                         android:textColor="@color/green" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/payment_method"
                         android:textColor="@color/green" />
-
-
-
 
                 </LinearLayout>
 
@@ -100,8 +101,9 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:paddingBottom="18dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="18dp">
+
                     <TextView
                         android:id="@+id/order_familiar_name"
                         android:layout_width="match_parent"
@@ -140,15 +142,16 @@
 
                     <TextView
                         android:id="@+id/order_status"
-                        android:textAllCaps="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textAllCaps="false"
                         android:textColor="@color/green" />
+
                     <TextView
                         android:id="@+id/Order_Type_payment"
                         android:layout_width="match_parent"
-                        android:textAllCaps="false"
                         android:layout_height="wrap_content"
+                        android:textAllCaps="false"
                         android:textColor="@color/green" />
 
                 </LinearLayout>
@@ -157,107 +160,89 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
                 <Button
-                    android:layout_marginEnd="10dp"
                     android:id="@+id/cooking_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/border"
                     android:backgroundTint="@color/brawn"
                     android:text="@string/cooking"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="20sp" />
+                    android:textSize="@dimen/size_text_small" />
 
                 <Button
-                    android:layout_marginStart="10dp"
                     android:id="@+id/Order_Accept"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/border"
                     android:backgroundTint="@color/green"
-                    android:text="@string/accept"
+                    android:text="@string/on_the_way"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/size_text_small" />
 
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
 
-            <Button
-                android:layout_marginEnd="10dp"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/Order_Cancel"
-                android:background="@drawable/border"
-                android:backgroundTint="@color/red"
-                android:text="@string/cancel"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_text_small" />
-            <Button
-                android:layout_marginStart="10dp"
-                android:id="@+id/done"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/border"
-                android:backgroundTint="#F29727"
-                android:text="@string/done"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/size_text_small" />
-        </LinearLayout>
-
-            <Button
-                android:textColor="@color/green"
-                android:textSize="20sp"
-                android:textAllCaps="false"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/completedBTN"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:backgroundTint="#F29727"
+                    android:text="@string/completed"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_text_small" />
+
+                <Button
+                    android:id="@+id/Order_Cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border"
+                    android:backgroundTint="@color/red"
+                    android:text="@string/cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/size_text_small" />
+
+            </LinearLayout>
+
+            <Button
                 android:id="@+id/open_location"
-                android:layout_marginBottom="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/border"
-                android:text="@string/open_location" />
+                android:text="@string/open_location"
+                android:textAllCaps="false"
+                android:textColor="@color/green"
+                android:textSize="20sp" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/noOrder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        app:cardCornerRadius="15dp">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/noorder" />
-
     </androidx.cardview.widget.CardView>
 </LinearLayout>
